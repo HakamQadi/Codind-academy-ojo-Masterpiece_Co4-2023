@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 
 import React from 'react';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import RegisterPage from '../screens/RegisterPage';
@@ -9,8 +10,10 @@ import SearchPage from '../screens/SearchPage';
 import DeliveryPage from '../screens/DeliveryPage';
 import ProfilePage from '../screens/ProfilePage';
 import Login from '../components/Login';
+import TabNav from './TabNav';
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function AppNavigator() {
   return (
@@ -22,28 +25,13 @@ export default function AppNavigator() {
           options={{headerShadowVisible: false, headerShown: false}}
         />
         <Stack.Screen
-          name="Home"
-          component={HomePage}
-          options={{headerShadowVisible: false, headerShown: false}}
-        />
-        <Stack.Screen
-          name="Search"
-          component={SearchPage}
-          options={{headerShadowVisible: false, headerShown: false}}
-        />
-        <Stack.Screen
-          name="Delivery"
-          component={DeliveryPage}
-          options={{headerShadowVisible: false, headerShown: false}}
-        />
-        <Stack.Screen
-          name="Profile"
-          component={ProfilePage}
-          options={{headerShadowVisible: false, headerShown: false}}
-        />
-        <Stack.Screen
           name="Login"
           component={Login}
+          options={{headerShadowVisible: false, headerShown: false}}
+        />
+        <Stack.Screen
+          name="Main"
+          component={TabNav} // Use the BottomTabNavigator here
           options={{headerShadowVisible: false, headerShown: false}}
         />
       </Stack.Navigator>

@@ -14,7 +14,7 @@ const RegisterPage = ({navigation}) => {
     setIsSignUp(!isSignUp);
   };
   const handleLogIn = () => {
-    navigation.navigate('Home');
+    navigation.navigate('Main');
   };
   return (
     <ImageBackground
