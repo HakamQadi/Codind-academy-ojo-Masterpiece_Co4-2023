@@ -4,13 +4,13 @@ import React, {useState} from 'react';
 import {LoginStyles} from '../style_sheets/StylesSheet';
 import {Text, TextInput, TouchableOpacity, View} from 'react-native';
 
-const Login = ({toggleForm}) => {
+const Login = ({toggleForm, handleLogIn}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    // Implement your login logic here
-    // Redirect to the logged-in state or show a success message
+    console.log('Login successfull');
+    handleLogIn();
   };
   return (
     <View style={LoginStyles.container}>

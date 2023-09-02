@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable prettier/prettier */
 import React, {useState} from 'react';
 import {SignUpStyles} from '../style_sheets/StylesSheet';
@@ -12,8 +11,10 @@ const SignUp = ({toggleForm}) => {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleSignUp = () => {
-    // Implement your sign-up logic here
-    // Redirect to the logged-in state or show a success message
+    console.log('SignUp successfull');
+    toggleForm();
+
+    // navigation.navigate('Login');
   };
   return (
     <View style={SignUpStyles.container}>
