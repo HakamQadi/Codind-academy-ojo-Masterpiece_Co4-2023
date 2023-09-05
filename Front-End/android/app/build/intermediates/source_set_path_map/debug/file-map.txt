@@ -24,13 +24,15 @@ com.speedx.app-jetified-lifecycle-process-2.4.0-22 C:\Users\hakam\.gradle\caches
 com.speedx.app-sqlite-2.2.0-23 C:\Users\hakam\.gradle\caches\transforms-3\dc58477293179deb391b12c4cba55b48\transformed\sqlite-2.2.0\res
 com.speedx.app-jetified-flipper-0.182.0-24 C:\Users\hakam\.gradle\caches\transforms-3\e13f88164840fe641a466d05cd8edac7\transformed\jetified-flipper-0.182.0\res
 com.speedx.app-jetified-annotation-experimental-1.1.0-25 C:\Users\hakam\.gradle\caches\transforms-3\ea88610a3c8be13450373fa73372379b\transformed\jetified-annotation-experimental-1.1.0\res
-com.speedx.app-pngs-26 C:\Users\hakam\OneDrive\Desktop\Codind-academy-ojo-Masterpiece_Co4-2023\Front-End\android\app\build\generated\res\pngs\debug
-com.speedx.app-resValues-27 C:\Users\hakam\OneDrive\Desktop\Codind-academy-ojo-Masterpiece_Co4-2023\Front-End\android\app\build\generated\res\resValues\debug
-com.speedx.app-rs-28 C:\Users\hakam\OneDrive\Desktop\Codind-academy-ojo-Masterpiece_Co4-2023\Front-End\android\app\build\generated\res\rs\debug
-com.speedx.app-mergeDebugResources-29 C:\Users\hakam\OneDrive\Desktop\Codind-academy-ojo-Masterpiece_Co4-2023\Front-End\android\app\build\intermediates\incremental\debug\mergeDebugResources\merged.dir
-com.speedx.app-mergeDebugResources-30 C:\Users\hakam\OneDrive\Desktop\Codind-academy-ojo-Masterpiece_Co4-2023\Front-End\android\app\build\intermediates\incremental\debug\mergeDebugResources\stripped.dir
-com.speedx.app-merged_res-31 C:\Users\hakam\OneDrive\Desktop\Codind-academy-ojo-Masterpiece_Co4-2023\Front-End\android\app\build\intermediates\merged_res\debug
-com.speedx.app-debug-32 C:\Users\hakam\OneDrive\Desktop\Codind-academy-ojo-Masterpiece_Co4-2023\Front-End\android\app\src\debug\res
-com.speedx.app-main-33 C:\Users\hakam\OneDrive\Desktop\Codind-academy-ojo-Masterpiece_Co4-2023\Front-End\android\app\src\main\res
-com.speedx.app-packaged_res-34 C:\Users\hakam\OneDrive\Desktop\Codind-academy-ojo-Masterpiece_Co4-2023\Front-End\node_modules\react-native-safe-area-context\android\build\intermediates\packaged_res\debug
-com.speedx.app-packaged_res-35 C:\Users\hakam\OneDrive\Desktop\Codind-academy-ojo-Masterpiece_Co4-2023\Front-End\node_modules\react-native-screens\android\build\intermediates\packaged_res\debug
+com.speedx.app-pngs-26 C:\Users\hakam\OneDrive\Desktop\New folder (3)\Codind-academy-ojo-Masterpiece_Co4-2023\Front-End\android\app\build\generated\res\pngs\debug
+com.speedx.app-resValues-27 C:\Users\hakam\OneDrive\Desktop\New folder (3)\Codind-academy-ojo-Masterpiece_Co4-2023\Front-End\android\app\build\generated\res\resValues\debug
+com.speedx.app-rs-28 C:\Users\hakam\OneDrive\Desktop\New folder (3)\Codind-academy-ojo-Masterpiece_Co4-2023\Front-End\android\app\build\generated\res\rs\debug
+com.speedx.app-mergeDebugResources-29 C:\Users\hakam\OneDrive\Desktop\New folder (3)\Codind-academy-ojo-Masterpiece_Co4-2023\Front-End\android\app\build\intermediates\incremental\debug\mergeDebugResources\merged.dir
+com.speedx.app-mergeDebugResources-30 C:\Users\hakam\OneDrive\Desktop\New folder (3)\Codind-academy-ojo-Masterpiece_Co4-2023\Front-End\android\app\build\intermediates\incremental\debug\mergeDebugResources\stripped.dir
+com.speedx.app-merged_res-31 C:\Users\hakam\OneDrive\Desktop\New folder (3)\Codind-academy-ojo-Masterpiece_Co4-2023\Front-End\android\app\build\intermediates\merged_res\debug
+com.speedx.app-debug-32 C:\Users\hakam\OneDrive\Desktop\New folder (3)\Codind-academy-ojo-Masterpiece_Co4-2023\Front-End\android\app\src\debug\res
+com.speedx.app-main-33 C:\Users\hakam\OneDrive\Desktop\New folder (3)\Codind-academy-ojo-Masterpiece_Co4-2023\Front-End\android\app\src\main\res
+com.speedx.app-packaged_res-34 C:\Users\hakam\OneDrive\Desktop\New folder (3)\Codind-academy-ojo-Masterpiece_Co4-2023\Front-End\node_modules\@react-native-community\datetimepicker\android\build\intermediates\packaged_res\debug
+com.speedx.app-packaged_res-35 C:\Users\hakam\OneDrive\Desktop\New folder (3)\Codind-academy-ojo-Masterpiece_Co4-2023\Front-End\node_modules\react-native-safe-area-context\android\build\intermediates\packaged_res\debug
+com.speedx.app-packaged_res-36 C:\Users\hakam\OneDrive\Desktop\New folder (3)\Codind-academy-ojo-Masterpiece_Co4-2023\Front-End\node_modules\react-native-screens\android\build\intermediates\packaged_res\debug
+com.speedx.app-packaged_res-37 C:\Users\hakam\OneDrive\Desktop\New folder (3)\Codind-academy-ojo-Masterpiece_Co4-2023\Front-End\node_modules\react-native-vector-icons\android\build\intermediates\packaged_res\debug

@@ -1,16 +1,12 @@
 /* eslint-disable prettier/prettier */
 import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  DatePickerAndroid,
-} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import {FormStyle} from '../style_sheets/StylesSheet';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const ReceivingForm = ({navigation, route}) => {
   const deliveryData = route.params.deliveryData;
+  const [date, setDate] = useState('');
 
   const [receivingData, setReceivingData] = useState({
     address: '',
@@ -19,26 +15,29 @@ const ReceivingForm = ({navigation, route}) => {
     name: '',
     phoneNumber: '',
     additionalDescription: '',
-    selectedDate: '', // Add a selectedDate field for the date picker
+    selectedDate: new Date(), // Add a selectedDate field for the date picker
+    showDatePicker: false, // To control the visibility of the date picker
   });
 
   const handleChange = (field, value) => {
     setReceivingData({...receivingData, [field]: value});
   };
+  // let formattedDate;
+  //  = receivingData.selectedDate.toLocaleDateString();
 
-  const handleDatePick = async () => {
-    try {
-      const {action, year, month, day} = await DatePickerAndroid.open({
-        date: new Date(),
-      });
-      if (action !== DatePickerAndroid.dismissedAction) {
-        // User has picked a date, format it and set it in receivingData
-        const selectedDate = `${year}-${month + 1}-${day}`;
-        setReceivingData({...receivingData, selectedDate});
-      }
-    } catch ({code, message}) {
-      console.warn('Cannot open date picker', message);
+  const handleDateChange = (event, selectedDate) => {
+    if (event.type === 'set') {
+      // User has selected a date
+      setReceivingData({...receivingData, selectedDate});
+      // console.log(selectedDate);
+      setDate(selectedDate.toDateString());
+      // formattedDate = selectedDate.toLocaleDateString();
     }
+    setReceivingData({...receivingData, showDatePicker: false});
+  };
+
+  const showDatePicker = () => {
+    setReceivingData({...receivingData, showDatePicker: true});
   };
 
   const handleSubmit = () => {
@@ -49,7 +48,6 @@ const ReceivingForm = ({navigation, route}) => {
     // For now, let's just navigate to the next page.
     navigation.navigate('ShipmentDetails', {mergedData});
   };
-
   return (
     <View style={FormStyle.container}>
       <TextInput
@@ -95,10 +93,23 @@ const ReceivingForm = ({navigation, route}) => {
         onChangeText={text => handleChange('additionalDescription', text)}
       />
 
-      {/* Date Picker */}
-      <TouchableOpacity onPress={handleDatePick}>
-        <Text style={FormStyle.button}>Pick a Date</Text>
-      </TouchableOpacity>
+      <View style={FormStyle.datePickerContainer}>
+        <View style={FormStyle.date}>
+          <Text >{date}</Text>
+        </View>
+        <TouchableOpacity onPress={showDatePicker}>
+          <Text style={FormStyle.dateButton}>Pick a Date</Text>
+        </TouchableOpacity>
+      </View>
+
+      {receivingData.showDatePicker && (
+        <DateTimePicker
+          value={receivingData.selectedDate}
+          mode="date"
+          display="spinner"
+          onChange={handleDateChange}
+        />
+      )}
 
       {/* Next Button */}
       <View style={FormStyle.buttonContainer}>

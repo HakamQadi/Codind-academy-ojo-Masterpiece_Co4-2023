@@ -219,6 +219,36 @@ const FormStyle = StyleSheet.create({
     borderRadius: 10,
     overflow: 'hidden',
   },
+
+  datePickerContainer: {
+    flexDirection: 'row', // Display its children in a row (side by side)
+    // alignItems: 'center', // Center its children vertically
+    justifyContent: 'center', // Distribute space evenly between its children
+    // marginHorizontal: 10, // Adjust the vertical margin as needed
+  },
+  date: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '40%',
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 0,
+    paddingHorizontal: 10,
+    marginBottom: 10,
+    marginRight: 65,
+    borderRadius: 10,
+    backgroundColor: 'white',
+    elevation: 1,
+  },
+  dateButton: {
+    color: 'white',
+    // fontSize: 18,
+    textAlign: 'center',
+    padding: 10,
+    backgroundColor: '#fa4a0c',
+    fontWeight: '700',
+    // width: 150,
+  },
 });
 
 module.exports = {
