@@ -5,17 +5,33 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomePage from '../screens/HomePage';
 import ProfilePage from '../screens/ProfilePage';
 import SearchPage from '../screens/SearchPage';
-import DeliveryPage from '../screens/DeliveryPage';
+import DeliveryForm from '../components/DeliveryForm';
 
 const Tab = createBottomTabNavigator();
 
 const TabNav = () => {
   return (
     <Tab.Navigator backBehavior="history">
-      <Tab.Screen name="Home" component={HomePage} options={{}}/>
-      <Tab.Screen name="Profile" component={ProfilePage} />
-      <Tab.Screen name="Search" component={SearchPage} />
-      <Tab.Screen name="Delivery" component={DeliveryPage} />
+      <Tab.Screen
+        name="Home"
+        component={HomePage}
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
+        name="Delivery"
+        component={DeliveryForm}
+        options={{headerShown: true, title: 'Delivery Form'}}
+      />
+      <Tab.Screen
+        name="Search"
+        component={SearchPage}
+        options={{headerShown: false}}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={ProfilePage}
+        options={{headerShown: false}}
+      />
     </Tab.Navigator>
   );
 };

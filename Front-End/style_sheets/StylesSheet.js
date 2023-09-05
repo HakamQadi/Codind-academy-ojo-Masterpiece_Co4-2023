@@ -176,8 +176,54 @@ const HomeStyles = StyleSheet.create({
   },
 });
 
+const FormStyle = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0', // Background color
+    // width: '50%',
+  },
+  placeholderColor: {
+    color: '#d8d8d8', // Text color
+  },
+  input: {
+    width: '80%',
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 0,
+    paddingHorizontal: 10,
+    marginBottom: 10,
+    borderRadius: 10,
+    backgroundColor: 'white',
+    elevation: 1,
+    // width: '50%',
+  },
+  button: {
+    color: 'white',
+    fontSize: 18,
+    textAlign: 'center',
+    padding: 10,
+    backgroundColor: '#fa4a0c',
+    fontWeight: '700',
+    width: 150,
+  },
+  buttonText: {
+    borderRadius: 40,
+    color: 'white',
+    fontSize: 18,
+    textAlign: 'center',
+  },
+  buttonContainer: {
+    marginTop: 30,
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
+});
+
 module.exports = {
   SignUpStyles,
   LoginStyles,
   HomeStyles,
+  FormStyle,
 };
