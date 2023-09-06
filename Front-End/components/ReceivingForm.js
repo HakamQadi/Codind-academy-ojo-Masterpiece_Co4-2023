@@ -28,9 +28,10 @@ const ReceivingForm = ({navigation, route}) => {
   const handleDateChange = (event, selectedDate) => {
     if (event.type === 'set') {
       // User has selected a date
-      setReceivingData({...receivingData, selectedDate});
+      const dateToString = selectedDate.toDateString();
+      setReceivingData({...receivingData, dateToString});
       // console.log(selectedDate);
-      setDate(selectedDate.toDateString());
+      setDate(dateToString);
       // formattedDate = selectedDate.toLocaleDateString();
     }
     setReceivingData({...receivingData, showDatePicker: false});
@@ -95,7 +96,7 @@ const ReceivingForm = ({navigation, route}) => {
 
       <View style={FormStyle.datePickerContainer}>
         <View style={FormStyle.date}>
-          <Text >{date}</Text>
+          <Text>{date}</Text>
         </View>
         <TouchableOpacity onPress={showDatePicker}>
           <Text style={FormStyle.dateButton}>Pick a Date</Text>

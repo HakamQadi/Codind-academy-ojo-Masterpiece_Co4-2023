@@ -22,6 +22,7 @@ const ShipmentDetails = ({mergedData}) => {
       thumbnail: require('../assets/images/package_service.jpg'),
     },
   ];
+  console.log(mergedData)
   return (
     <View style={FormStyle.container}>
       <View style={{flexDirection: 'row'}}>
@@ -39,35 +40,7 @@ const ShipmentDetails = ({mergedData}) => {
           // value={receivingData.addressDetails}
           // onChangeText={text => handleChange('addressDetails', text)}
         />
-        <view>
-          <FlatList
-            data={popDelivery}
-            numColumns={3} // Set the number of columns
-            renderItem={({item}) => (
-              <TouchableOpacity
-                style={HomeStyles.card}
-                onPress={() => navigate('ProductDetails', {item})}>
-                {/* thumbnail */}
-                <Image style={HomeStyles.thumbnail} source={item.thumbnail} />
-                {/* title */}
-                <Text
-                  numberOfLines={1}
-                  ellipsizeMode="tail"
-                  style={{fontSize: 15, marginTop: 6}}>
-                  {item.title}
-                </Text>
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    marginTop: 3,
-                  }}></View>
-              </TouchableOpacity>
-            )}
-            keyExtractor={item => item.id.toString()} // Provide a unique key for each item
-            showsVerticalScrollIndicator={false}
-          />
-        </view>
+       
       </View>
     </View>
   );
