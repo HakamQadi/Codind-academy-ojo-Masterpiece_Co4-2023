@@ -68,10 +68,10 @@ const HomePage = ({navigation}) => {
         }}>
         {/* Replace this with your app logo */}
         <View style={{flexDirection: 'row'}}>
-          <Text style={{fontSize: 20, fontWeight: '800', color: 'black'}}>
+          <Text style={{fontSize: 30, fontWeight: '800', color: 'black'}}>
             Speed
           </Text>
-          <Text style={{fontSize: 20, fontWeight: '800', color: '#fa4a0c'}}>
+          <Text style={{fontSize: 30, fontWeight: '800', color: '#fa4a0c'}}>
             X
           </Text>
         </View>
@@ -79,7 +79,7 @@ const HomePage = ({navigation}) => {
 
       {/* Popular Delivery Section */}
       <View style={HomeStyles.bestSellersContainer}>
-        <Text style={HomeStyles.h2}>Popular Delivery</Text>
+        <Text style={[HomeStyles.h2, {marginTop: 10}]}>Popular Delivery</Text>
         <FlatList
           data={popDelivery}
           numColumns={NUM_COLUMNS} // Set the number of columns

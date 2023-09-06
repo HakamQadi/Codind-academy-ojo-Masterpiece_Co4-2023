@@ -133,6 +133,7 @@ const HomeStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     paddingVertical: 15,
+    justifyContent:'center'
   },
   iconButton: {
     marginStart: 8,
@@ -155,7 +156,7 @@ const HomeStyles = StyleSheet.create({
     padding: 15,
   },
   h2: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: 'bold',
     color: 'black',
   },
