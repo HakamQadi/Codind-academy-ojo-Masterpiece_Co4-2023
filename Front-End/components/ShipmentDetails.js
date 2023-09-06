@@ -1,8 +1,19 @@
 /* eslint-disable prettier/prettier */
-import {View, Text, Button, TextInput, FlatList, TouchableOpacity, Image} from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+  TextInput,
+  FlatList,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import React from 'react';
 import {FormStyle} from '../style_sheets/StylesSheet';
 import {HomeStyles} from '../style_sheets/StylesSheet';
+import car from '../assets/icons/car.png';
+import truck from '../assets/icons//truck.png';
+import bike from '../assets/icons/bike.png';
 
 const ShipmentDetails = ({mergedData}) => {
   const popDelivery = [
@@ -22,25 +33,39 @@ const ShipmentDetails = ({mergedData}) => {
       thumbnail: require('../assets/images/package_service.jpg'),
     },
   ];
-  console.log(mergedData)
+  console.log(mergedData);
   return (
     <View style={FormStyle.container}>
       <View style={{flexDirection: 'row'}}>
         <TextInput
           style={[FormStyle.input, {width: '40%', marginRight: 10}]}
-          placeholder="Address"
+          placeholder="Shipment Description"
           placeholderTextColor={FormStyle.placeholderColor.color}
           // value={receivingData.address}
           // onChangeText={text => handleChange('address', text)}
         />
         <TextInput
           style={[FormStyle.input, {width: '40%'}]}
-          placeholder="Address Details"
+          placeholder="Shipment Weight"
           placeholderTextColor={FormStyle.placeholderColor.color}
           // value={receivingData.addressDetails}
           // onChangeText={text => handleChange('addressDetails', text)}
         />
-       
+      </View>
+
+      <View style={FormStyle.deleveryButtonIconContainer}>
+        <TouchableOpacity style={FormStyle.deleveryButtonIcon}>
+          <Image style={FormStyle.image} source={truck} />
+          <Text style={FormStyle.textCard}>Large</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={FormStyle.deleveryButtonIcon}>
+          <Image style={FormStyle.image} source={car} />
+          <Text style={FormStyle.textCard}>Medium</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={FormStyle.deleveryButtonIcon}>
+          <Image style={FormStyle.image} source={bike} />
+          <Text style={FormStyle.textCard}>Small</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

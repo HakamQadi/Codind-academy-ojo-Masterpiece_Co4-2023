@@ -1,9 +1,10 @@
 /* eslint-disable prettier/prettier */
 import React, {useState} from 'react';
-import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
 import {FormStyle} from '../style_sheets/StylesSheet';
 import DateTimePicker from '@react-native-community/datetimepicker';
-
+// import {SvgXml} from 'react-native-svg';
+import dateIcon from '../assets/icons/Date.png';
 const ReceivingForm = ({navigation, route}) => {
   const deliveryData = route.params.deliveryData;
   const [date, setDate] = useState('');
@@ -98,8 +99,17 @@ const ReceivingForm = ({navigation, route}) => {
         <View style={FormStyle.date}>
           <Text>{date}</Text>
         </View>
-        <TouchableOpacity onPress={showDatePicker}>
+        {/* <TouchableOpacity onPress={showDatePicker}>
+          <SvgXml xml={dateIcon} width={24} height={24} />
           <Text style={FormStyle.dateButton}>Pick a Date</Text>
+        </TouchableOpacity> */}
+
+        {/* <Icon name="star" size={30} color="#900" /> */}
+        <TouchableOpacity
+          style={[{alignSelf: 'center'}]}
+          onPress={showDatePicker}>
+          <Image source={dateIcon} style={FormStyle.ButtonIcon} />
+          {/* <Text style={FormStyle.dateButton}>Pick a Date</Text> */}
         </TouchableOpacity>
       </View>
 

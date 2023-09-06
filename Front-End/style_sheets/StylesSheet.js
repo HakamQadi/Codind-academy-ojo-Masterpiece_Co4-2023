@@ -133,7 +133,7 @@ const HomeStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     paddingVertical: 15,
-    justifyContent:'center'
+    justifyContent: 'center',
   },
   iconButton: {
     marginStart: 8,
@@ -249,6 +249,37 @@ const FormStyle = StyleSheet.create({
     backgroundColor: '#fa4a0c',
     fontWeight: '700',
     // width: 150,
+  },
+  ButtonIcon: {
+    width: 27,
+    height: 27,
+    // justifyContent: 'center',
+    alignSelf: 'center',
+  },
+  deleveryButtonIconContainer: {
+    width: 330,
+    // backgroundColor: 'black',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  deleveryButtonIcon: {
+    width: 90,
+    height: 80,
+    backgroundColor: '#fa4a00',
+    borderRadius: 10,
+    elevation: 5,
+    marginTop: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  image: {
+    width: 55,
+    height: 55,
+  },
+  textCard: {
+    marginBottom: 6,
+    color: 'white',
+    fontWeight: '500',
   },
 });
 
