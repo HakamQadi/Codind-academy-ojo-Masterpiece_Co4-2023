@@ -33,9 +33,21 @@ export default function AppNavigator() {
           component={TabNav} // Use the BottomTabNavigator here
           options={{headerShadowVisible: false, headerShown: false}}
         />
-        <Stack.Screen name="DeliveryForm" component={DeliveryForm} />
-        <Stack.Screen name="ReceivingForm" component={ReceivingForm} />
-        <Stack.Screen name="ShipmentDetails" component={ShipmentDetails} />
+        <Stack.Screen
+          name="DeliveryForm"
+          component={DeliveryForm}
+          options={{headerTitle: 'Delivery Form'}}
+        />
+        <Stack.Screen
+          name="ReceivingForm"
+          component={ReceivingForm}
+          options={{headerTitle: 'Receiving Form'}}
+        />
+        <Stack.Screen
+          name="ShipmentDetails"
+          component={ShipmentDetails}
+          options={{headerTitle: 'Shipment Details'}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
