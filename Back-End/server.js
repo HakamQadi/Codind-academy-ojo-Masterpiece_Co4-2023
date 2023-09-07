@@ -1,0 +1,24 @@
+const express = require("express");
+const dotnev = require("dotenv");
+dotnev.config({ path: "./conf.env" });
+const mongoose = require("mongoose");
+const userRouter = require("./routes/UserRouter");
+const orderRouter = require("./routes/OrderRouter");
+const app = express();
+app.use(express.json())
+
+mongoose
+  .connect(process.env.CONN_STR, {
+    UseNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then((conn) => {
+    console.log("DB connected");
+  });
+
+app.use("/user", userRouter);
+app.use("/order", orderRouter);
+
+app.listen(8080, () => {
+  console.log("http://localhost:8080");
+});
