@@ -1,17 +1,19 @@
 const User = require("../model/UserModel");
-const express = require("express");
+
 const bcrypt = require("bcrypt");
+
 const jwt = require("jsonwebtoken");
 
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.SECRET_STR);
 };
 
+
+
 exports.createUser = async (req, res) => {
   const { fullname, email, password, orders } = req.body;
 
   try {
-    // if (role === "super admin" || role === "user") {
     const userExist = await User.findOne({ email }).catch((err) => {
       console.log("Error: ", err);
     });
@@ -22,7 +24,6 @@ exports.createUser = async (req, res) => {
     }
 
     const hashPass = bcrypt.hashSync(password, 12);
-
     const newUser = await User.create({
       fullname,
       email,
@@ -31,7 +32,6 @@ exports.createUser = async (req, res) => {
       role: "User",
     });
     const token = signToken(newUser._id);
-    // console.log("first ", hashPass)
     res.status(201).json({
       token,
       data: {
@@ -42,15 +42,6 @@ exports.createUser = async (req, res) => {
       },
       message: "Thanks for registration",
     });
-    // } else if (role === "") {
-    //   res.status(401).json({
-    //     message: "Choosing role is required",
-    //   });
-    // } else {
-    //   res.status(401).json({
-    //     message: "Wrong secret key",
-    //   });
-    // }
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Cannot register the user" });

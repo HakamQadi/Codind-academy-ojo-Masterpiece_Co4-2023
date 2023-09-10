@@ -1,14 +1,17 @@
 const express = require("express");
 const dotnev = require("dotenv");
-dotnev.config({ path: "./conf.env" });
 const mongoose = require("mongoose");
+
+dotnev.config({ path: "./conf.env" });
 
 const userRouter = require("./routes/UserRouter");
 const orderRouter = require("./routes/OrderRouter");
 const adminRouter = require('./routes/AdminRoutes')
 
 const app = express();
+
 app.use(express.json())
+
 
 mongoose
   .connect(process.env.CONN_STR, {
