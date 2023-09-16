@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.SECRET_STR);
 };
-
+  
 
 
 exports.createUser = async (req, res) => {
@@ -56,7 +56,7 @@ exports.getUser = async (req, res) => {
       const isMatch = await userExist.comparePass(password, userExist.password);
       if (isMatch) {
         const token = signToken(userExist._id);
-        return res.status(201).json({
+        return res.status(200).json({
           token,
           data: {
             fullname: userExist.fullname,
