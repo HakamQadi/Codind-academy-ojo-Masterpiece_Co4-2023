@@ -1,0 +1,68 @@
+:root {
+    --accent-color: #ebfdff;
+    --secondary-color: #3ac5ce;
+    --dark-color: #083c3e;
+    --grey-color: #f8f8f8;
+    --body-text-color: #083c3e;
+    --light-text-color: #7c7c7c;
+    --link-color: #ffffff;
+}
+
+#logo_image {
+    width: 10rem
+}
+
+#download_btn {
+    /* --bs-btn-hover-border-color: var(--secondary-color); */
+
+    font-size: 19px;
+
+    padding: 20px 60px;
+
+    transition: all 0.3s ease-in;
+
+    color: #f05252;
+    border-radius: 60px;
+    border: #f05252 solid 2px;
+    background-color: transparent;
+
+    /* --bs-btn-color: var(--accent-color); */
+
+    /* --bs-btn-bg: var(--body-text-color); */
+
+    /* --bs-btn-border-color: var(--body-text-color); */
+
+    /* --bs-btn-hover-color: var(--accent-color); */
+
+    /* --bs-btn-hover-bg: var(--secondary-color); */
+}
+
+#download_btn:hover {
+    background-color: #f05252;
+    color: white;
+}
+
+
+.myBtn{
+    font-size: 19px;
+
+    padding: 10px 20px;
+
+    transition: all 0.3s ease-in;
+
+    color: #f05252;
+    border-radius: 60px;
+    border: #f05252 solid 2px;
+    background-color: transparent;
+}
+
+.myBtn:hover {
+    background-color: #f05252;
+    color: white;
+}
+
+
+h2 span {
+    color: #f05252;
+    font-weight: bold;
+}
