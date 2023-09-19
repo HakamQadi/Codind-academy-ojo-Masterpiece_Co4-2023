@@ -131,6 +131,11 @@ const LoginStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  errorMessage: {
+    color: 'red',
+    textAlign:'center'
+
+  },
 });
 
 const HomeStyles = StyleSheet.create({

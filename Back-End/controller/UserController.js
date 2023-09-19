@@ -64,7 +64,7 @@ exports.getUser = async (req, res) => {
           },
         });
       } else {
-        return res.status(404).json({ message: "Password is wrong" }); //404=not found
+        return res.status(404).json({ message: "Email or password is wrong" }); //404=not found
       }
     } else {
       return res.status(404).json({ message: "Email or password is wrong" }); //404=not found
