@@ -63,6 +63,11 @@ const SignUpStyles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  errorText: {
+    color: 'red',
+    marginBottom: 5,
+    marginTop: -10,
+  },
 });
 
 const LoginStyles = StyleSheet.create({

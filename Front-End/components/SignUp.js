@@ -1,62 +1,90 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable prettier/prettier */
-import React, {useState} from 'react';
-import {SignUpStyles} from '../style_sheets/StylesSheet';
-import {Text, TextInput, TouchableOpacity, View} from 'react-native';
+import React from 'react';
+import { Text, TextInput, TouchableOpacity, View, Alert } from 'react-native';
+// import { Formik } from 'formik';
+import {Formik} from 'formik'
+import * as Yup from 'yup';
+import { SignUpStyles } from '../style_sheets/StylesSheet';
 
-const SignUp = ({toggleForm}) => {
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+const validationSchema = Yup.object().shape({
+  fullName: Yup.string().required('Full Name is required'),
+  email: Yup.string().email('Invalid email').required('Email is required'),
+  password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
+  confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required('Confirm Password is required'),
+});
 
-  const handleSignUp = () => {
-    console.log('SignUp successfull');
-    toggleForm();
-
-    // navigation.navigate('Login');
-  };
+const SignUp = ({ toggleForm }) => {
   return (
-    <View style={SignUpStyles.container}>
-      <Text style={SignUpStyles.title}>Sign Up</Text>
-      <TextInput
-        style={SignUpStyles.input}
-        placeholder="Full Name"
-        value={fullName}
-        onChangeText={setFullName}
-      />
-      <TextInput
-        style={SignUpStyles.input}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <TextInput
-        style={SignUpStyles.input}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <TextInput
-        style={SignUpStyles.input}
-        placeholder="Confirm Password"
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-        secureTextEntry
-      />
-      <View style={SignUpStyles.buttonContainer}>
-        <TouchableOpacity onPress={handleSignUp}>
-          <Text style={SignUpStyles.button}>Sign Up</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={SignUpStyles.loginContainer}>
-        <Text>Already have an account? </Text>
-        <TouchableOpacity onPress={toggleForm}>
-          <Text style={SignUpStyles.toggleText}>Log In</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    <Formik
+      initialValues={{
+        fullName: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+      }}
+      validationSchema={validationSchema}
+      onSubmit={(values, { resetForm }) => {
+        // Handle form submission here (e.g., API call)
+        console.log('Form submitted with values:', values);
+        resetForm();
+        Alert.alert('Success', 'Sign-up successful!');
+        // navigation.navigate('Login');
+      }}
+    >
+      {({ values, handleChange, handleSubmit, errors, touched }) => (
+        <View style={SignUpStyles.container}>
+          <Text style={SignUpStyles.title}>Sign Up</Text>
+          <TextInput
+            style={SignUpStyles.input}
+            placeholder="Full Name"
+            value={values.fullName}
+            onChangeText={handleChange('fullName')}
+          />
+          {touched.fullName && errors.fullName && (
+            <Text style={SignUpStyles.errorText}>{errors.fullName}</Text>
+          )}
+          <TextInput
+            style={SignUpStyles.input}
+            placeholder="Email"
+            value={values.email}
+            onChangeText={handleChange('email')}
+          />
+          {touched.email && errors.email && (
+            <Text style={SignUpStyles.errorText}>{errors.email}</Text>
+          )}
+          <TextInput
+            style={SignUpStyles.input}
+            placeholder="Password"
+            value={values.password}
+            onChangeText={handleChange('password')}
+            secureTextEntry
+          />
+          {touched.password && errors.password && (
+            <Text style={SignUpStyles.errorText}>{errors.password}</Text>
+          )}
+          <TextInput
+            style={SignUpStyles.input}
+            placeholder="Confirm Password"
+            value={values.confirmPassword}
+            onChangeText={handleChange('confirmPassword')}
+            secureTextEntry
+          />
+          {touched.confirmPassword && errors.confirmPassword && (
+            <Text style={SignUpStyles.errorText}>{errors.confirmPassword}</Text>
+          )}
+          <View style={SignUpStyles.buttonContainer}>
+            <TouchableOpacity onPress={handleSubmit}>
+              <Text style={SignUpStyles.button}>Sign Up</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={SignUpStyles.loginContainer}>
+            <Text>Already have an account? </Text>
+            <TouchableOpacity onPress={toggleForm}>
+              <Text style={SignUpStyles.toggleText}>Log In</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      )}
+    </Formik>
   );
 };
 
