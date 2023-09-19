@@ -29,7 +29,7 @@ exports.createUser = async (req, res) => {
       email,
       password: hashPass,
       orders,
-      role: "User",
+      role: "user",
     });
     const token = signToken(newUser._id);
     res.status(201).json({
