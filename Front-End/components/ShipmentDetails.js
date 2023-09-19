@@ -15,7 +15,27 @@ import car from '../assets/icons/car.png';
 import truck from '../assets/icons//truck.png';
 import bike from '../assets/icons/bike.png';
 
-const ShipmentDetails = ({mergedData}) => {
+const ShipmentDetails = ({route, navigation}) => {
+  const shipmentDetails = {
+    shipmentDescription: '',
+    shipmentWeight: '',
+  };
+  const {mergedData} = route.params;
+  const allData = {...mergedData, ...shipmentDetails};
+  const handleSubmit = () => {
+    // Create an object with the order details you want to pass
+    console.log('allData', allData);
+
+    const orderDetails = {
+      sendingAddress: mergedData.deliveryAddress,
+      receivingAddress: mergedData.address,
+      shipmentDescription: '' /* Get the description from the input field */,
+      shipmentWeight: '' /* Get the weight from the input field */,
+    };
+
+    // Navigate to PlaceOrderSuccess and pass orderDetails as a parameter
+    navigation.navigate('OrderPlaced', {orderDetails});
+  };
   const popDelivery = [
     {
       id: 1,
@@ -33,7 +53,7 @@ const ShipmentDetails = ({mergedData}) => {
       thumbnail: require('../assets/images/package_service.jpg'),
     },
   ];
-  console.log(mergedData);
+  // console.log(mergedData);
   return (
     <View style={FormStyle.container}>
       <View style={{flexDirection: 'row'}}>
@@ -65,6 +85,11 @@ const ShipmentDetails = ({mergedData}) => {
         <TouchableOpacity style={FormStyle.deleveryButtonIcon}>
           <Image style={FormStyle.image} source={bike} />
           <Text style={FormStyle.textCard}>Small</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={FormStyle.buttonContainer}>
+        <TouchableOpacity onPress={handleSubmit}>
+          <Text style={FormStyle.button}>Place Order</Text>
         </TouchableOpacity>
       </View>
     </View>

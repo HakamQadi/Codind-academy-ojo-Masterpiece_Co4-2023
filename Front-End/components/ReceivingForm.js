@@ -1,39 +1,36 @@
 /* eslint-disable prettier/prettier */
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
 import {FormStyle} from '../style_sheets/StylesSheet';
 import DateTimePicker from '@react-native-community/datetimepicker';
-// import {SvgXml} from 'react-native-svg';
 import dateIcon from '../assets/icons/Date.png';
-const ReceivingForm = ({navigation, route}) => {
-  const deliveryData = route.params.deliveryData;
-  const [date, setDate] = useState('');
+import {useAppContext} from '../context/AppContext'; // Import the context hook
 
+const ReceivingForm = ({navigation,route}) => {
+  const { deliveryData } = route.params;
+  // const {deliveryData} = useAppContext(); // Access deliveryData from context
+  const [date, setDate] = useState('');
+  console.log('deliveryData ', deliveryData);
   const [receivingData, setReceivingData] = useState({
-    address: '',
+    address: 'shahed',
     addressDetails: '',
     city: '',
     name: '',
     phoneNumber: '',
     additionalDescription: '',
-    selectedDate: new Date(), // Add a selectedDate field for the date picker
-    showDatePicker: false, // To control the visibility of the date picker
+    // selectedDate: new Date(),
+    // showDatePicker: false,
   });
 
   const handleChange = (field, value) => {
     setReceivingData({...receivingData, [field]: value});
   };
-  // let formattedDate;
-  //  = receivingData.selectedDate.toLocaleDateString();
 
   const handleDateChange = (event, selectedDate) => {
     if (event.type === 'set') {
-      // User has selected a date
       const dateToString = selectedDate.toDateString();
-      setReceivingData({...receivingData, dateToString});
-      // console.log(selectedDate);
+      setReceivingData({...receivingData, selectedDate, dateToString});
       setDate(dateToString);
-      // formattedDate = selectedDate.toLocaleDateString();
     }
     setReceivingData({...receivingData, showDatePicker: false});
   };
@@ -48,8 +45,10 @@ const ReceivingForm = ({navigation, route}) => {
 
     // Here, you can perform form submission logic and send mergedData as needed.
     // For now, let's just navigate to the next page.
+    console.log("mergedData 1 ",mergedData)
     navigation.navigate('ShipmentDetails', {mergedData});
   };
+
   return (
     <View style={FormStyle.container}>
       <TextInput
@@ -99,17 +98,10 @@ const ReceivingForm = ({navigation, route}) => {
         <View style={FormStyle.date}>
           <Text>{date}</Text>
         </View>
-        {/* <TouchableOpacity onPress={showDatePicker}>
-          <SvgXml xml={dateIcon} width={24} height={24} />
-          <Text style={FormStyle.dateButton}>Pick a Date</Text>
-        </TouchableOpacity> */}
-
-        {/* <Icon name="star" size={30} color="#900" /> */}
         <TouchableOpacity
           style={[{alignSelf: 'center'}]}
           onPress={showDatePicker}>
           <Image source={dateIcon} style={FormStyle.ButtonIcon} />
-          {/* <Text style={FormStyle.dateButton}>Pick a Date</Text> */}
         </TouchableOpacity>
       </View>
 
@@ -122,7 +114,6 @@ const ReceivingForm = ({navigation, route}) => {
         />
       )}
 
-      {/* Next Button */}
       <View style={FormStyle.buttonContainer}>
         <TouchableOpacity onPress={handleSubmit}>
           <Text style={FormStyle.button}>Next</Text>

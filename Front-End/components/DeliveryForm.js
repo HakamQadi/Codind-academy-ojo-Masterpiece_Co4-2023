@@ -10,12 +10,12 @@ import {FormStyle} from '../style_sheets/StylesSheet';
 
 const DeliveryForm = ({navigation}) => {
   const [deliveryData, setDeliveryData] = useState({
-    address: '',
-    addressDetails: '',
-    city: '',
-    name: '',
-    phoneNumber: '',
-    additionalDescription: '',
+    deliveryAddress: 'hakam',
+    deliveryAddressDetails: '',
+    deliveryCity: '',
+    deliveryName: '',
+    deliveryPhoneNumber: '',
+    deliveryAdditionalDescription: '',
   });
 
   const handleChange = (field, value) => {

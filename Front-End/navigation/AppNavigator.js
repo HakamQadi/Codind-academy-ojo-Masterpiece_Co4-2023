@@ -10,6 +10,7 @@ import TabNav from './TabNav';
 import DeliveryForm from '../components/DeliveryForm';
 import ReceivingForm from '../components/ReceivingForm';
 import ShipmentDetails from '../components/ShipmentDetails';
+import PlaceOrderSuccess from '../components/PlaceOrderSuccess';
 
 const Stack = createNativeStackNavigator();
 // const Tab = createBottomTabNavigator();
@@ -47,6 +48,11 @@ export default function AppNavigator() {
           name="ShipmentDetails"
           component={ShipmentDetails}
           options={{headerTitle: 'Shipment Details'}}
+        />
+        <Stack.Screen
+          name="OrderPlaced"
+          component={PlaceOrderSuccess}
+          options={{headerTitle: 'Order Placed'}}
         />
       </Stack.Navigator>
     </NavigationContainer>
