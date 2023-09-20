@@ -26,7 +26,7 @@ exports.addOrder = async (req, res) => {
     shipmentDescription,
     shipmentWeight,
   } = req.body;
-  console.log("recieving_date type : ", typeof recieving_date);
+  console.log("recieving_date type : ", typeof selectedDate);
   console.log("shipmentDescription ", shipmentDescription);
   console.log("shipmentWeight ", shipmentWeight);
   try {
@@ -44,7 +44,7 @@ exports.addOrder = async (req, res) => {
       recipient_name,
       recipient_phone,
       recipient_additionalDesc,
-      recieving_date,
+      selectedDate,
       shipmentDescription,
       shipmentWeight,
     });
