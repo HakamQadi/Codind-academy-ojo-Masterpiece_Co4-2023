@@ -12,12 +12,13 @@ const ReceivingForm = ({navigation}) => {
   const [selectedDate, setSelectedDate] = useState(null);
 
   const [receivingData, setReceivingData] = useState({
-    address: '',
-    addressDetails: '',
-    city: '',
-    name: '',
-    phoneNumber: '',
-    additionalDescription: '',
+    recieving_address: '',
+    recipient_addressDetails: '',
+    recipient_city: '',
+    recipient_name: '',
+    recipient_phone: '',
+    recipient_additionalDesc: '',
+    recieving_date: selectedDate,
     showDatePicker: false, // Add showDatePicker state
   });
 
@@ -35,12 +36,9 @@ const ReceivingForm = ({navigation}) => {
   };
 
   const handleSubmit = () => {
-    // Merge receivingData and update context
-    const mergedData = {...receivingData, selectedDate};
-    // updateMergedData(mergedData);
-    // console.log('mergedData ', mergedData);
+    // const mergedData = {...receivingData, selectedDate};
+    const mergedData = {...receivingData};
     updateMergedData(mergedData);
-    // Navigate to the next page
     navigation.navigate('ShipmentDetails');
   };
 

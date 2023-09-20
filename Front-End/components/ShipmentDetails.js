@@ -1,23 +1,15 @@
 /* eslint-disable prettier/prettier */
-import {
-  View,
-  Text,
-  Button,
-  TextInput,
-  FlatList,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
-import React, { useState } from 'react';
+import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
+import React, {useState} from 'react';
 import {FormStyle} from '../style_sheets/StylesSheet';
-import {HomeStyles} from '../style_sheets/StylesSheet';
 import car from '../assets/icons/car.png';
 import truck from '../assets/icons//truck.png';
 import bike from '../assets/icons/bike.png';
 import {useAppContext} from '../context/AppContext'; // Import the context hook
+import axios from 'axios';
 
 const ShipmentDetails = ({route, navigation}) => {
-  const {updateMergedData} = useAppContext();
+  const {updateMergedData, user, mergedData} = useAppContext();
   const [shipmentDetails, setShipmentDetails] = useState({
     shipmentDescription: '',
     shipmentWeight: '',
@@ -25,48 +17,22 @@ const ShipmentDetails = ({route, navigation}) => {
   const handleChange = (field, value) => {
     setShipmentDetails({...shipmentDetails, [field]: value});
   };
-  // const shipmentDetails = {
-  //   shipmentDescription: '',
-  //   shipmentWeight: '',
-  // };
-  // const {mergedData} = route.params;
-  // const allData = {...mergedData, ...shipmentDetails};
-  const handleSubmit = () => {
-    // Create an object with the order details you want to pass
-    // console.log('allData', allData);
-
-    // const orderDetails = {
-    // sendingAddress: mergedData.deliveryAddress,
-    // receivingAddress: mergedData.address,
-    // shipmentDescription: '' /* Get the description from the input field */,
-    // shipmentWeight: '' /* Get the weight from the input field */,
-    // };
-
-    // Navigate to PlaceOrderSuccess and pass orderDetails as a parameter
-    // navigation.navigate('OrderPlaced', {orderDetails});
-
-    // console.log('shipmentDetails ', shipmentDetails);
+  const handleSubmit = async () => {
+    // console.log('user ID ', user.userId);
+    await axios
+      .post(
+        `https://speedx-backend.onrender.com/order/add_order/${user.userId}`,
+        mergedData,
+      )
+      .then(response => {
+        console.log('response ', response.data);
+      })
+      .catch(error => {
+        setErrorMessage(error.response.data.message);
+      });
     updateMergedData(shipmentDetails);
     navigation.navigate('OrderPlaced');
   };
-  // const popDelivery = [
-  //   {
-  //     id: 1,
-  //     title: 'Small',
-  //     thumbnail: require('../assets/images/popular_service.jpg'),
-  //   },
-  //   {
-  //     id: 2,
-  //     title: 'Medium',
-  //     thumbnail: require('../assets/images/package_service.jpg'),
-  //   },
-  //   {
-  //     id: 3,
-  //     title: 'Large',
-  //     thumbnail: require('../assets/images/package_service.jpg'),
-  //   },
-  // ];
-  // console.log(mergedData);
   return (
     <View style={FormStyle.container}>
       <View style={{flexDirection: 'row'}}>

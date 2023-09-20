@@ -11,13 +11,17 @@ exports.addOrder = async (req, res) => {
     delivery_address,
     address_details,
     city,
+    name,
     phone,
     additional_desc,
-    recipient_name,
+    // ///////
     recieving_address,
     recipient_addressDetails,
-    recieving_date,
+    recipient_city,
+    recipient_name,
     recipient_phone,
+    recipient_additionalDesc,
+    recieving_date,
   } = req.body;
 
   try {
@@ -25,13 +29,17 @@ exports.addOrder = async (req, res) => {
       delivery_address,
       address_details,
       city,
+      name,
       phone,
       additional_desc,
-      recipient_name,
+      // //////////////
       recieving_address,
       recipient_addressDetails,
-      recieving_date,
+      recipient_city,
+      recipient_name,
       recipient_phone,
+      recipient_additionalDesc,
+      recieving_date,
     });
 
     console.log(order._id);

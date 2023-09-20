@@ -5,13 +5,20 @@ const mySchema = new mongoose.Schema({
   delivery_address: String,
   address_details: String,
   city: String,
+  name: String,
   phone: Number,
   additional_desc: String,
-  recipient_name: String,
+  // /////////////////////
   recieving_address: String,
   recipient_addressDetails: String,
-  recieving_date: String,
+  recipient_city: String,
+  recipient_name: String,
   recipient_phone: Number,
+  recipient_additionalDesc: String,
+  recieving_date: String,
+  // //////////////////
+  shipmentDescription: String,
+  shipmentWeight: String,
 });
 
 const Order = mongoose.model("Order", mySchema);

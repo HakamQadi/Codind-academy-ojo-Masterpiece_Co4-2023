@@ -3,9 +3,11 @@
 import React, {useState} from 'react';
 import {LoginStyles} from '../style_sheets/StylesSheet';
 import {Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {useAppContext} from '../context/AppContext';
 import axios from 'axios';
 
 const Login = ({toggleForm, handleLogIn}) => {
+  const {setUser} = useAppContext();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
@@ -21,6 +23,12 @@ const Login = ({toggleForm, handleLogIn}) => {
         // Handle the API response data here
         // console.log('Data from API:', response.data.data.drivers[0]);
         // console.log('response',response.data);
+        const userInfo = {
+          fullname: response.data.data.fullname,
+          userId: response.data.data.userId,
+        };
+
+        setUser(userInfo);
         console.log('Login successfull');
         handleLogIn();
       })
