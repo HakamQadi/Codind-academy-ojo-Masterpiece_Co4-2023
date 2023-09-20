@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 // const app = express();
 
 exports.addOrder = async (req, res) => {
+  console.log("object")
   const userId = req.params.userID;
   const {
     delivery_address,
@@ -25,7 +26,9 @@ exports.addOrder = async (req, res) => {
     shipmentDescription,
     shipmentWeight,
   } = req.body;
-
+  console.log("recieving_date type : ", typeof recieving_date);
+  console.log("shipmentDescription ", shipmentDescription);
+  console.log("shipmentWeight ", shipmentWeight);
   try {
     const order = await Order.create({
       delivery_address,

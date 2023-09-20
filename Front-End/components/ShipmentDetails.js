@@ -29,7 +29,7 @@ const ShipmentDetails = ({route, navigation}) => {
         console.log('response ', response.data);
       })
       .catch(error => {
-        setErrorMessage(error.response.data.message);
+        // setErrorMessage(error.response.data.message);
       });
     updateMergedData(shipmentDetails);
     navigation.navigate('OrderPlaced');
