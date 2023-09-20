@@ -18,6 +18,7 @@ const ShipmentDetails = ({route, navigation}) => {
     setShipmentDetails({...shipmentDetails, [field]: value});
   };
   const handleSubmit = async () => {
+    console.log('mergedData ',mergedData)
     // console.log('user ID ', user.userId);
     await axios
       .post(

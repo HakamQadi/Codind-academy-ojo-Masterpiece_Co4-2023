@@ -22,6 +22,8 @@ exports.addOrder = async (req, res) => {
     recipient_phone,
     recipient_additionalDesc,
     recieving_date,
+    shipmentDescription,
+    shipmentWeight,
   } = req.body;
 
   try {
@@ -40,6 +42,8 @@ exports.addOrder = async (req, res) => {
       recipient_phone,
       recipient_additionalDesc,
       recieving_date,
+      shipmentDescription,
+      shipmentWeight,
     });
 
     console.log(order._id);

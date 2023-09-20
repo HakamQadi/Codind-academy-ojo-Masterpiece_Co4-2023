@@ -18,7 +18,7 @@ const ReceivingForm = ({navigation}) => {
     recipient_name: '',
     recipient_phone: '',
     recipient_additionalDesc: '',
-    recieving_date: selectedDate,
+    recieving_date: '',
     showDatePicker: false, // Add showDatePicker state
   });
 
@@ -36,8 +36,8 @@ const ReceivingForm = ({navigation}) => {
   };
 
   const handleSubmit = () => {
-    // const mergedData = {...receivingData, selectedDate};
-    const mergedData = {...receivingData};
+    const mergedData = {...receivingData, selectedDate};
+    // const mergedData = {...receivingData};
     updateMergedData(mergedData);
     navigation.navigate('ShipmentDetails');
   };
@@ -48,43 +48,43 @@ const ReceivingForm = ({navigation}) => {
         style={FormStyle.input}
         placeholder="Address"
         placeholderTextColor={FormStyle.placeholderColor.color}
-        value={receivingData.address}
-        onChangeText={text => handleChange('address', text)}
+        value={receivingData.recieving_address}
+        onChangeText={text => handleChange('recieving_address', text)}
       />
       <TextInput
         style={FormStyle.input}
         placeholder="Address Details"
         placeholderTextColor={FormStyle.placeholderColor.color}
-        value={receivingData.addressDetails}
-        onChangeText={text => handleChange('addressDetails', text)}
+        value={receivingData.recipient_addressDetails}
+        onChangeText={text => handleChange('recipient_addressDetails', text)}
       />
       <TextInput
         style={FormStyle.input}
         placeholder="City"
         placeholderTextColor={FormStyle.placeholderColor.color}
-        value={receivingData.city}
-        onChangeText={text => handleChange('city', text)}
+        value={receivingData.recipient_city}
+        onChangeText={text => handleChange('recipient_city', text)}
       />
       <TextInput
         style={FormStyle.input}
         placeholder="Name"
         placeholderTextColor={FormStyle.placeholderColor.color}
-        value={receivingData.name}
-        onChangeText={text => handleChange('name', text)}
+        value={receivingData.recipient_name}
+        onChangeText={text => handleChange('recipient_name', text)}
       />
       <TextInput
         style={FormStyle.input}
         placeholder="Phone Number"
         placeholderTextColor={FormStyle.placeholderColor.color}
-        value={receivingData.phoneNumber}
-        onChangeText={text => handleChange('phoneNumber', text)}
+        value={receivingData.recipient_phone}
+        onChangeText={text => handleChange('recipient_phone', text)}
       />
       <TextInput
         style={FormStyle.input}
         placeholderTextColor={FormStyle.placeholderColor.color}
         placeholder="Additional Description"
-        value={receivingData.additionalDescription}
-        onChangeText={text => handleChange('additionalDescription', text)}
+        value={receivingData.recipient_additionalDesc}
+        onChangeText={text => handleChange('recipient_additionalDesc', text)}
       />
 
       <View style={FormStyle.datePickerContainer}>
