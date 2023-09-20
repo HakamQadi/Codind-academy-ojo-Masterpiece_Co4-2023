@@ -1,9 +1,11 @@
 import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
+import {useAppContext} from '../context/AppContext'; // Import the context hook
 
 const PlaceOrderSuccess = ({route, navigation}) => {
-  const {orderDetails} = route.params;
-
+  // const {orderDetails} = route.params;
+  const {mergedData} = useAppContext();
+  // console.log('mergedData ', mergedData);
   const handleSubmit = () => {
     navigation.navigate('Home');
   };
@@ -14,10 +16,10 @@ const PlaceOrderSuccess = ({route, navigation}) => {
         Order Placed Successfully!
       </Text>
       <Text>Your order details:</Text>
-      <Text>Sending Address: {orderDetails.sendingAddress}</Text>
-      <Text>Receiving Address: {orderDetails.receivingAddress}</Text>
-      <Text>Shipment Description: {orderDetails.shipmentDescription}</Text>
-      <Text>Shipment Weight: {orderDetails.shipmentWeight}</Text>
+      <Text>Sending Address: {mergedData.deliveryAddress}</Text>
+      <Text>Receiving Address: {mergedData.address}</Text>
+      <Text>Shipment Description: {mergedData.shipmentDescription}</Text>
+      <Text>Shipment Weight: {mergedData.shipmentWeight}</Text>
 
       <TouchableOpacity onPress={handleSubmit}>
         <Text

@@ -26,7 +26,7 @@ const Login = ({toggleForm, handleLogIn}) => {
       })
       .catch(error => {
         // Handle any errors that occurred during the request
-        console.error('Error fetching data:', error.response.data.message);
+        // console.error('Error fetching data:', error.response.data.message);
         setErrorMessage(error.response.data.message);
       });
   };

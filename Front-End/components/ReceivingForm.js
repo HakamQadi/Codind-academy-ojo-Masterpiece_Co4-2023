@@ -1,37 +1,32 @@
 /* eslint-disable prettier/prettier */
-import React, {useState, useContext} from 'react';
+import React, {useState} from 'react';
 import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
 import {FormStyle} from '../style_sheets/StylesSheet';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import dateIcon from '../assets/icons/Date.png';
-import {useAppContext} from '../context/AppContext'; // Import the context hook
+import {useAppContext} from '../context/AppContext';
 
-const ReceivingForm = ({navigation,route}) => {
-  const { deliveryData } = route.params;
-  // const {deliveryData} = useAppContext(); // Access deliveryData from context
-  const [date, setDate] = useState('');
-  console.log('deliveryData ', deliveryData);
+const ReceivingForm = ({navigation}) => {
+  const {updateMergedData} = useAppContext();
+
+  const [selectedDate, setSelectedDate] = useState(null);
+
   const [receivingData, setReceivingData] = useState({
-    address: 'shahed',
+    address: '',
     addressDetails: '',
     city: '',
     name: '',
     phoneNumber: '',
     additionalDescription: '',
-    // selectedDate: new Date(),
-    // showDatePicker: false,
+    showDatePicker: false, // Add showDatePicker state
   });
 
   const handleChange = (field, value) => {
     setReceivingData({...receivingData, [field]: value});
   };
 
-  const handleDateChange = (event, selectedDate) => {
-    if (event.type === 'set') {
-      const dateToString = selectedDate.toDateString();
-      setReceivingData({...receivingData, selectedDate, dateToString});
-      setDate(dateToString);
-    }
+  const handleDateChange = (event, newDate) => {
+    setSelectedDate(newDate);
     setReceivingData({...receivingData, showDatePicker: false});
   };
 
@@ -40,13 +35,13 @@ const ReceivingForm = ({navigation,route}) => {
   };
 
   const handleSubmit = () => {
-    // Merge receivingData and deliveryData
-    const mergedData = {...receivingData, ...deliveryData};
-
-    // Here, you can perform form submission logic and send mergedData as needed.
-    // For now, let's just navigate to the next page.
-    console.log("mergedData 1 ",mergedData)
-    navigation.navigate('ShipmentDetails', {mergedData});
+    // Merge receivingData and update context
+    const mergedData = {...receivingData, selectedDate};
+    // updateMergedData(mergedData);
+    // console.log('mergedData ', mergedData);
+    updateMergedData(mergedData);
+    // Navigate to the next page
+    navigation.navigate('ShipmentDetails');
   };
 
   return (
@@ -96,7 +91,7 @@ const ReceivingForm = ({navigation,route}) => {
 
       <View style={FormStyle.datePickerContainer}>
         <View style={FormStyle.date}>
-          <Text>{date}</Text>
+          <Text>{selectedDate ? selectedDate.toDateString() : ''}</Text>
         </View>
         <TouchableOpacity
           style={[{alignSelf: 'center'}]}
@@ -107,7 +102,7 @@ const ReceivingForm = ({navigation,route}) => {
 
       {receivingData.showDatePicker && (
         <DateTimePicker
-          value={receivingData.selectedDate}
+          value={selectedDate || new Date()} // Provide a default value
           mode="date"
           display="spinner"
           onChange={handleDateChange}

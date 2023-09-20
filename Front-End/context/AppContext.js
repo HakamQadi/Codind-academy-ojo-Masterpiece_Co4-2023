@@ -3,14 +3,17 @@ import React, {createContext, useContext, useState} from 'react';
 const AppContext = createContext();
 
 export const AppProvider = ({children}) => {
-  const [mergedData, setMergedData] = useState({}); // Initialize with an empty object
-  const [allData, setAllData] = useState({}); // Initialize with an empty object
+  // Initialize the mergedData state with an empty object
+  const [mergedData, setMergedData] = useState({});
 
-  // You can provide functions to update mergedData if needed
+  // Define a function to update the mergedData
+  const updateMergedData = data => {
+    setMergedData({...mergedData, ...data});
+  };
 
+  // Provide mergedData and the updateMergedData function to the context
   return (
-    <AppContext.Provider
-      value={{mergedData, setMergedData, allData, setAllData}}>
+    <AppContext.Provider value={{mergedData, updateMergedData}}>
       {children}
     </AppContext.Provider>
   );
