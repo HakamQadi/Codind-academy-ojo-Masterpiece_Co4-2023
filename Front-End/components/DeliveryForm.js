@@ -21,43 +21,63 @@ const DeliveryForm = ({navigation}) => {
   };
 
   const handleSubmit = () => {
+    // Check if any of the fields are empty
+    if (
+      deliveryData.delivery_address === '' ||
+      deliveryData.address_details === '' ||
+      deliveryData.city === '' ||
+      deliveryData.name === '' ||
+      deliveryData.phone === ''
+    ) {
+      alert('Please fill in all required fields'); // You can also use a different way to display the error message
+      return; // Exit the function if any field is empty
+    }
     updateMergedData(deliveryData);
     navigation.navigate('ReceivingForm');
+    setDeliveryData({
+      delivery_address: '',
+      address_details: '',
+      city: '',
+      name: user.fullname,
+      phone: '',
+      additional_desc: '',
+    });
   };
 
   return (
     <View style={FormStyle.container}>
       <TextInput
         style={FormStyle.input}
-        placeholder="Address"
+        placeholder="Address *"
         placeholderTextColor={FormStyle.placeholderColor.color}
         value={deliveryData.delivery_address}
         onChangeText={text => handleChange('delivery_address', text)}
       />
       <TextInput
         style={FormStyle.input}
-        placeholder="Address Details"
+        placeholder="Address Details *"
         placeholderTextColor={FormStyle.placeholderColor.color}
         value={deliveryData.address_details}
         onChangeText={text => handleChange('address_details', text)}
       />
       <TextInput
         style={FormStyle.input}
-        placeholder="City"
+        placeholder="City *"
         placeholderTextColor={FormStyle.placeholderColor.color}
         value={deliveryData.city}
         onChangeText={text => handleChange('city', text)}
       />
       <TextInput
-        style={FormStyle.input}
-        placeholder="Name"
+        style={[FormStyle.input, {color: 'black'}]}
+        placeholder="Name *"
         placeholderTextColor={FormStyle.placeholderColor.color}
         value={deliveryData.name}
         onChangeText={text => handleChange('name', text)}
+        editable={false}
       />
       <TextInput
         style={FormStyle.input}
-        placeholder="Phone Number"
+        placeholder="Phone Number *"
         placeholderTextColor={FormStyle.placeholderColor.color}
         value={deliveryData.phone}
         onChangeText={text => handleChange('phone', text)}
