@@ -22,7 +22,7 @@ exports.addOrder = async (req, res) => {
     recipient_name,
     recipient_phone,
     recipient_additionalDesc,
-    recieving_date,
+    selectedDate,
     shipmentDescription,
     shipmentWeight,
   } = req.body;
