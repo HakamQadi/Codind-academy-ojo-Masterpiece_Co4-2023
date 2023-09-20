@@ -29,6 +29,10 @@ exports.addOrder = async (req, res) => {
   console.log("recieving_date type : ", typeof selectedDate);
   console.log("shipmentDescription ", shipmentDescription);
   console.log("shipmentWeight ", shipmentWeight);
+
+
+  const formattedDate = selectedDate.split('T')[0];
+
   try {
     const order = await Order.create({
       delivery_address,
@@ -44,7 +48,7 @@ exports.addOrder = async (req, res) => {
       recipient_name,
       recipient_phone,
       recipient_additionalDesc,
-      selectedDate,
+      selectedDate:formattedDate,
       shipmentDescription,
       shipmentWeight,
     });

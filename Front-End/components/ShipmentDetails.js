@@ -19,6 +19,7 @@ const ShipmentDetails = ({route, navigation}) => {
   };
   const handleSubmit = async () => {
     console.log('mergedData ',mergedData)
+     updateMergedData(shipmentDetails);
     // console.log('user ID ', user.userId);
     await axios
       .post(
@@ -31,7 +32,6 @@ const ShipmentDetails = ({route, navigation}) => {
       .catch(error => {
         // setErrorMessage(error.response.data.message);
       });
-    updateMergedData(shipmentDetails);
     navigation.navigate('OrderPlaced');
   };
   return (
