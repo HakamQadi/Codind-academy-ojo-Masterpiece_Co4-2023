@@ -15,7 +15,7 @@ const mySchema = new mongoose.Schema({
   recipient_name: String,
   recipient_phone: Number,
   recipient_additionalDesc: String,
-  recieving_date: String,
+  recieving_date: Date,
   // //////////////////
   shipmentDescription: String,
   shipmentWeight: String,
