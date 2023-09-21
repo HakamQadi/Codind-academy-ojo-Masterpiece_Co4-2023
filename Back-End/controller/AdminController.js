@@ -1,4 +1,4 @@
-const {User} = require("../model/UserModel");
+const { User } = require("../model/UserModel");
 const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -27,11 +27,10 @@ exports.getAllUsersByRole = async (req, res) => {
   }
 };
 
-
 exports.addUser = async (req, res) => {
   //   res.send("asd");
 
-  const { fullname, email, password, orders } = req.body;
+  const { fullname, email, password, orders, role } = req.body;
 
   try {
     // if (role === "super admin" || role === "user") {
@@ -51,7 +50,7 @@ exports.addUser = async (req, res) => {
       email,
       password: hashPass,
       //   orders,
-      role: "driver",
+      role,
     });
     const token = signToken(newUser._id);
     res.status(201).json({
@@ -129,5 +128,3 @@ exports.login = async (req, res) => {
     res.status(400).json({ message: error });
   }
 };
-
-
