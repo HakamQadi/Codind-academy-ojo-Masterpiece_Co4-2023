@@ -126,7 +126,7 @@ exports.login = async (req, res) => {
       return res.status(404).json({ message: "Email or password is wrong" }); //404=not found
     }
   } catch (error) {
-    res.status(400).json({ message: "Something went wrong" });
+    res.status(400).json({ message: error });
   }
 };
 
