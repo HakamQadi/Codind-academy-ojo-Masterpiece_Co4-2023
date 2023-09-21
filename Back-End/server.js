@@ -1,7 +1,7 @@
 const express = require("express");
 const dotnev = require("dotenv");
 const mongoose = require("mongoose");
-
+const cors = require('cors')
 dotnev.config({ path: "./conf.env" });
 
 const userRouter = require("./routes/UserRouter");
