@@ -21,8 +21,8 @@ function App() {
     <>
       <Routes>
         {/* <Route path="/" element={<RegisterForm />} /> */}
-        {/* <Route path="/login" element={<Loginform />} /> */}
-        {/* <Route path="/profile" element={<Profile />} /> */}
+        <Route path="/" element={<Loginform />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
       <NavBar/>
       <div className="App" style={{ display: "flex" }}>

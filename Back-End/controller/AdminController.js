@@ -103,3 +103,29 @@ exports.updateUser = async (req, res) => {
     message: "User Updated Successfully",
   });
 };
+exports.login = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const userExist = await User.findOne({ email: email });
+    if (userExist) {
+      const isMatch = await userExist.comparePass(password, userExist.password);
+      if (isMatch && userExist.role === "admin") {
+        const token = signToken(userExist._id);
+        return res.status(200).json({
+          token,
+          data: {
+            fullname: userExist.fullname,
+            userId: userExist._id,
+            role: userExist.role,
+          },
+        });
+      } else {
+        return res.status(404).json({ message: "Email or password is wrong" }); //404=not found
+      }
+    } else {
+      return res.status(404).json({ message: "Email or password is wrong" }); //404=not found
+    }
+  } catch (error) {
+    res.status(400).json({ message: "Something went wrong" });
+  }
+};
