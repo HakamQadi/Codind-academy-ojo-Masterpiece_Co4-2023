@@ -4,7 +4,7 @@ import React from 'react';
 const DeleteBtn = ({ id, onDelete }) => {
   const deleteServerData = async () => {
     try {
-      await axios.delete(`http://localhost:8080/dashboard/deleteUser/${id}`);
+      await axios.delete(`https://speedx-backend.onrender.com/admin/delete_user/${id}`);
       onDelete(id); // Call the onDelete callback to update the state in the UsersTable component
     } catch (error) {
       console.log(error);

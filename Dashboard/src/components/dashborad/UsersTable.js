@@ -7,11 +7,11 @@ import { useUserContext } from "../../context/UserContext";
 
 const UsersTable = (props) => {
   const { user } = useUserContext();
-  const role = user?.userRole;
-  const token = user?.token;
+  // const role = user?.userRole;
+  // const token = user?.token;
 
-  const [drivers, setDrivers] = useState([]);
-  const [users, setUsers] = useState([]);
+  const [Driver, setDrivers] = useState([]);
+  const [Users, setUsers] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
 
   useEffect(() => {
@@ -32,14 +32,14 @@ const UsersTable = (props) => {
 
           setDrivers(drivers);
           setUsers(users);
-          setAllUsers([...users, ...drivers]);
+          setAllUsers([...Users, ...Driver]);
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
     fetchUserData();
-  }, []); // Removed drivers from the dependency array to prevent an infinite loop
+  }, [Driver, Users]); // Removed drivers from the dependency array to prevent an infinite loop
 
   const handleUserDelete = (deletedUserId) => {
     // Filter the old items in the array and return a new array of items whose id does not match the deletedUserId
@@ -50,10 +50,13 @@ const UsersTable = (props) => {
 
   const handleUsernameEdit = async (id, newUsername) => {
     try {
-      await axios.patch(`https://speedx-backend.onrender.com/admin/edit_user/${id}`, {
-        fullname: newUsername,
-        // id: userId,
-      });
+      await axios.patch(
+        `https://speedx-backend.onrender.com/admin/edit_user/${id}`,
+        {
+          fullname: newUsername,
+          // id: userId,
+        }
+      );
     } catch (error) {
       console.error("Error updating username:", error);
     }

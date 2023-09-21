@@ -8,19 +8,17 @@ const signToken = (id) => {
 };
 
 exports.getAllUsersByRole = async (req, res) => {
-  //   const role = req.params.role;
-  //   res.send(role);
   try {
     const users = await User.find({ role: "user" });
     const drivers = await User.find({ role: "driver" });
 
+    const mergedData = users.concat(drivers);
+
     res.status(200).json({
       usersCount: users.length,
       driversCount: drivers.length,
-      data: {
-        users,
-        drivers,
-      },
+      totalUsers: mergedData.length,
+      data: mergedData,
     });
   } catch (error) {
     res.status(404).json({
@@ -28,6 +26,7 @@ exports.getAllUsersByRole = async (req, res) => {
     });
   }
 };
+
 
 exports.addUser = async (req, res) => {
   //   res.send("asd");
