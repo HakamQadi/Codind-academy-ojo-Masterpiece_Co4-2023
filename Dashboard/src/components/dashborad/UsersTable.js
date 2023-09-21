@@ -8,11 +8,8 @@ import { useUserContext } from "../../context/UserContext";
 const UsersTable = (props) => {
   const { user } = useUserContext();
   console.log("user ", user);
-  // const role = localStorage.getItem("role");
-  // const token = sessionStorage.getItem("token");
-
-  // const role = user.token;
-  const token = user.token
+  const role = localStorage.getItem("role");
+  const token = sessionStorage.getItem("token");
 
   const [users, setUsers] = useState([]);
 
@@ -20,22 +17,27 @@ const UsersTable = (props) => {
     const fetchUserData = async () => {
       try {
         const response = await axios
-          .post("https://speedx-backend.onrender.com/admin", {
-            headers: {
-              Authorization: `bearer ${token}`,
+          .post(
+            "https://speedx-backend.onrender.com/admin",
+            {
+              role: role,
             },
-          })
+            {
+              headers: {
+                Authorization: `bearer ${token}`,
+              },
+            }
+          )
           .catch((err) => {
             if (err && err.response) {
-              console.log("there is erorr");
-              // console.log("Error: ", err.response.data.error);
-              // navigate("/login"); //redirect to the login page
+              console.log("first");
+              console.log("Error: ", err.response.data.error);
+              navigate("/login"); //redirect to the login page
             }
           });
 
         if (response && response.data) {
-          // setUsers(response.data.data.users);
-          console.log("OK");
+          setUsers(response.data.data.users);
         }
       } catch (error) {
         console.error("Error fetching user data:", error);

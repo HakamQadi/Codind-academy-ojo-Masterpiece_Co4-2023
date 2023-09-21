@@ -4,7 +4,7 @@ const adminController = require("../controller/AdminController");
 const protectRoutes = require("../model/UserModel");
 
 // router.route("/").get(protectRoutes.protect, adminController.getAllUsersByRole);
-router.route("/").get(protectRoutes.protect, adminController.getAllUsersByRole);
+router.route("/").get(adminController.getAllUsersByRole);
 router.route("/add_user").post(adminController.addUser);
 router.route("/delete_user/:id").delete(adminController.deleteUser);
 router.route("/edit_user/:id").patch(adminController.updateUser);
