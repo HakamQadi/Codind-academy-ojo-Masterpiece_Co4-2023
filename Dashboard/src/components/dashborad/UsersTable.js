@@ -7,59 +7,52 @@ import { useUserContext } from "../../context/UserContext";
 
 const UsersTable = (props) => {
   const { user } = useUserContext();
-  console.log("user ", user);
-  const role = user.userRole;
-  const token = user.token;
+  const role = user?.userRole;
+  const token = user?.token;
 
+  const [drivers, setDrivers] = useState([]);
   const [users, setUsers] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await axios
-          .post(
-            "https://speedx-backend.onrender.com/admin",
-            {
-              role: role,
-            },
-            {
-              headers: {
-                Authorization: `bearer ${token}`,
-              },
-            }
-          )
+          .get("https://speedx-backend.onrender.com/admin")
           .catch((err) => {
             if (err && err.response) {
-              console.log("first");
-              console.log("Error: ", err.response.data.error);
-              navigate("/login"); //redirect to the login page
+              console.log("Error: ", err.response.data);
+              // navigate("/login"); //redirect to the login page
             }
           });
 
         if (response && response.data) {
-          setUsers(response.data.data.users);
+          // Separate drivers and users data from the response
+          const { drivers, users } = response.data.data;
+
+          setDrivers(drivers);
+          setUsers(users);
+          setAllUsers([...users, ...drivers]);
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
     fetchUserData();
-  }, []);
+  }, []); // Removed drivers from the dependency array to prevent an infinite loop
 
   const handleUserDelete = (deletedUserId) => {
-    // filter the old items in the array and returns new array of items there id does not
+    // Filter the old items in the array and return a new array of items whose id does not match the deletedUserId
     setUsers((prevUsers) =>
       prevUsers.filter((user) => user._id !== deletedUserId)
     );
   };
 
-  let navigate = useNavigate();
-
-  const handleUsernameEdit = async (userId, newUsername) => {
+  const handleUsernameEdit = async (id, newUsername) => {
     try {
-      await axios.patch(`http://localhost:8080/dashboard/editUser`, {
-        username: newUsername,
-        id: userId,
+      await axios.patch(`https://speedx-backend.onrender.com/admin/edit_user/${id}`, {
+        fullname: newUsername,
+        // id: userId,
       });
     } catch (error) {
       console.error("Error updating username:", error);
@@ -94,7 +87,7 @@ const UsersTable = (props) => {
                         </tr>
                       </thead>
                       <tbody>
-                        {users.map((user, index) => {
+                        {allUsers.map((user, index) => {
                           return (
                             <tr key={index}>
                               <td>{user._id}</td>
@@ -107,19 +100,17 @@ const UsersTable = (props) => {
                                   )
                                 }
                               >
-                                {user.username}
+                                {user.fullname}
                               </td>
                               <td>{user.email}</td>
                               <td>{user.role}</td>
                               <td>{user.password}</td>
-                              {role === "super admin" ? (
-                                <td>
-                                  <DeleteBtn
-                                    id={user._id}
-                                    onDelete={handleUserDelete}
-                                  />
-                                </td>
-                              ) : null}
+                              <td>
+                                <DeleteBtn
+                                  id={user._id}
+                                  onDelete={handleUserDelete}
+                                />
+                              </td>
                             </tr>
                           );
                         })}

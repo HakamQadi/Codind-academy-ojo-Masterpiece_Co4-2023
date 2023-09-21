@@ -48,7 +48,8 @@ const Loginform = (props) => {
         // sessionStorage.setItem("token", response.data.token);
         // localStorage.setItem("id", response.data.userId);
         // console.log(response.data.data.fullname);
-        navigate("/profile"); //redirect to the profile page
+        // navigate("/profile"); //redirect to the profile page
+        console.log("You should be an Admin");
       }
     }
     setError(null);
