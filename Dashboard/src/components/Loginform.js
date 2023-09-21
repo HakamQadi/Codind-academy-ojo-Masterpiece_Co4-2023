@@ -32,10 +32,10 @@ const Loginform = (props) => {
       //   sessionStorage.setItem("token", response.data.token);
       //   localStorage.setItem("id", response.data.userId);
       setUser({
-        username: response.data.username,
-        userRole: response.data.userRole,
-        // token: response.data.token,
-        userId: response.data.userId,
+        username: response.data.data.fullname,
+        userRole: response.data.data.role,
+        token: response.data.token,
+        userId: response.data.data.userId,
       });
       navigate("/dashboard");
     } else {
