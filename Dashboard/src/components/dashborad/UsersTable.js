@@ -8,8 +8,11 @@ import { useUserContext } from "../../context/UserContext";
 const UsersTable = (props) => {
   const { user } = useUserContext();
   console.log("user ", user);
-  const role = localStorage.getItem("role");
-  const token = sessionStorage.getItem("token");
+  // const role = localStorage.getItem("role");
+  // const token = sessionStorage.getItem("token");
+
+  // const role = user.token;
+  const token = user.token
 
   const [users, setUsers] = useState([]);
 
@@ -32,7 +35,7 @@ const UsersTable = (props) => {
 
         if (response && response.data) {
           // setUsers(response.data.data.users);
-          console.log("OK")
+          console.log("OK");
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
