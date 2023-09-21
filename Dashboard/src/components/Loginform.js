@@ -16,7 +16,7 @@ const Loginform = (props) => {
   let navigate = useNavigate();
   const onSubmit = async (values) => {
     const response = await axios
-      .post("http://localhost:8080/users/login", values)
+      .post("https://speedx-backend.onrender.com/admin/login", values)
       .catch((err) => {
         if (err && err.response) {
           console.log("Error: ", err.response.data.message); ///////////////////
@@ -25,6 +25,7 @@ const Loginform = (props) => {
       });
 
     if (response && response.data) {
+        console.log(response.data)
       // if (response.data.userRole === "admin" || response.data.userRole === "super admin") {
       //   localStorage.setItem("username", response.data.username);
       //   localStorage.setItem("role", response.data.userRole);

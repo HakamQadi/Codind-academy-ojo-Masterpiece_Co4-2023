@@ -9,8 +9,9 @@ const orderRouter = require("./routes/OrderRouter");
 const adminRouter = require('./routes/AdminRoutes')
 
 const app = express();
-
+app.use(cors())
 app.use(express.json())
+
 
 
 mongoose
