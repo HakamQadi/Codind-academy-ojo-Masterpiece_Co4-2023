@@ -109,7 +109,8 @@ exports.login = async (req, res) => {
     const userExist = await User.findOne({ email: email });
     if (userExist) {
       const isMatch = await userExist.comparePass(password, userExist.password);
-      if (isMatch && userExist.role === "admin") {
+      if (isMatch) {
+        // if (isMatch && userExist.role === "admin") {
         const token = signToken(userExist._id);
         return res.status(200).json({
           token,

@@ -25,23 +25,31 @@ const Loginform = (props) => {
       });
 
     if (response && response.data) {
-        
-      // if (response.data.userRole === "admin" || response.data.userRole === "super admin") {
-      //   localStorage.setItem("username", response.data.username);
-      //   localStorage.setItem("role", response.data.userRole);
-      //   sessionStorage.setItem("token", response.data.token);
-      //   localStorage.setItem("id", response.data.userId);
       setUser({
         username: response.data.data.fullname,
         userRole: response.data.data.role,
         token: response.data.token,
         userId: response.data.data.userId,
       });
-      navigate("/dashboard");
-    } else {
-      // sessionStorage.setItem("token", response.data.token);
-      // localStorage.setItem("id", response.data.userId);
-      navigate("/profile"); //redirect to the profile page
+      // if (response.data.userRole === "admin" || response.data.userRole === "super admin") {
+      if (response.data.data.role === "admin") {
+        //   localStorage.setItem("username", response.data.username);
+        //   localStorage.setItem("role", response.data.userRole);
+        //   sessionStorage.setItem("token", response.data.token);
+        //   localStorage.setItem("id", response.data.userId);
+        // setUser({
+        //   username: response.data.data.fullname,
+        //   userRole: response.data.data.role,
+        //   token: response.data.token,
+        //   userId: response.data.data.userId,
+        // });
+        navigate("/dashboard");
+      } else {
+        // sessionStorage.setItem("token", response.data.token);
+        // localStorage.setItem("id", response.data.userId);
+        // console.log(response.data.data.fullname);
+        navigate("/profile"); //redirect to the profile page
+      }
     }
     setError(null);
     formik.resetForm();

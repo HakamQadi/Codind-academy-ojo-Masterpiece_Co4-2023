@@ -8,8 +8,8 @@ import { useUserContext } from "../../context/UserContext";
 const UsersTable = (props) => {
   const { user } = useUserContext();
   console.log("user ", user);
-  const role = localStorage.getItem("role");
-  const token = sessionStorage.getItem("token");
+  const role = user.userRole;
+  const token = user.token;
 
   const [users, setUsers] = useState([]);
 
