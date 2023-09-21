@@ -10,8 +10,8 @@ const UsersTable = (props) => {
   // const role = user?.userRole;
   // const token = user?.token;
 
-  const [Driver, setDrivers] = useState([]);
-  const [Users, setUsers] = useState([]);
+  // const [Driver, setDrivers] = useState([]);
+  // const [Users, setUsers] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
 
   useEffect(() => {
@@ -28,22 +28,23 @@ const UsersTable = (props) => {
 
         if (response && response.data) {
           // Separate drivers and users data from the response
-          const { drivers, users } = response.data.data;
+          // const { drivers, users } = response.data.data;
 
-          setDrivers(drivers);
-          setUsers(users);
-          setAllUsers([...Users, ...Driver]);
+          // setDrivers(drivers);
+          // setUsers(users);
+          // console.log(response.data.data);
+          setAllUsers(response.data.data);
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
     fetchUserData();
-  }, [Driver, Users]); // Removed drivers from the dependency array to prevent an infinite loop
+  }, []); // Removed drivers from the dependency array to prevent an infinite loop
 
   const handleUserDelete = (deletedUserId) => {
     // Filter the old items in the array and return a new array of items whose id does not match the deletedUserId
-    setUsers((prevUsers) =>
+    setAllUsers((prevUsers) =>
       prevUsers.filter((user) => user._id !== deletedUserId)
     );
   };
