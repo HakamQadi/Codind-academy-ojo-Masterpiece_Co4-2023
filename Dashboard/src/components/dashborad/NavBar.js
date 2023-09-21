@@ -12,7 +12,7 @@ const NavBar = () => {
         localStorage.clear();
         sessionStorage.clear();
         // localStorage.setItem('logout', true)
-        navigate('/login');
+        navigate('/');
     }
     return (
         <nav className="navbar navbar-expand navbar-light bg-white topbar static-top shadow">

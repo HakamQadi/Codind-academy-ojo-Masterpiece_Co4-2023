@@ -17,27 +17,22 @@ const UsersTable = (props) => {
     const fetchUserData = async () => {
       try {
         const response = await axios
-          .post(
-            "http://localhost:8080/dashboard",
-            {
-              role: role,
+          .post("https://speedx-backend.onrender.com/admin", {
+            headers: {
+              Authorization: `bearer ${token}`,
             },
-            {
-              headers: {
-                Authorization: `bearer ${token}`,
-              },
-            }
-          )
+          })
           .catch((err) => {
             if (err && err.response) {
-              console.log("first");
-              console.log("Error: ", err.response.data.error);
-              navigate("/login"); //redirect to the login page
+              console.log("there is erorr");
+              // console.log("Error: ", err.response.data.error);
+              // navigate("/login"); //redirect to the login page
             }
           });
 
         if (response && response.data) {
-          setUsers(response.data.data.users);
+          // setUsers(response.data.data.users);
+          console.log("OK")
         }
       } catch (error) {
         console.error("Error fetching user data:", error);

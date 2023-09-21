@@ -25,17 +25,17 @@ const Loginform = (props) => {
       });
 
     if (response && response.data) {
-        console.log(response.data)
+        // console.log(response.data)
       // if (response.data.userRole === "admin" || response.data.userRole === "super admin") {
       //   localStorage.setItem("username", response.data.username);
       //   localStorage.setItem("role", response.data.userRole);
       //   sessionStorage.setItem("token", response.data.token);
       //   localStorage.setItem("id", response.data.userId);
       setUser({
-        username: response.data.username,
-        userRole: response.data.userRole,
+        fullname: response.data.data.fullname,
+        userRole: response.data.data.role,
         token: response.data.token,
-        userId: response.data.userId,
+        userId: response.data.data.userId,
       });
       navigate("/dashboard");
     } else {
