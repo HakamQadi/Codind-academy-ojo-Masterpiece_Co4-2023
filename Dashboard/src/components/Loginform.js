@@ -31,9 +31,9 @@ const Loginform = (props) => {
         token: response.data.token,
         userId: response.data.data.userId,
       });
+      localStorage.setItem("username", response.data.data.fullname);
       // if (response.data.userRole === "admin" || response.data.userRole === "super admin") {
       if (response.data.data.role === "admin") {
-        //   localStorage.setItem("username", response.data.username);
         //   localStorage.setItem("role", response.data.userRole);
         //   sessionStorage.setItem("token", response.data.token);
         //   localStorage.setItem("id", response.data.userId);

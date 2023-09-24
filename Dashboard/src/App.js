@@ -10,6 +10,7 @@ import UsersTable from './components/dashborad/UsersTable';
 import AddUser from './components/dashborad/AddUser';
 import SideNav from './components/dashborad/SideNav';
 import NavBar from './components/dashborad/NavBar';
+import ViewOrders from './components/dashborad/ViewOrders';
 function App() {
 
 
@@ -28,9 +29,9 @@ function App() {
       <div className="App" style={{ display: "flex" }}>
         <SideNav />
         <Routes>
-          {/* <Route path="/allusers" element={<UsersTable />} /> */}
           <Route path="/dashboard" element={<UsersTable/>} />
           <Route path="/dashboard/adduser" element={<AddUser  />} />
+          <Route path="/view-orders" element={<ViewOrders />} />
         </Routes>
       </div>
 

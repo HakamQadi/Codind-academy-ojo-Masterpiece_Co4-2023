@@ -1,17 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "../formStyle.css";
 import DeleteBtn from "./DeleteBtn";
-import { useUserContext } from "../../context/UserContext";
 
 const UsersTable = (props) => {
-  const { user } = useUserContext();
-  // const role = user?.userRole;
-  // const token = user?.token;
-
-  // const [Driver, setDrivers] = useState([]);
-  // const [Users, setUsers] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
 
   useEffect(() => {
@@ -22,17 +14,10 @@ const UsersTable = (props) => {
           .catch((err) => {
             if (err && err.response) {
               console.log("Error: ", err.response.data);
-              // navigate("/login"); //redirect to the login page
             }
           });
 
         if (response && response.data) {
-          // Separate drivers and users data from the response
-          // const { drivers, users } = response.data.data;
-
-          // setDrivers(drivers);
-          // setUsers(users);
-          // console.log(response.data.data);
           setAllUsers(response.data.data);
         }
       } catch (error) {
@@ -55,7 +40,6 @@ const UsersTable = (props) => {
         `https://speedx-backend.onrender.com/admin/edit_user/${id}`,
         {
           fullname: newUsername,
-          // id: userId,
         }
       );
     } catch (error) {
