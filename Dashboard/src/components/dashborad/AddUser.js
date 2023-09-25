@@ -1,10 +1,9 @@
+import React, { useState } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
-import React from "react";
-import { useState } from "react";
 import { useNavigate } from "react-router";
-// import { Link } from 'react-router-dom'
 import * as yup from "yup";
+import LoadingSpinner from "../LoadingSpinner"; // Import the LoadingSpinner component
 
 const PASS_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
 
@@ -25,40 +24,37 @@ const validationSchema = yup.object({
     .string()
     .required("Please confirm your password")
     .oneOf([yup.ref("password")], "Password does not match"),
-  // secret_key: yup.string(),
+  role: yup.string().required("Role is required"),
 });
 
 const AddUser = () => {
-  // const x = localStorage.getItem("role");
-  // const [role, setRole] = useState('')
-
-  // const handleRole = (e) => {
-  //   // formik.handleChange(e);
-  //   setRole(e.target.value)
-  // }
-
   const [error, setError] = useState(null);
   const [role, setRole] = useState("");
-  // const [secretKey, setSecretKey] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // Add loading state
   let navigate = useNavigate();
 
   const onSubmit = async (values) => {
-    const { confirm_password, ...data } = values; //destructure the values to exclude confirm_password , we dont need to send it to the API
-    const response = await axios
-      .post("https://speedx-backend.onrender.com/admin/add_user", data)
-      .catch((err) => {
-        if (err && err.response) {
-          // console.log("Error: ", err.response.data.message)
-          setError(err.response.data.message);
-          // setSuccess(null)
-        }
-      });
-    if (response && response.data) {
-      localStorage.setItem("token", JSON.stringify(response.data.token)); //store the token in local session
-      // setError(null)
-      // setSuccess(response.data.message)
-      navigate("/dashboard"); //redirect to the profile page
-      formik.resetForm();
+    setIsLoading(true); // Set loading to true when sending data
+
+    const { confirm_password, ...data } = values; // Destructure the values to exclude confirm_password; we don't need to send it to the API
+
+    try {
+      const response = await axios.post(
+        "https://speedx-backend.onrender.com/admin/add_user",
+        data
+      );
+
+      if (response && response.data) {
+        localStorage.setItem("token", JSON.stringify(response.data.token)); // Store the token in local session
+        navigate("/dashboard"); // Redirect to the profile page
+        formik.resetForm();
+      }
+    } catch (error) {
+      if (error && error.response) {
+        setError(error.response.data.message);
+      }
+    } finally {
+      setIsLoading(false); // Set loading to false when data sending is done (success or error)
     }
   };
 
@@ -68,8 +64,7 @@ const AddUser = () => {
       email: "",
       password: "",
       confirm_password: "",
-      role: "user",
-      // secret_key: "",
+      role: "",
     },
     validateOnBlur: true,
     onSubmit,
@@ -79,14 +74,11 @@ const AddUser = () => {
   const handleInputChange = (event) => {
     setError(null);
   };
+
   const handleRole = (e) => {
-    // console.log(e.target.value)
     formik.handleChange(e);
     setRole(e.target.value);
   };
-  // const handleSecretKey = (e) => {
-  //   setSecretKey(e.target.value);
-  // };
 
   return (
     <div style={{ width: "100%" }}>
@@ -100,152 +92,167 @@ const AddUser = () => {
                 <span className={error ? "error" : ""}>
                   {error ? error : ""}
                 </span>
-                <form
-                  className="requires-validation"
-                  onSubmit={formik.handleSubmit}
-                  noValidate
-                >
-                  <div>
-                    <h5>Add as :</h5>
-                    <div className="form-check">
-                      <input
-                        onChange={handleRole}
-                        value="driver"
-                        className="form-check-input"
-                        type="radio"
-                        name="role"
-                        id="driver_rb"
-                      />
-                      <label className="form-check-label" htmlFor="driver_rb">
-                        Driver
-                      </label>
+                {isLoading ? (
+                  <LoadingSpinner /> // Show loading spinner while sending data
+                ) : (
+                  <form
+                    className="requires-validation"
+                    onSubmit={formik.handleSubmit}
+                    noValidate
+                  >
+                    <div>
+                      <h5>Add as :</h5>
+                      <div className="form-check">
+                        <input
+                          onChange={handleRole}
+                          value="driver"
+                          className="form-check-input"
+                          type="radio"
+                          name="role"
+                          id="driver_rb"
+                        />
+                        <label className="form-check-label" htmlFor="driver_rb">
+                          Driver
+                        </label>
+                      </div>
+                      <div className="form-check">
+                        <input
+                          onChange={handleRole}
+                          value="user"
+                          className="form-check-input"
+                          type="radio"
+                          name="role"
+                          id="user_rb"
+                        />
+                        <label className="form-check-label" htmlFor="user_rb">
+                          User
+                        </label>
+                      </div>
+                      <span
+                        className={
+                          formik.touched.role && formik.errors.role
+                            ? "invalid-feedback"
+                            : "valid-feedback"
+                        }
+                      >
+                        {formik.touched.role && formik.errors.role
+                          ? formik.errors.role
+                          : ""}
+                      </span>
                     </div>
-                    <div className="form-check">
+                    <div className="col-md-12">
                       <input
-                        onChange={handleRole}
-                        value="user"
-                        className="form-check-input"
-                        type="radio"
-                        name="role"
-                        id="user_rb"
+                        onBlur={formik.handleBlur}
+                        onChange={(event) => {
+                          formik.handleChange(event);
+                          handleInputChange(event);
+                        }}
+                        value={formik.values.fullname}
+                        className="form-control"
+                        type="text"
+                        name="fullname"
+                        placeholder="Full Name"
+                        required
                       />
-                      <label className="form-check-label" htmlFor="user_rb">
-                        User
-                      </label>
+                      <span
+                        className={
+                          formik.touched.fullname && formik.errors.fullname
+                            ? "invalid-feedback"
+                            : "valid-feedback"
+                        }
+                      >
+                        {formik.touched.fullname && formik.errors.fullname
+                          ? formik.errors.fullname
+                          : ""}
+                      </span>
                     </div>
-                  </div>
-                  <div className="col-md-12">
-                    <input
-                      onBlur={formik.handleBlur}
-                      onChange={(event) => {
-                        formik.handleChange(event);
-                        handleInputChange(event);
-                      }}
-                      value={formik.values.fullname}
-                      className="form-control"
-                      type="text"
-                      name="fullname"
-                      placeholder="Full Name"
-                      required
-                    />
-                    <span
-                      className={
-                        formik.touched.fullname && formik.errors.fullname
-                          ? "invalid-feedback"
-                          : "valid-feedback"
-                      }
-                    >
-                      {formik.touched.fullname && formik.errors.fullname
-                        ? formik.errors.fullname
-                        : ""}
-                    </span>
-                  </div>
-                  <div className="col-md-12">
-                    <input
-                      onBlur={formik.handleBlur}
-                      onChange={(event) => {
-                        formik.handleChange(event);
-                        handleInputChange(event);
-                      }}
-                      value={formik.values.email}
-                      className="form-control"
-                      type="email"
-                      name="email"
-                      placeholder="E-mail Address"
-                      required
-                    />
-                    <span
-                      className={
-                        formik.touched.email && formik.errors.email
-                          ? "invalid-feedback"
-                          : "valid-feedback"
-                      }
-                    >
-                      {formik.touched.email && formik.errors.email
-                        ? formik.errors.email
-                        : ""}
-                    </span>
-                  </div>
-                  <div className="col-md-12">
-                    <input
-                      onBlur={formik.handleBlur}
-                      onChange={(event) => {
-                        formik.handleChange(event);
-                        handleInputChange(event);
-                      }}
-                      value={formik.values.password}
-                      className="form-control"
-                      type="password"
-                      name="password"
-                      placeholder="Password"
-                      required
-                    />
-                    <span
-                      className={
-                        formik.touched.password && formik.errors.password
-                          ? "invalid-feedback"
-                          : "valid-feedback"
-                      }
-                    >
-                      {formik.touched.password && formik.errors.password
-                        ? formik.errors.password
-                        : ""}
-                    </span>
-                  </div>
-                  <div className="col-md-12">
-                    <input
-                      onBlur={formik.handleBlur}
-                      onChange={(event) => {
-                        formik.handleChange(event);
-                        handleInputChange(event);
-                      }}
-                      value={formik.values.confirm_password}
-                      className="form-control"
-                      type="password"
-                      name="confirm_password"
-                      placeholder="confirm Password"
-                      required
-                    />
-                    <span
-                      className={
-                        formik.touched.confirm_password &&
+                    <div className="col-md-12">
+                      <input
+                        onBlur={formik.handleBlur}
+                        onChange={(event) => {
+                          formik.handleChange(event);
+                          handleInputChange(event);
+                        }}
+                        value={formik.values.email}
+                        className="form-control"
+                        type="email"
+                        name="email"
+                        placeholder="E-mail Address"
+                        required
+                      />
+                      <span
+                        className={
+                          formik.touched.email && formik.errors.email
+                            ? "invalid-feedback"
+                            : "valid-feedback"
+                        }
+                      >
+                        {formik.touched.email && formik.errors.email
+                          ? formik.errors.email
+                          : ""}
+                      </span>
+                    </div>
+                    <div className="col-md-12">
+                      <input
+                        onBlur={formik.handleBlur}
+                        onChange={(event) => {
+                          formik.handleChange(event);
+                          handleInputChange(event);
+                        }}
+                        value={formik.values.password}
+                        className="form-control"
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        required
+                      />
+                      <span
+                        className={
+                          formik.touched.password && formik.errors.password
+                            ? "invalid-feedback"
+                            : "valid-feedback"
+                        }
+                      >
+                        {formik.touched.password && formik.errors.password
+                          ? formik.errors.password
+                          : ""}
+                      </span>
+                    </div>
+                    <div className="col-md-12">
+                      <input
+                        onBlur={formik.handleBlur}
+                        onChange={(event) => {
+                          formik.handleChange(event);
+                          handleInputChange(event);
+                        }}
+                        value={formik.values.confirm_password}
+                        className="form-control"
+                        type="password"
+                        name="confirm_password"
+                        placeholder="Confirm Password"
+                        required
+                      />
+                      <span
+                        className={
+                          formik.touched.confirm_password &&
+                          formik.errors.confirm_password
+                            ? "invalid-feedback"
+                            : "valid-feedback"
+                        }
+                      >
+                        {formik.touched.confirm_password &&
                         formik.errors.confirm_password
-                          ? "invalid-feedback"
-                          : "valid-feedback"
-                      }
-                    >
-                      {formik.touched.confirm_password &&
-                      formik.errors.confirm_password
-                        ? formik.errors.confirm_password
-                        : ""}
-                    </span>
-                  </div>
-                  <div className="form-button mt-3 d-flex justify-content-between">
-                    <button id="submit" type="submit" className="btn ">
-                      Add
-                    </button>
-                  </div>
-                </form>
+                          ? formik.errors.confirm_password
+                          : ""}
+                      </span>
+                    </div>
+                    <div className="form-button mt-3 d-flex justify-content-between">
+                      <button id="submit" type="submit" className="btn">
+                        Add
+                      </button>
+                    </div>
+                  </form>
+                )}
               </div>
             </div>
           </div>

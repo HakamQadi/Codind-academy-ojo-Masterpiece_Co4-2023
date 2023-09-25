@@ -2,9 +2,11 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "../formStyle.css";
 import DeleteBtn from "./DeleteBtn";
+import LoadingSpinner from "../LoadingSpinner"; // Import the LoadingSpinner component
 
 const UsersTable = (props) => {
   const [allUsers, setAllUsers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -22,6 +24,8 @@ const UsersTable = (props) => {
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
+      } finally {
+        setIsLoading(false); // Set loading to false when data fetching is done (success or error)
       }
     };
     fetchUserData();
@@ -58,53 +62,57 @@ const UsersTable = (props) => {
               </h1>
               <div className="card shadow mb-4">
                 <div className="card-body">
-                  <div className="table-responsive">
-                    <table
-                      className="table table-bordered"
-                      id="dataTable"
-                      width="100%"
-                      cellSpacing="0"
-                    >
-                      <thead>
-                        <tr>
-                          <th>ID</th>
-                          <th>Username</th>
-                          <th>Email</th>
-                          <th>Role</th>
-                          <th>Password</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {allUsers.map((user, index) => {
-                          return (
-                            <tr key={index}>
-                              <td>{user._id}</td>
-                              <td
-                                contentEditable={true}
-                                onBlur={(e) =>
-                                  handleUsernameEdit(
-                                    user._id,
-                                    e.target.innerText
-                                  )
-                                }
-                              >
-                                {user.fullname}
-                              </td>
-                              <td>{user.email}</td>
-                              <td>{user.role}</td>
-                              <td>{user.password}</td>
-                              <td>
-                                <DeleteBtn
-                                  id={user._id}
-                                  onDelete={handleUserDelete}
-                                />
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
-                  </div>
+                  {isLoading ? (
+                    <LoadingSpinner /> // Show loading spinner while fetching data
+                  ) : (
+                    <div className="table-responsive">
+                      <table
+                        className="table table-bordered"
+                        id="dataTable"
+                        width="100%"
+                        cellSpacing="0"
+                      >
+                        <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Password</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {allUsers.map((user, index) => {
+                            return (
+                              <tr key={index}>
+                                <td>{user._id}</td>
+                                <td
+                                  contentEditable={true}
+                                  onBlur={(e) =>
+                                    handleUsernameEdit(
+                                      user._id,
+                                      e.target.innerText
+                                    )
+                                  }
+                                >
+                                  {user.fullname}
+                                </td>
+                                <td>{user.email}</td>
+                                <td>{user.role}</td>
+                                <td>{user.password}</td>
+                                <td>
+                                  <DeleteBtn
+                                    id={user._id}
+                                    onDelete={handleUserDelete}
+                                  />
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

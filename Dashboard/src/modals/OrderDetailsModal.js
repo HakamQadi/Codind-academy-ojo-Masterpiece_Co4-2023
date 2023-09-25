@@ -2,19 +2,27 @@ import React from "react";
 import Modal from "react-modal";
 
 const OrderDetailsModal = ({ isOpen, closeModal, orders }) => {
+  const overlayStyle = {
+    backgroundColor: "rgba(0, 0, 0, 0.7)", // Dark background color with some transparency
+  };
   return (
+    
     <Modal
-      isOpen={isOpen}
-      onRequestClose={closeModal}
-      contentLabel="Order Details"
-      className="modal-dialog modal-dialog-centered" // Center horizontally
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }} // Center vertically
-    >
-      <div style={{ margin: "6% auto" }} className="modal-content container">
+    isOpen={isOpen}
+    onRequestClose={closeModal}
+    contentLabel="Order Details"
+    className="modal-dialog modal-dialog-centered"
+    style={{
+      overlay: {
+        backgroundColor: "rgba(0, 0, 0, 0.4)", // Dark background color with some transparency
+      },
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    }}
+    overlayStyle={overlayStyle} // Apply the customized overlay style
+  >
+      <div style={{ margin: "6% auto",width:'40%' }} className="modal-content container">
         <div className="modal-header">
           {/* <h5 className="modal-title text-dark">Selected User's Orders</h5> */}
           <button

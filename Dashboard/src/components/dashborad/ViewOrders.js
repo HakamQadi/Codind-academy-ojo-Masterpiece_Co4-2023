@@ -1,28 +1,29 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import OrderDetailsModal from "../../modals/OrderDetailsModal";
+import LoadingSpinner from "../LoadingSpinner";
 
 const ViewOrders = () => {
   const [allUsersData, setAllUsersData] = useState([]);
   const [selectedUserOrders, setSelectedUserOrders] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Add loading state
 
   const fetchUserOrders = async (userId, OrderId) => {
+    setIsLoading(true); // Set loading to true when fetching data
+
     try {
       const response = await axios.get(
         `https://speedx-backend.onrender.com/order/${userId}`
       );
 
       if (response && response.data) {
-        // setSelectedUserOrders(response.data.data.userOrders);
         const allUserOrders = response.data.data.userOrders;
 
-        // Iterate through allUserOrders and print orders with matching OrderId
         allUserOrders.forEach((order) => {
           if (order._id === OrderId) {
-            setSelectedUserOrders(order)
+            setSelectedUserOrders(order);
             console.log("Matching Order:", order);
-            // You can print/order or perform any other actions here
           }
         });
 
@@ -30,6 +31,8 @@ const ViewOrders = () => {
       }
     } catch (error) {
       console.error("Error fetching user orders:", error);
+    } finally {
+      setIsLoading(false); // Set loading to false when data fetching is done (success or error)
     }
   };
 
@@ -39,13 +42,14 @@ const ViewOrders = () => {
 
   useEffect(() => {
     const fetchAllUsersData = async () => {
+      setIsLoading(true); // Set loading to true when fetching data
+
       try {
         const response = await axios.get(
           "https://speedx-backend.onrender.com/admin"
         );
 
         if (response && response.data) {
-          // Filter the mergedData array to include only users (role: "user")
           const usersOnly = response.data.data.filter(
             (user) => user.role === "user"
           );
@@ -54,11 +58,13 @@ const ViewOrders = () => {
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
+      } finally {
+        setIsLoading(false); // Set loading to false when data fetching is done (success or error)
       }
     };
 
     fetchAllUsersData();
-  }, []); // Runs once when the component mounts
+  }, []);
 
   return (
     <div
@@ -81,7 +87,7 @@ const ViewOrders = () => {
                     style={{ cursor: "pointer" }}
                     key={order.orderId}
                     className="list-group-item"
-                    onClick={() => fetchUserOrders(user._id, order.orderId)} // Fetch user's orders when clicked
+                    onClick={() => fetchUserOrders(user._id, order.orderId)}
                   >
                     {order.orderId}
                   </li>
@@ -90,6 +96,9 @@ const ViewOrders = () => {
             </div>
           </div>
         ))}
+        {isLoading ? (
+          <LoadingSpinner /> // Show loading spinner while fetching data
+        ) : null}
       </div>
       <OrderDetailsModal
         isOpen={isModalOpen}
