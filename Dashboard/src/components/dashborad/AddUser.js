@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router";
 import * as yup from "yup";
-import LoadingSpinner from "../LoadingSpinner"; // Import the LoadingSpinner component
+// import LoadingSpinner from "../LoadingSpinner";
+// import SuccessMessage from "../SuccessMessage"; // Import the SuccessMessage component
+import LoadingSpinner from './components/LoadingSpinner';
+import SuccessMessage from "./components/SuccessMessage";
 
 const PASS_REGEX = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
 
@@ -30,13 +33,21 @@ const validationSchema = yup.object({
 const AddUser = () => {
   const [error, setError] = useState(null);
   const [role, setRole] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // Add loading state
+  const [isLoading, setIsLoading] = useState(false);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
   let navigate = useNavigate();
 
-  const onSubmit = async (values) => {
-    setIsLoading(true); // Set loading to true when sending data
+  const onCloseSuccessMessage = () => {
+    setShowSuccessMessage(false);
+    setSuccessMessage("");
+    navigate("/dashboard");
+  };
 
-    const { confirm_password, ...data } = values; // Destructure the values to exclude confirm_password; we don't need to send it to the API
+  const onSubmit = async (values) => {
+    setIsLoading(true);
+
+    const { confirm_password, ...data } = values;
 
     try {
       const response = await axios.post(
@@ -45,16 +56,19 @@ const AddUser = () => {
       );
 
       if (response && response.data) {
-        localStorage.setItem("token", JSON.stringify(response.data.token)); // Store the token in local session
-        navigate("/dashboard"); // Redirect to the profile page
+        localStorage.setItem("token", JSON.stringify(response.data.token));
         formik.resetForm();
+        
+        // Show success message
+        setSuccessMessage("User added successfully!");
+        setShowSuccessMessage(true);
       }
     } catch (error) {
       if (error && error.response) {
         setError(error.response.data.message);
       }
     } finally {
-      setIsLoading(false); // Set loading to false when data sending is done (success or error)
+      setIsLoading(false);
     }
   };
 
@@ -93,7 +107,7 @@ const AddUser = () => {
                   {error ? error : ""}
                 </span>
                 {isLoading ? (
-                  <LoadingSpinner /> // Show loading spinner while sending data
+                  <LoadingSpinner />
                 ) : (
                   <form
                     className="requires-validation"
@@ -258,6 +272,14 @@ const AddUser = () => {
           </div>
         </div>
       </div>
+
+      {/* Success message */}
+      {showSuccessMessage && (
+        <SuccessMessage
+          message={successMessage}
+          onClose={onCloseSuccessMessage}
+        />
+      )}
     </div>
   );
 };

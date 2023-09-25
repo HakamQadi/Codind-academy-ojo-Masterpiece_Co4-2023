@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import OrderDetailsModal from "../../modals/OrderDetailsModal";
-import LoadingSpinner from "../LoadingSpinner";
+import LoadingSpinner from "./components/LoadingSpinner"; // Import the LoadingSpinner component
 
 const ViewOrders = () => {
   const [allUsersData, setAllUsersData] = useState([]);

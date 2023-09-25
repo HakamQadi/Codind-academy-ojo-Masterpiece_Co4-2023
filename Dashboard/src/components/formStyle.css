@@ -12,6 +12,10 @@ body {
 }
 */
 
+* {
+    transition: all 0.3s ease-in-out;
+}
+
 span {
     font-size: 1rem !important;
 }

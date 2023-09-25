@@ -2,11 +2,16 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "../formStyle.css";
 import DeleteBtn from "./DeleteBtn";
-import LoadingSpinner from "../LoadingSpinner"; // Import the LoadingSpinner component
+import LoadingSpinner from "./components/LoadingSpinner";
+import SuccessMessage from "./components/SuccessMessage"; // Import the SuccessMessage component
 
 const UsersTable = (props) => {
   const [allUsers, setAllUsers] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // Add loading state
+  const [isLoading, setIsLoading] = useState(true);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  // const [isUsernameEditing, setIsUsernameEditing] = useState(false);
+  const [isDeletingUser, setIsDeletingUser] = useState(false);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -25,17 +30,32 @@ const UsersTable = (props) => {
       } catch (error) {
         console.error("Error fetching user data:", error);
       } finally {
-        setIsLoading(false); // Set loading to false when data fetching is done (success or error)
+        setIsLoading(false);
       }
     };
     fetchUserData();
-  }, []); // Removed drivers from the dependency array to prevent an infinite loop
+  }, []);
 
-  const handleUserDelete = (deletedUserId) => {
-    // Filter the old items in the array and return a new array of items whose id does not match the deletedUserId
-    setAllUsers((prevUsers) =>
-      prevUsers.filter((user) => user._id !== deletedUserId)
-    );
+  const handleUserDelete = async (deletedUserId) => {
+    try {
+      setIsDeletingUser(true);
+      await axios.delete(
+        `https://speedx-backend.onrender.com/admin/delete_user/${deletedUserId}`
+      );
+
+      // Filter the old items in the array and return a new array of items whose id does not match the deletedUserId
+      setAllUsers((prevUsers) =>
+        prevUsers.filter((user) => user._id !== deletedUserId)
+      );
+
+      // Show success message
+      setSuccessMessage("User deleted successfully!");
+      setShowSuccessMessage(true);
+    } catch (error) {
+      console.error("Error deleting user:", error);
+    } finally {
+      setIsDeletingUser(false); // Reset the flag when the delete operation is complete
+    }
   };
 
   const handleUsernameEdit = async (id, newUsername) => {
@@ -46,9 +66,30 @@ const UsersTable = (props) => {
           fullname: newUsername,
         }
       );
+
+      // Update the username in the user list after a successful edit
+      setAllUsers((prevUsers) =>
+        prevUsers.map((user) => {
+          if (user._id === id) {
+            return { ...user, fullname: newUsername };
+          }
+          return user;
+        })
+      );
+
+      // Show success message
+      setSuccessMessage("Username updated successfully!");
+      setShowSuccessMessage(true);
     } catch (error) {
       console.error("Error updating username:", error);
+    } finally {
+      // setIsUsernameEditing(false);
     }
+  };
+
+  const onCloseSuccessMessage = () => {
+    setShowSuccessMessage(false);
+    setSuccessMessage("");
   };
 
   return (
@@ -63,7 +104,7 @@ const UsersTable = (props) => {
               <div className="card shadow mb-4">
                 <div className="card-body">
                   {isLoading ? (
-                    <LoadingSpinner /> // Show loading spinner while fetching data
+                    <LoadingSpinner />
                   ) : (
                     <div className="table-responsive">
                       <table
@@ -75,7 +116,7 @@ const UsersTable = (props) => {
                         <thead>
                           <tr>
                             <th>ID</th>
-                            <th>Username</th>
+                            <th>FullName</th>
                             <th>Email</th>
                             <th>Role</th>
                             <th>Password</th>
@@ -100,11 +141,15 @@ const UsersTable = (props) => {
                                 <td>{user.email}</td>
                                 <td>{user.role}</td>
                                 <td>{user.password}</td>
-                                <td>
-                                  <DeleteBtn
-                                    id={user._id}
-                                    onDelete={handleUserDelete}
-                                  />
+                                <td style={{ width: "121.5px" }}>
+                                  { isDeletingUser ? (
+                                    <LoadingSpinner />
+                                  ) : (
+                                    <DeleteBtn
+                                      id={user._id}
+                                      onDelete={handleUserDelete}
+                                    />
+                                  )}
                                 </td>
                               </tr>
                             );
@@ -119,6 +164,14 @@ const UsersTable = (props) => {
           </div>
         </div>
       </div>
+
+      {/* Success message */}
+      {showSuccessMessage && (
+        <SuccessMessage
+          message={successMessage}
+          onClose={onCloseSuccessMessage}
+        />
+      )}
     </>
   );
 };

@@ -8,44 +8,46 @@ import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../context/UserContext";
 
 // Import your loading spinner or component here
-import LoadingSpinner from "./LoadingSpinner"; // Replace with your actual loading component
+import LoadingSpinner from "./dashborad/components/LoadingSpinner"; // Replace with your actual loading component
 
 const Loginform = (props) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false); // Add loading state
   const { setUser } = useUserContext();
   let navigate = useNavigate();
-  
+
   const onSubmit = async (values) => {
-    setLoading(true); // Set loading to true before making the API request
+    setLoading(true);
 
-    const response = await axios
-      .post("https://speedx-backend.onrender.com/admin/login", values)
-      .catch((err) => {
-        if (err && err.response) {
-          console.log("Error: ", err.response.data.message);
-          setError(err.response.data.message);
+    try {
+      const response = await axios.post(
+        "https://speedx-backend.onrender.com/admin/login",
+        values
+      );
+
+      if (response && response.data) {
+        setUser({
+          username: response.data.data.fullname,
+          userRole: response.data.data.role,
+          token: response.data.token,
+          userId: response.data.data.userId,
+        });
+        localStorage.setItem("username", response.data.data.fullname);
+        if (response.data.data.role === "admin") {
+          navigate("/dashboard");
+        } else {
+          setError("Please login with Admin Email.");
         }
-      });
-
-    if (response && response.data) {
-      setUser({
-        username: response.data.data.fullname,
-        userRole: response.data.data.role,
-        token: response.data.token,
-        userId: response.data.data.userId,
-      });
-      localStorage.setItem("username", response.data.data.fullname);
-      if (response.data.data.role === "admin") {
-        navigate("/dashboard");
+      }
+    } catch (error) {
+      if (error.response) {
+        setError(error.response.data.message); // Display the error message from the server
       } else {
-        console.log("You should be an Admin");
+        setError("Network error. Please check your internet connection.");
       }
     }
 
-    setLoading(false); // Set loading back to false after the API request is complete
-    setError(null);
-    formik.resetForm();
+    setLoading(false);
   };
 
   const validationSchema = yup.object({
