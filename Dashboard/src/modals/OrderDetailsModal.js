@@ -38,62 +38,62 @@ const OrderDetailsModal = ({ isOpen, closeModal, orders }) => {
         </div>
         <div className="modal-body">
           <ul className="list-group">
-            {orders.map((order) => (
+            {/* {orders.map((order) => ( */}
               <li
-                key={order._id}
+                key={orders._id}
                 className="list-group-item"
                 style={{ backgroundColor: "#ffff" }} // Background color
               >
-                <h5 style={{color:'black'}}>Order ID: {order._id}</h5>
+                <h5 style={{color:'black'}}>Order ID: {orders._id}</h5>
                 <p>
-                  <strong>Order by:</strong> {order.name}
+                  <strong>Order by:</strong> {orders.name}
                 </p>
                 <hr />
                 <p>
-                  <strong>Delivery Address:</strong> {order.delivery_address}
+                  <strong>Delivery Address:</strong> {orders.delivery_address}
                 </p>
                 <p>
-                  <strong>Address Details:</strong> {order.address_details}
+                  <strong>Address Details:</strong> {orders.address_details}
                 </p>
                 <p>
-                  <strong>City:</strong> {order.city}
+                  <strong>City:</strong> {orders.city}
                 </p>
                 <p>
-                  <strong>Phone:</strong> {order.phone}
+                  <strong>Phone:</strong> {orders.phone}
                 </p>
                 <p>
                   <strong>Additional Description:</strong>{" "}
-                  {order.additional_desc}
+                  {orders.additional_desc}
                 </p>
                 <hr />
                 <p>
                   <strong>Receiving Address:</strong>{" "}
-                  {order.recieving_address}
+                  {orders.recieving_address}
                 </p>
                 <p>
                   <strong>Recipient Address Details:</strong>{" "}
-                  {order.recipient_addressDetails}
+                  {orders.recipient_addressDetails}
                 </p>
                 <p>
-                  <strong>Recipient City:</strong> {order.recipient_city}
+                  <strong>Recipient City:</strong> {orders.recipient_city}
                 </p>
                 <p>
-                  <strong>Recipient Name:</strong> {order.recipient_name}
+                  <strong>Recipient Name:</strong> {orders.recipient_name}
                 </p>
                 <p>
-                  <strong>Recipient Phone:</strong> {order.recipient_phone}
+                  <strong>Recipient Phone:</strong> {orders.recipient_phone}
                 </p>
                 <p>
                   <strong>Recipient Additional Description:</strong>{" "}
-                  {order.recipient_additionalDesc}
+                  {orders.recipient_additionalDesc}
                 </p>
                 <hr />
                 <p>
-                  <strong>Selected Date:</strong> {order.selectedDate}
+                  <strong>Selected Date:</strong> {orders.selectedDate}
                 </p>
                 {/* Add more order details as needed */}
               </li>
-            ))}
+            {/* ))} */}
           </ul>
         </div>
       </div>

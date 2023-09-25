@@ -154,12 +154,12 @@ const Loginform = (props) => {
                   <button id="submit" type="submit" className="btn">
                     Get In
                   </button>
-                  <p>
+                  {/* <p>
                     New here? Let's get you{" "}
                     <Link className="login_link" to={"/"}>
                       registered!
                     </Link>
-                  </p>
+                  </p> */}
                 </div>
               </form>
             </div>

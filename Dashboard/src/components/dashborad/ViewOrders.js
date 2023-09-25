@@ -7,15 +7,25 @@ const ViewOrders = () => {
   const [selectedUserOrders, setSelectedUserOrders] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const fetchUserOrders = async (userId) => {
+  const fetchUserOrders = async (userId, OrderId) => {
     try {
       const response = await axios.get(
         `https://speedx-backend.onrender.com/order/${userId}`
       );
 
       if (response && response.data) {
-        setSelectedUserOrders(response.data.data.userOrders);
-        console.log(response.data.data);
+        // setSelectedUserOrders(response.data.data.userOrders);
+        const allUserOrders = response.data.data.userOrders;
+
+        // Iterate through allUserOrders and print orders with matching OrderId
+        allUserOrders.forEach((order) => {
+          if (order._id === OrderId) {
+            setSelectedUserOrders(order)
+            console.log("Matching Order:", order);
+            // You can print/order or perform any other actions here
+          }
+        });
+
         setIsModalOpen(true); // Open the modal when orders are fetched
       }
     } catch (error) {
@@ -36,7 +46,9 @@ const ViewOrders = () => {
 
         if (response && response.data) {
           // Filter the mergedData array to include only users (role: "user")
-          const usersOnly = response.data.data.filter((user) => user.role === "user");
+          const usersOnly = response.data.data.filter(
+            (user) => user.role === "user"
+          );
           setAllUsersData(usersOnly);
           console.log(usersOnly);
         }
@@ -49,7 +61,10 @@ const ViewOrders = () => {
   }, []); // Runs once when the component mounts
 
   return (
-    <div className="container-fluid" style={{ height: "53rem", overflowY: "auto" }}>
+    <div
+      className="container-fluid"
+      style={{ height: "53rem", overflowY: "auto" }}
+    >
       <div className="container">
         {allUsersData.map((user) => (
           <div key={user._id} className="card mt-4 border-0">
@@ -63,10 +78,10 @@ const ViewOrders = () => {
               <ul className="list-group">
                 {user.orders.map((order) => (
                   <li
-                  style={{cursor:'pointer'}}
+                    style={{ cursor: "pointer" }}
                     key={order.orderId}
                     className="list-group-item"
-                    onClick={() => fetchUserOrders(user._id)} // Fetch user's orders when clicked
+                    onClick={() => fetchUserOrders(user._id, order.orderId)} // Fetch user's orders when clicked
                   >
                     {order.orderId}
                   </li>
@@ -76,7 +91,11 @@ const ViewOrders = () => {
           </div>
         ))}
       </div>
-      <OrderDetailsModal isOpen={isModalOpen} closeModal={closeModal} orders={selectedUserOrders} />
+      <OrderDetailsModal
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+        orders={selectedUserOrders}
+      />
     </div>
   );
 };
