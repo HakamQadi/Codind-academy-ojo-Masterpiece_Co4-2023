@@ -19,6 +19,7 @@ const ShipmentDetails = ({route, navigation}) => {
   };
   const handleSubmit = async () => {
     console.log('mergedData ',mergedData)
+    // console.log('user ',user)
      updateMergedData(shipmentDetails);
     // console.log('user ID ', user.userId);
     await axios
@@ -28,11 +29,12 @@ const ShipmentDetails = ({route, navigation}) => {
       )
       .then(response => {
         console.log('response ', response.data);
+        // console.log('response2 ', response);
+        navigation.navigate('OrderPlaced');
       })
       .catch(error => {
         // setErrorMessage(error.response.data.message);
       });
-    navigation.navigate('OrderPlaced');
   };
   return (
     <View style={FormStyle.container}>

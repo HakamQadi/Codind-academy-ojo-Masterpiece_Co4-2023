@@ -133,8 +133,7 @@ const LoginStyles = StyleSheet.create({
   },
   errorMessage: {
     color: 'red',
-    textAlign:'center'
-
+    textAlign: 'center',
   },
 });
 
@@ -188,6 +187,11 @@ const HomeStyles = StyleSheet.create({
 });
 
 const FormStyle = StyleSheet.create({
+  title: {
+    marginBottom:70,
+    fontWeight:'800',
+    fontSize:20
+  },
   container: {
     flex: 1,
     justifyContent: 'center',

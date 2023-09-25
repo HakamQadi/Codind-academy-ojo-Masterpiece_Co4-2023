@@ -17,11 +17,11 @@ const TabNav = () => {
         component={HomePage}
         options={{headerShown: false}}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Delivery"
         component={DeliveryForm}
         options={{headerShown: true, title: 'Delivery Form'}}
-      />
+      /> */}
       <Tab.Screen
         name="Search"
         component={SearchPage}

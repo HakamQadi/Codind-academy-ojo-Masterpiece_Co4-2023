@@ -4,7 +4,9 @@ import {View, Text, TextInput, TouchableOpacity} from 'react-native';
 import {FormStyle} from '../style_sheets/StylesSheet';
 import {useAppContext} from '../context/AppContext';
 
-const DeliveryForm = ({navigation}) => {
+const DeliveryForm = ({navigation, route}) => {
+  const {title} = route.params;
+
   const {updateMergedData, user} = useAppContext();
 
   const [deliveryData, setDeliveryData] = useState({
@@ -46,6 +48,7 @@ const DeliveryForm = ({navigation}) => {
 
   return (
     <View style={FormStyle.container}>
+      <Text style={FormStyle.title}>{title}</Text>
       <TextInput
         style={FormStyle.input}
         placeholder="Address *"

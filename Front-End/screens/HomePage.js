@@ -86,7 +86,7 @@ const HomePage = ({navigation}) => {
           renderItem={({item}) => (
             <TouchableOpacity
               style={HomeStyles.card}
-              onPress={() => navigate('ProductDetails', {item})}>
+              onPress={() => navigate('DeliveryForm', {title: item.title})}>
               {/* thumbnail */}
               <Image style={HomeStyles.thumbnail} source={item.thumbnail} />
               {/* title */}
@@ -133,7 +133,7 @@ const HomePage = ({navigation}) => {
           renderItem={({item}) => (
             <TouchableOpacity
               style={HomeStyles.card}
-              onPress={() => navigate('ProductDetails', {item})}>
+              onPress={() => navigate('DeliveryForm', {title: item.title })}>
               {/* thumbnail */}
               <Image style={HomeStyles.thumbnail} source={item.thumbnail} />
               {/* title */}
