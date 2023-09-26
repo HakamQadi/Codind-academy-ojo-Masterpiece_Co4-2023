@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import {View, Text, TextInput, TouchableOpacity, Image} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity, Image, Alert} from 'react-native';
 import React, {useState} from 'react';
 import {FormStyle} from '../style_sheets/StylesSheet';
 import car from '../assets/icons/car.png';
@@ -20,17 +20,39 @@ const ShipmentDetails = ({route, navigation}) => {
     // console.log(shipmentDetails);
   };
   const handleSubmit = async () => {
+
+    if (
+      shipmentDetails.shipmentDescription === '' ||
+      shipmentDetails.shipmentWeight === '' ||
+      shipmentDetails.shipmentSize === ''
+    ) {
+      Alert.alert(
+        'Incomplete Information',
+        'Please fill in all required fields.',
+      );
+      return;
+    }
+
+    // Use a Promise to wait for the state to update
+    await new Promise(resolve => {
+      updateMergedData(shipmentDetails);
+      resolve();
+    });
     // console.log('user ',user)
-    updateMergedData(shipmentDetails);
+    // await updateMergedData(shipmentDetails);
     // console.log('mergedData ', mergedData);
     // console.log('user ID ', user.userId);
-    console.log(shipmentDetails) 
+    // console.log(shipmentDetails)
+    console.log('mergedData ', mergedData);
+    console.log('user.userId ', user.userId);
+    console.log('shipmentDetails ', shipmentDetails);
     await axios
       .post(
         `https://speedx-backend.onrender.com/order/add_order/${user.userId}`,
         mergedData,
       )
       .then(response => {
+        console.log('mergedData ', mergedData);
         console.log('response ', response.data);
         // console.log('response2 ', response);
         navigation.navigate('OrderPlaced');
@@ -44,14 +66,15 @@ const ShipmentDetails = ({route, navigation}) => {
       <View style={{flexDirection: 'row'}}>
         <TextInput
           style={[FormStyle.input, {width: '40%', marginRight: 10}]}
-          placeholder="Shipment Description"
+          placeholder="Shipment Description*"
           placeholderTextColor={FormStyle.placeholderColor.color}
           value={shipmentDetails.shipmentDescription}
           onChangeText={text => handleChange('shipmentDescription', text)}
         />
         <TextInput
+        keyboardType='numeric'
           style={[FormStyle.input, {width: '40%'}]}
-          placeholder="Shipment Weight"
+          placeholder="Shipment Weight*"
           placeholderTextColor={FormStyle.placeholderColor.color}
           value={shipmentDetails.shipmentWeight}
           onChangeText={text => handleChange('shipmentWeight', text)}

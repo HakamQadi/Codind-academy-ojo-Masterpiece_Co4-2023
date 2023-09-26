@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, {useState} from 'react';
-import {View, Text, TextInput, TouchableOpacity} from 'react-native';
+import {View, Text, TextInput, TouchableOpacity, Alert} from 'react-native';
 import {FormStyle} from '../style_sheets/StylesSheet';
 import {useAppContext} from '../context/AppContext';
 
@@ -31,9 +31,26 @@ const DeliveryForm = ({navigation, route}) => {
       deliveryData.name === '' ||
       deliveryData.phone === ''
     ) {
-      alert('Please fill in all required fields'); // You can also use a different way to display the error message
-      return; // Exit the function if any field is empty
+       Alert.alert('Incomplete Information', 'Please fill in all required fields.');
+      return;
     }
+
+
+    if (!/^[0-9]+$/.test(deliveryData.phone)) {
+      Alert.alert('Invalid Phone Number', 'Phone number should contain only numbers.');
+      return;
+    }
+    if (deliveryData.phone.length !== 10) {
+      Alert.alert('Invalid Phone Number', 'Phone number should be 10 digits.');
+      return;
+    }
+
+    if (!/^(077|078|079)/.test(deliveryData.phone)) {
+      Alert.alert('Invalid Phone Number', 'Phone number should start with 077, 078, or 079.');
+      return;
+    }
+
+
     updateMergedData(deliveryData);
     navigation.navigate('ReceivingForm');
     setDeliveryData({
@@ -79,6 +96,8 @@ const DeliveryForm = ({navigation, route}) => {
         editable={false}
       />
       <TextInput
+        keyboardType="numeric"
+        textContentType="telephoneNumber"
         style={FormStyle.input}
         placeholder="Phone Number *"
         placeholderTextColor={FormStyle.placeholderColor.color}
