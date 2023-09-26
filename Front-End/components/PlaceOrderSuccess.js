@@ -4,7 +4,7 @@ import {useAppContext} from '../context/AppContext'; // Import the context hook
 
 const PlaceOrderSuccess = ({navigation}) => {
   const {mergedData} = useAppContext();
-  console.log(mergedData)
+  // console.log(mergedData)
   const handleSubmit = () => {
     navigation.navigate('Home');
   };

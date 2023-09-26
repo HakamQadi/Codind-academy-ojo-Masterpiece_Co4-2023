@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 // const app = express();
 
 exports.addOrder = async (req, res) => {
-  console.log("object")
+  // console.log("object")
   const userId = req.params.userID;
   const {
     delivery_address,

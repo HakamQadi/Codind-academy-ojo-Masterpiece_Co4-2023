@@ -17,13 +17,14 @@ const ShipmentDetails = ({route, navigation}) => {
   });
   const handleChange = (field, value) => {
     setShipmentDetails({...shipmentDetails, [field]: value});
-    console.log(shipmentDetails);
+    // console.log(shipmentDetails);
   };
   const handleSubmit = async () => {
-    console.log('mergedData ', mergedData);
     // console.log('user ',user)
     updateMergedData(shipmentDetails);
+    // console.log('mergedData ', mergedData);
     // console.log('user ID ', user.userId);
+    console.log(shipmentDetails) 
     await axios
       .post(
         `https://speedx-backend.onrender.com/order/add_order/${user.userId}`,

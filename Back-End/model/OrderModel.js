@@ -19,6 +19,7 @@ const mySchema = new mongoose.Schema({
   // //////////////////
   shipmentDescription: String,
   shipmentWeight: String,
+  shipmentSize: String,
 });
 
 const Order = mongoose.model("Order", mySchema);
