@@ -28,8 +28,9 @@ exports.addOrder = async (req, res) => {
     shipmentSize,
   } = req.body;
   // console.log("recieving_date type : ", typeof selectedDate);
-  // console.log("shipmentDescription ", shipmentDescription);
-  // console.log("shipmentWeight ", shipmentWeight);
+  console.log("shipmentDescription ", shipmentDescription);
+  console.log("shipmentWeight ", shipmentWeight);
+  console.log("shipmentSize ", shipmentSize);
 
 
   const formattedDate = selectedDate.split('T')[0];
