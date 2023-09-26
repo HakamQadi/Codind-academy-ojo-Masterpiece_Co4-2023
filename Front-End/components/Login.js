@@ -1,43 +1,43 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable prettier/prettier */
-import React, {useState} from 'react';
-import {LoginStyles} from '../style_sheets/StylesSheet';
-import {Text, TextInput, TouchableOpacity, View} from 'react-native';
-import {useAppContext} from '../context/AppContext';
+import React, { useState } from 'react';
+import { LoginStyles } from '../style_sheets/StylesSheet';
+import { Text, TextInput, TouchableOpacity, View, ActivityIndicator } from 'react-native'; // Import ActivityIndicator
+import { useAppContext } from '../context/AppContext';
 import axios from 'axios';
 
-const Login = ({toggleForm, handleLogIn}) => {
-  const {setUser} = useAppContext();
+const Login = ({ toggleForm, handleLogIn }) => {
+  const { setUser } = useAppContext();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false); // Add loading state
+
   const login = () => {
+    setIsLoading(true); // Set loading to true when the login request starts
     const values = {
       email: email,
       password: password,
     };
-    // console.log(values)
+
     axios
       .post('https://speedx-backend.onrender.com/user/login', values)
-      .then(response => {
-        // Handle the API response data here
-        // console.log('Data from API:', response.data.data.drivers[0]);
-        // console.log('response',response.data);
+      .then((response) => {
         const userInfo = {
           fullname: response.data.data.fullname,
           userId: response.data.data.userId,
         };
 
         setUser(userInfo);
-        console.log('Login successfull');
+        // console.log('Login successful');
         handleLogIn();
       })
-      .catch(error => {
-        // Handle any errors that occurred during the request
-        // console.error('Error fetching data:', error.response.data.message);
+      .catch((error) => {
         setErrorMessage(error.response.data.message);
+      })
+      .finally(() => {
+        setIsLoading(false); // Set loading to false when the request is completed (success or error)
       });
   };
+
   return (
     <View style={LoginStyles.container}>
       <Text style={LoginStyles.title}>Login</Text>
@@ -55,20 +55,26 @@ const Login = ({toggleForm, handleLogIn}) => {
         onChangeText={setPassword}
         secureTextEntry
       />
-      {errorMessage && (
-        <Text style={LoginStyles.errorMessage}>{errorMessage}</Text>
+      {isLoading ? ( // Show loading indicator if isLoading is true
+        <ActivityIndicator size="large" color="#0000ff" />
+      ) : (
+        <>
+          {errorMessage && (
+            <Text style={LoginStyles.errorMessage}>{errorMessage}</Text>
+          )}
+          <View style={LoginStyles.buttonContainer}>
+            <TouchableOpacity onPress={login}>
+              <Text style={LoginStyles.button}>Log In</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={LoginStyles.loginContainer}>
+            <Text>Don't have an account? </Text>
+            <TouchableOpacity onPress={toggleForm}>
+              <Text style={LoginStyles.toggleText}>Sign Up</Text>
+            </TouchableOpacity>
+          </View>
+        </>
       )}
-      <View style={LoginStyles.buttonContainer}>
-        <TouchableOpacity onPress={login}>
-          <Text style={LoginStyles.button}>Log In</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={LoginStyles.loginContainer}>
-        <Text>Don't have an account? </Text>
-        <TouchableOpacity onPress={toggleForm}>
-          <Text style={LoginStyles.toggleText}>Sign Up</Text>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 };

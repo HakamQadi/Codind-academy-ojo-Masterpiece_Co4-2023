@@ -13,14 +13,16 @@ const ShipmentDetails = ({route, navigation}) => {
   const [shipmentDetails, setShipmentDetails] = useState({
     shipmentDescription: '',
     shipmentWeight: '',
+    shipmentSize: '',
   });
   const handleChange = (field, value) => {
     setShipmentDetails({...shipmentDetails, [field]: value});
+    console.log(shipmentDetails);
   };
   const handleSubmit = async () => {
-    console.log('mergedData ',mergedData)
+    console.log('mergedData ', mergedData);
     // console.log('user ',user)
-     updateMergedData(shipmentDetails);
+    updateMergedData(shipmentDetails);
     // console.log('user ID ', user.userId);
     await axios
       .post(
@@ -56,15 +58,21 @@ const ShipmentDetails = ({route, navigation}) => {
       </View>
 
       <View style={FormStyle.deleveryButtonIconContainer}>
-        <TouchableOpacity style={FormStyle.deleveryButtonIcon}>
+        <TouchableOpacity
+          onPress={() => handleChange('shipmentSize', 'Large')}
+          style={FormStyle.deleveryButtonIcon}>
           <Image style={FormStyle.image} source={truck} />
           <Text style={FormStyle.textCard}>Large</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={FormStyle.deleveryButtonIcon}>
+        <TouchableOpacity
+          onPress={() => handleChange('shipmentSize', 'Medium')}
+          style={FormStyle.deleveryButtonIcon}>
           <Image style={FormStyle.image} source={car} />
           <Text style={FormStyle.textCard}>Medium</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={FormStyle.deleveryButtonIcon}>
+        <TouchableOpacity
+          onPress={() => handleChange('shipmentSize', 'Small')}
+          style={FormStyle.deleveryButtonIcon}>
           <Image style={FormStyle.image} source={bike} />
           <Text style={FormStyle.textCard}>Small</Text>
         </TouchableOpacity>
