@@ -6,13 +6,16 @@ import {
   Button,
   FlatList,
   StyleSheet,
+  Alert, // Import Alert from React Native
+  TouchableOpacity
 } from 'react-native';
 import {useAppContext} from '../context/AppContext';
 import axios from 'axios';
+import {searchStyle} from '../style_sheets/StylesSheet';
 
 const SearchPage = () => {
   const {user} = useAppContext();
-  const [recipientName, setRecipientName] = useState(''); // State for recipient name input
+  const [recipientName, setRecipientName] = useState('');
   const [userOrders, setUserOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
 
@@ -31,10 +34,9 @@ const SearchPage = () => {
     if (user.userId) {
       fetchUserOrders();
     }
-  }, []);
+  }, [user.userId]);
 
   useEffect(() => {
-    // Filter orders based on the recipient name
     const filtered = userOrders.filter(order =>
       order.recipient_name.toLowerCase().includes(recipientName.toLowerCase()),
     );
@@ -42,69 +44,52 @@ const SearchPage = () => {
   }, [recipientName, userOrders]);
 
   const clearSearch = () => {
-    setRecipientName(''); // Clear the search input
-    setFilteredOrders([]); // Clear the filtered orders
+    setRecipientName('');
+    setFilteredOrders([]);
+  };
+
+  // Function to handle card click and show order details in an alert
+  const handleCardClick = order => {
+    Alert.alert(
+      'Order Details',
+      `Order ID: ${order._id}\nRecipient Name: ${order.recipient_name}`,
+      [
+        {
+          text: 'OK',
+          onPress: () => console.log('OK Pressed'),
+        },
+      ],
+    );
   };
 
   return (
-    <View>
-      <Text>SearchPage</Text>
+    <View style={searchStyle.container}>
       <TextInput
+        style={searchStyle.input}
         placeholder="Enter Recipient Name"
         value={recipientName}
         onChangeText={text => setRecipientName(text)}
       />
-      <Button title="Search" onPress={fetchUserOrders} />
-      <Button title="Clear" onPress={clearSearch} /> {/* Add a clear button */}
-      {/* Display filtered user orders */}
       <FlatList
         data={filteredOrders}
         keyExtractor={item => item._id.toString()}
         renderItem={({item}) => (
-          <View style={styles.card} key={item._id}>
-            <Text style={styles.cardText}>
-              Order ID: {item.additional_desc}
-            </Text>
-            <Text style={styles.cardText}>
+          <View style={searchStyle.card} key={item._id}>
+            <Text style={searchStyle.cardText}>Order ID: {item._id}</Text>
+            <Text style={searchStyle.cardText}>
               Recipient Name: {item.recipient_name}
             </Text>
+            {/* Add onPress prop to call the handleCardClick function */}
+            <TouchableOpacity
+              
+              onPress={() => handleCardClick(item)}>
+              <Text style={searchStyle.viewDetailsBtn}>View Details</Text>
+            </TouchableOpacity>
           </View>
         )}
       />
-      {/* <FlatList
-  data={filteredOrders}
-  keyExtractor={(item) => item._id.toString()}
-  renderItem={({ item }) => (
-    <View style={styles.card} key={item._id}>
-      <Text style={styles.cardText}>Order ID: {item.additional_desc}</Text>
-      <Text style={styles.cardText}>Recipient Name: {item.recipient_name}</Text>
-      
-    </View>
-  )}
-/> */}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  card: {
-    backgroundColor: 'white',
-    borderRadius: 8,
-    padding: 16,
-    margin: 8,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  cardText: {
-    fontSize: 16,
-    marginBottom: 8,
-  },
-});
 
 export default SearchPage;

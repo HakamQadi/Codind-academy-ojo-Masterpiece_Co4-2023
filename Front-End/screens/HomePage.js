@@ -1,7 +1,15 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react-native/no-inline-styles */
-import {View, Text, TouchableOpacity, Image, FlatList} from 'react-native';
-import React from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  FlatList,
+  BackHandler,
+  Alert,
+} from 'react-native';
+import React, { useEffect, useState } from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {HomeStyles} from '../style_sheets/StylesSheet';
 
@@ -18,25 +26,6 @@ const popDelivery = [
     description: 'Secure, Reliable',
     thumbnail: require('../assets/images/package_service.jpg'),
   },
-  // {
-  //   id: 3,
-  //   title: 'iPhone X',
-  //   description:
-  //     'SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...',
-  //   price: 899,
-  //   discountPercentage: 17.94,
-  //   rating: 4.44,
-  //   stock: 34,
-  //   brand: 'Apple',
-  //   category: 'smartphones',
-  //   thumbnail: 'https://i.dummyjson.com/data/products/2/thumbnail.jpg',
-  //   images: [
-  //     'https://i.dummyjson.com/data/products/2/1.jpg',
-  //     'https://i.dummyjson.com/data/products/2/2.jpg',
-  //     'https://i.dummyjson.com/data/products/2/3.jpg',
-  //     'https://i.dummyjson.com/data/products/2/thumbnail.jpg',
-  //   ],
-  // },
 ];
 const expDelivery = [
   {
@@ -54,6 +43,41 @@ const expDelivery = [
 ];
 const NUM_COLUMNS = 2;
 const HomePage = ({navigation}) => {
+  const [confirmExit, setConfirmExit] = useState(false);
+
+  useEffect(() => {
+    const backAction = () => {
+      if (!confirmExit) {
+        Alert.alert('Confirm Exit', 'Are you sure you want to exit the app?', [
+          {
+            text: 'Cancel',
+            onPress: () => null,
+            style: 'cancel',
+          },
+          {
+            text: 'Exit',
+            onPress: () => {
+              setConfirmExit(true);
+              BackHandler.exitApp(); 
+            },
+          },
+        ]);
+      } else {
+        BackHandler.exitApp();
+      }
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => {
+      backHandler.remove();
+    };
+  }, [confirmExit]);
+
   const {navigate} = useNavigation();
 
   return (
@@ -133,7 +157,7 @@ const HomePage = ({navigation}) => {
           renderItem={({item}) => (
             <TouchableOpacity
               style={HomeStyles.card}
-              onPress={() => navigate('DeliveryForm', {title: item.title })}>
+              onPress={() => navigate('DeliveryForm', {title: item.title})}>
               {/* thumbnail */}
               <Image style={HomeStyles.thumbnail} source={item.thumbnail} />
               {/* title */}

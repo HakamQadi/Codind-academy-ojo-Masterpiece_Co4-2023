@@ -15,7 +15,7 @@ const TabNav = () => {
       <Tab.Screen
         name="Home"
         component={HomePage}
-        options={{headerShown: true}}
+        options={{headerShown: false}}
       />
       {/* <Tab.Screen
         name="Delivery"

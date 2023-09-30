@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
-import { LoginStyles } from '../style_sheets/StylesSheet';
-import { Text, TextInput, TouchableOpacity, View, ActivityIndicator } from 'react-native'; // Import ActivityIndicator
-import { useAppContext } from '../context/AppContext';
+import React, {useState} from 'react';
+import {LoginStyles} from '../style_sheets/StylesSheet';
+import {
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  ActivityIndicator,
+} from 'react-native'; // Import ActivityIndicator
+import {useAppContext} from '../context/AppContext';
 import axios from 'axios';
 
-const Login = ({ toggleForm, handleLogIn }) => {
-  const { setUser } = useAppContext();
+const Login = ({toggleForm, handleLogIn}) => {
+  const {setUser} = useAppContext();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
@@ -20,7 +26,7 @@ const Login = ({ toggleForm, handleLogIn }) => {
 
     axios
       .post('https://speedx-backend.onrender.com/user/login', values)
-      .then((response) => {
+      .then(response => {
         const userInfo = {
           fullname: response.data.data.fullname,
           userId: response.data.data.userId,
@@ -30,7 +36,7 @@ const Login = ({ toggleForm, handleLogIn }) => {
         // console.log('Login successful');
         handleLogIn();
       })
-      .catch((error) => {
+      .catch(error => {
         setErrorMessage(error.response.data.message);
       })
       .finally(() => {
@@ -56,7 +62,23 @@ const Login = ({ toggleForm, handleLogIn }) => {
         secureTextEntry
       />
       {isLoading ? ( // Show loading indicator if isLoading is true
-        <ActivityIndicator size="large" color="#0000ff" />
+        <ActivityIndicator
+          style={{
+            width: 60,
+            height: 60,
+            borderRadius: 30,
+            borderWidth: 3,
+            borderColor: '#fc2f70',
+            borderStyle: 'solid',
+            borderTopColor: 'transparent',
+            borderBottomColor: 'transparent',
+            alignItems: 'center',
+            justifyContent: 'center',
+            animation: 'spin-stretch 2s ease infinite',
+          }}
+          size="large"
+          color="#0000ff"
+        />
       ) : (
         <>
           {errorMessage && (

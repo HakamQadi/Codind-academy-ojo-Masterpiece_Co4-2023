@@ -297,9 +297,48 @@ const FormStyle = StyleSheet.create({
   },
 });
 
+const searchStyle = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: '#F5F5F5',
+  },
+  input: {
+    fontSize: 18,
+    marginBottom: 8,
+    padding: 8,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    backgroundColor: 'white',
+  },
+  card: {
+    backgroundColor: 'white',
+    borderRadius: 8,
+    padding: 16,
+    margin: 8,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  cardText: {
+    fontSize: 16,
+    marginBottom: 8,
+    color: '#333',
+  },
+  viewDetailsBtn:{
+    color:'#fa4a0c'
+  }
+})
 module.exports = {
   SignUpStyles,
   LoginStyles,
   HomeStyles,
   FormStyle,
+  searchStyle
 };

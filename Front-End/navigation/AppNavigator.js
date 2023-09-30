@@ -11,6 +11,7 @@ import DeliveryForm from '../components/DeliveryForm';
 import ReceivingForm from '../components/ReceivingForm';
 import ShipmentDetails from '../components/ShipmentDetails';
 import PlaceOrderSuccess from '../components/PlaceOrderSuccess';
+import CheckoutPage from '../screens/CheckoutPage';
 
 const Stack = createNativeStackNavigator();
 // const Tab = createBottomTabNavigator();
@@ -53,6 +54,11 @@ export default function AppNavigator() {
           name="OrderPlaced"
           component={PlaceOrderSuccess}
           options={{headerTitle: 'Order Placed'}}
+        />
+        <Stack.Screen
+          name="CheckOut"
+          component={CheckoutPage}
+          options={{headerTitle: 'Checkout'}}
         />
       </Stack.Navigator>
     </NavigationContainer>

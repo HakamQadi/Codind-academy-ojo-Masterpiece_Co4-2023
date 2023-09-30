@@ -14,7 +14,11 @@ const RegisterPage = ({navigation}) => {
     setIsSignUp(!isSignUp);
   };
   const handleLogIn = () => {
-    navigation.navigate('Main');
+    // navigation.navigate('Main');
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Main' }],
+    });
   };
   return (
     <ImageBackground
