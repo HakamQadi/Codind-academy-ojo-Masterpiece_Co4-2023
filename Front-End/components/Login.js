@@ -17,7 +17,7 @@ const Login = ({toggleForm, handleLogIn}) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false); // Add loading state
 
-  const login = async() => {
+  const login = async () => {
     setIsLoading(true); // Set loading to true when the login request starts
     const values = {
       email: email,
@@ -27,11 +27,11 @@ const Login = ({toggleForm, handleLogIn}) => {
     await axios
       .post('https://speedx-backend.onrender.com/user/login', values)
       .then(response => {
-        // console.log('Response Data: ******************** ', response);
+        console.log('role: ******************** ', response.data.data.role);
         const userInfo = {
           fullname: response.data.data.fullname,
           userId: response.data.data.userId,
-          phone:response.data.data.phone
+          phone: response.data.data.phone,
         };
 
         setUser(userInfo);
@@ -64,10 +64,7 @@ const Login = ({toggleForm, handleLogIn}) => {
         secureTextEntry
       />
       {isLoading ? ( // Show loading indicator if isLoading is true
-        <ActivityIndicator
-          size="large"
-          color="#fa4a0c"
-        />
+        <ActivityIndicator size="large" color="#fa4a0c" />
       ) : (
         <>
           {errorMessage && (

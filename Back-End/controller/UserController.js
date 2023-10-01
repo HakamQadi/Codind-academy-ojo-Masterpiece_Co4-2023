@@ -61,6 +61,7 @@ exports.getUser = async (req, res) => {
           data: {
             fullname: userExist.fullname,
             userId: userExist._id,
+            role: userExist.role,
           },
         });
       } else {
