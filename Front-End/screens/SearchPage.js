@@ -7,7 +7,8 @@ import {
   FlatList,
   StyleSheet,
   Alert, // Import Alert from React Native
-  TouchableOpacity
+  TouchableOpacity,
+  Image
 } from 'react-native';
 import {useAppContext} from '../context/AppContext';
 import axios from 'axios';
@@ -52,7 +53,7 @@ const SearchPage = () => {
   const handleCardClick = order => {
     Alert.alert(
       'Order Details',
-      `Order ID: ${order._id}\nRecipient Name: ${order.recipient_name}`,
+      `Order ID: ${order._id}\nRecipient Name: ${order.recipient_name}\nrecipient_phone: 0${order.recipient_phone}\nMy phone: 0${order.phone}`,
       [
         {
           text: 'OK',
@@ -64,12 +65,18 @@ const SearchPage = () => {
 
   return (
     <View style={searchStyle.container}>
-      <TextInput
-        style={searchStyle.input}
-        placeholder="Enter Recipient Name"
-        value={recipientName}
-        onChangeText={text => setRecipientName(text)}
-      />
+      {/* <View style={searchStyle.searchBar}> */}
+        {/* <Image
+          source={require('../assets/icons/search.png')}
+          style={searchStyle.searchIcon}
+        /> */}
+        <TextInput
+          style={searchStyle.input}
+          placeholder="Enter Recipient Name"
+          value={recipientName}
+          onChangeText={text => setRecipientName(text)}
+        />
+      {/* </View> */}
       <FlatList
         data={filteredOrders}
         keyExtractor={item => item._id.toString()}
@@ -80,9 +87,7 @@ const SearchPage = () => {
               Recipient Name: {item.recipient_name}
             </Text>
             {/* Add onPress prop to call the handleCardClick function */}
-            <TouchableOpacity
-              
-              onPress={() => handleCardClick(item)}>
+            <TouchableOpacity onPress={() => handleCardClick(item)}>
               <Text style={searchStyle.viewDetailsBtn}>View Details</Text>
             </TouchableOpacity>
           </View>

@@ -176,14 +176,23 @@ const HomeStyles = StyleSheet.create({
     borderRadius: 12,
   },
   card: {
-    flex: 1, // Equal flex to distribute items evenly in columns
-    margin: 8, // Margin between grid items
-    backgroundColor: '#f0f0f0',
+    flex: 1,
+    margin: 8,
+    backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 12,
     paddingBottom: 7,
+    // shadowColor: '#000',
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 2,
+    // },
+    // shadowOpacity: 0.2,
+    // shadowRadius: 4,
+    elevation: 5, // This is for Android devices
   },
+  
 });
 
 const FormStyle = StyleSheet.create({
@@ -333,7 +342,20 @@ const searchStyle = StyleSheet.create({
   },
   viewDetailsBtn:{
     color:'#fa4a0c'
-  }
+  },
+  // searchBar: {
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  //   backgroundColor: '#f2f2f2',
+  //   borderRadius: 10,
+  //   paddingHorizontal: 10,
+  //   marginBottom: 10,
+  // },
+  // searchIcon: {
+  //   width: 20, // Set the width of the search icon image
+  //   height: 20, // Set the height of the search icon image
+  //   marginRight: 10,
+  // },
 })
 module.exports = {
   SignUpStyles,

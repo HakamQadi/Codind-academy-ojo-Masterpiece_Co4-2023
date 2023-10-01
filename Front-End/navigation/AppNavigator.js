@@ -11,7 +11,9 @@ import DeliveryForm from '../components/DeliveryForm';
 import ReceivingForm from '../components/ReceivingForm';
 import ShipmentDetails from '../components/ShipmentDetails';
 import PlaceOrderSuccess from '../components/PlaceOrderSuccess';
-import CheckoutPage from '../screens/CheckoutPage';
+import CheckoutPage from '../screens/driver/DriverOrder';
+import DriverHome from '../screens/driver/DriverHome';
+import DriverOrder from '../screens/driver/DriverOrder';
 
 const Stack = createNativeStackNavigator();
 // const Tab = createBottomTabNavigator();
@@ -56,9 +58,14 @@ export default function AppNavigator() {
           options={{headerTitle: 'Order Placed'}}
         />
         <Stack.Screen
-          name="CheckOut"
-          component={CheckoutPage}
-          options={{headerTitle: 'Checkout'}}
+          name="DriverHome"
+          component={DriverHome}
+          options={{headerTitle: 'Home'}}
+        />
+        <Stack.Screen
+          name="DriverOrder"
+          component={DriverOrder}
+          options={{headerTitle: 'Order'}}
         />
       </Stack.Navigator>
     </NavigationContainer>

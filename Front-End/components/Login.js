@@ -17,19 +17,21 @@ const Login = ({toggleForm, handleLogIn}) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false); // Add loading state
 
-  const login = () => {
+  const login = async() => {
     setIsLoading(true); // Set loading to true when the login request starts
     const values = {
       email: email,
       password: password,
     };
 
-    axios
+    await axios
       .post('https://speedx-backend.onrender.com/user/login', values)
       .then(response => {
+        // console.log('Response Data: ******************** ', response);
         const userInfo = {
           fullname: response.data.data.fullname,
           userId: response.data.data.userId,
+          phone:response.data.data.phone
         };
 
         setUser(userInfo);
@@ -37,7 +39,7 @@ const Login = ({toggleForm, handleLogIn}) => {
         handleLogIn();
       })
       .catch(error => {
-        setErrorMessage(error.response.data.message);
+        // setErrorMessage(error.response.data.message);
       })
       .finally(() => {
         setIsLoading(false); // Set loading to false when the request is completed (success or error)
@@ -63,21 +65,8 @@ const Login = ({toggleForm, handleLogIn}) => {
       />
       {isLoading ? ( // Show loading indicator if isLoading is true
         <ActivityIndicator
-          style={{
-            width: 60,
-            height: 60,
-            borderRadius: 30,
-            borderWidth: 3,
-            borderColor: '#fc2f70',
-            borderStyle: 'solid',
-            borderTopColor: 'transparent',
-            borderBottomColor: 'transparent',
-            alignItems: 'center',
-            justifyContent: 'center',
-            animation: 'spin-stretch 2s ease infinite',
-          }}
           size="large"
-          color="#0000ff"
+          color="#fa4a0c"
         />
       ) : (
         <>

@@ -1,13 +1,13 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
-import { useAppContext } from '../context/AppContext';
+import {useAppContext} from '../context/AppContext';
 
-const Card = ({ children }) => {
+const Card = ({children}) => {
   return <View style={styles.card}>{children}</View>;
 };
 
-const ProfilePage = ({ navigation, route }) => {
-  const { user } = useAppContext();
+const ProfilePage = ({navigation, route}) => {
+  const {user} = useAppContext();
 
   const handleLogout = () => {
     // You can add your logout logic here
@@ -18,7 +18,11 @@ const ProfilePage = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Profile Page</Text>
+      {/* <Text style={styles.title}>Profile Page</Text> */}
+      <Image
+        source={require('../assets/images/profile.png')}
+        style={styles.profilePic}
+      />
       <View>
         <Card>
           <Text style={styles.label}>User ID:</Text>
@@ -28,7 +32,10 @@ const ProfilePage = ({ navigation, route }) => {
           <Text style={styles.label}>Name:</Text>
           <Text style={styles.info}>{user.fullname}</Text>
         </Card>
-        
+        <Card>
+          <Text style={styles.label}>Phone Number:</Text>
+          <Text style={styles.info}>{user.phone}</Text>
+        </Card>
       </View>
       {/* Add more cards for additional user information */}
 
@@ -37,14 +44,14 @@ const ProfilePage = ({ navigation, route }) => {
         <TouchableOpacity
           // title="Go Back to Home"
           onPress={() => navigation.navigate('Home')}
-          style={[styles.button, { backgroundColor: '#fa4a0c' }]} // Change background color
+          style={[styles.button, {backgroundColor: '#fa4a0c'}]} // Change background color
         >
           <Text style={styles.buttonText}>Back to Home</Text>
         </TouchableOpacity>
         <TouchableOpacity
           // title="Logout"
           onPress={handleLogout}
-          style={[styles.button, { backgroundColor: '#fa4a0c' }]} // Change background color
+          style={[styles.button, {backgroundColor: '#fa4a0c'}]} // Change background color
         >
           <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>
@@ -109,6 +116,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  profilePic: {
+    width: 150, // Adjust the width as needed
+    height: 150, // Adjust the height as needed
+    borderRadius: 75, // Half of the width and height to make it circular
+    marginTop: 100,
+    marginBottom: -150,
+    borderColor: 'red',
+    borderWidth: 5,
   },
 });
 

@@ -5,7 +5,11 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomePage from '../screens/HomePage';
 import ProfilePage from '../screens/ProfilePage';
 import SearchPage from '../screens/SearchPage';
+import DriverHome from '../screens/driver/DriverHome';
 import DeliveryForm from '../components/DeliveryForm';
+import {Image} from 'react-native';
+import {screen} from '@testing-library/react';
+import DriverOrder from '../screens/driver/DriverOrder';
 
 const Tab = createBottomTabNavigator();
 
@@ -15,7 +19,22 @@ const TabNav = () => {
       <Tab.Screen
         name="Home"
         component={HomePage}
-        options={{headerShown: false}}
+        options={{
+          tabBarShowLabel: false,
+          headerShown: false,
+          tabBarIcon: ({focused}) =>
+            focused ? (
+              <Image
+                style={{width: 30, height: 30}}
+                source={require('../assets/icons/home-stroke.png')}
+              />
+            ) : (
+              <Image
+                style={{width: 30, height: 30}}
+                source={require('../assets/icons/home.png')}
+              />
+            ),
+        }}
       />
       {/* <Tab.Screen
         name="Delivery"
@@ -25,12 +44,44 @@ const TabNav = () => {
       <Tab.Screen
         name="Search"
         component={SearchPage}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          tabBarShowLabel: false,
+          
+          tabBarIcon: ({focused}) =>
+            focused ? (
+              <Image
+                style={{width: 30, height: 30}}
+                source={require('../assets/icons/search-stroke.png')}
+              />
+            ) : (
+              <Image
+                style={{width: 30, height: 30}}
+                source={require('../assets/icons/search.png')}
+              />
+            ),
+        }}
       />
       <Tab.Screen
         name="Profile"
         component={ProfilePage}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          tabBarShowLabel: false,
+          
+          tabBarIcon: ({focused}) =>
+            focused ? (
+              <Image
+                style={{width: 30, height: 30}}
+                source={require('../assets/icons/user-stroke.png')}
+              />
+            ) : (
+              <Image
+                style={{width: 30, height: 30}}
+                source={require('../assets/icons/user.png')}
+              />
+            ),
+        }}
       />
     </Tab.Navigator>
   );

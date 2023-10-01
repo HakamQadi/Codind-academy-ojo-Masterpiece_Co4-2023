@@ -117,7 +117,7 @@ const HomePage = ({navigation}) => {
               <Text
                 numberOfLines={1}
                 ellipsizeMode="tail"
-                style={{fontSize: 15, marginTop: 6}}>
+                style={{fontSize: 15, marginTop: 6,color:'black'}}>
                 {item.title}
               </Text>
               <View
@@ -127,7 +127,7 @@ const HomePage = ({navigation}) => {
                   marginTop: 3,
                 }}>
                 {/* Price */}
-                <Text style={{fontWeight: '700'}}> {item.description}</Text>
+                <Text style={{fontWeight: '700',color:'black'}}> {item.description}</Text>
                 {/* Ratings */}
               </View>
             </TouchableOpacity>
@@ -138,7 +138,7 @@ const HomePage = ({navigation}) => {
       </View>
 
       {/* Horizontal Line */}
-      <View
+      {/* <View
         style={{
           borderBottomWidth: 1,
           borderBottomColor: 'gray',
@@ -146,7 +146,7 @@ const HomePage = ({navigation}) => {
           width: '70%',
           alignSelf: 'center',
         }}
-      />
+      /> */}
 
       {/* Express Delivery Section */}
       <View style={HomeStyles.bestSellersContainer}>
@@ -164,7 +164,7 @@ const HomePage = ({navigation}) => {
               <Text
                 numberOfLines={1}
                 ellipsizeMode="tail"
-                style={{fontSize: 15, marginTop: 6}}>
+                style={{fontSize: 15, marginTop: 6,color:'black'}}>
                 {item.title}
               </Text>
               <View
@@ -172,9 +172,10 @@ const HomePage = ({navigation}) => {
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   marginTop: 3,
+                  
                 }}>
                 {/* Price */}
-                <Text style={{fontWeight: '700'}}>{item.description}</Text>
+                <Text style={{fontWeight: '700',color:'black'}}>{item.description}</Text>
                 {/* Ratings */}
               </View>
             </TouchableOpacity>
