@@ -1,5 +1,5 @@
 const Order = require("../model/OrderModel");
-const {User} = require("../model/UserModel");
+const { User } = require("../model/UserModel");
 const express = require("express");
 const bcrypt = require("bcrypt");
 
@@ -32,8 +32,7 @@ exports.addOrder = async (req, res) => {
   console.log("shipmentWeight ", shipmentWeight);
   console.log("shipmentSize ", shipmentSize);
 
-
-  const formattedDate = selectedDate.split('T')[0];
+  const formattedDate = selectedDate.split("T")[0];
 
   try {
     const order = await Order.create({
@@ -50,10 +49,10 @@ exports.addOrder = async (req, res) => {
       recipient_name,
       recipient_phone,
       recipient_additionalDesc,
-      selectedDate:formattedDate,
+      selectedDate: formattedDate,
       shipmentDescription,
       shipmentWeight,
-      shipmentSize
+      shipmentSize,
     });
 
     console.log(order._id);
@@ -93,4 +92,37 @@ exports.getOrder = async (req, res) => {
       userOrders,
     },
   });
+};
+
+exports.getOrderById = async (req, res) => {
+  try {
+    const OrderID = req.params.id;
+    const order = await Order.findById(OrderID);
+    console.log("Order : ", order);
+
+    res.status(200).json({
+      // message: "New Order Created Successfully",
+      data: {
+        order,
+      },
+    });
+  } catch (error) {
+    res.status(400).json({ message: "Something went wrong" });
+  }
+};
+
+exports.allOrders = async (req, res) => {
+  try {
+    const orders = await Order.find();
+    console.log("orders ", orders);
+
+    res.status(200).json({
+      // message: "New Order Created Successfully",
+      data: {
+        orders,
+      },
+    });
+  } catch (error) {
+    res.status(400).json({ message: "Something went wrong" });
+  }
 };
