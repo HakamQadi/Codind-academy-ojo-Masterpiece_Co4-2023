@@ -11,8 +11,8 @@ import {
   Alert,
 } from 'react-native';
 import {useAppContext} from '../../context/AppContext';
-import Swiper from 'react-native-swiper'; // Import the Swiper component
-import axios, {all} from 'axios';
+import Swiper from 'react-native-swiper';
+import axios from 'axios';
 
 const driversData = [
   {name: 'Driver 1', score: 85},
@@ -25,6 +25,7 @@ const DriverHome = () => {
   const {navigate} = useNavigation();
   const [confirmExit, setConfirmExit] = useState(false);
   const [allOrders, setAllOrders] = useState([]);
+  const [drivers, setDrivers] = useState([]);
   const {user} = useAppContext();
 
   useEffect(() => {
@@ -60,25 +61,48 @@ const DriverHome = () => {
     };
   }, [confirmExit]);
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await axios.get(
-          'https://speedx-backend.onrender.com/order',
-        );
-        // console.log('success');
-        // console.log(response.data.data.orders)
-        setAllOrders(response.data.data.orders);
-        // console.log(allOrders)
-      } catch (error) {
-        // console.log('faild');
-      }
-    };
+  const fetchOrders = async () => {
+    try {
+      const response = await axios.get(
+        'https://speedx-backend.onrender.com/order',
+      );
+      setAllOrders(response.data.data.orders);
+    } catch (error) {
+      // Handle the error
+      console.error('Failed to fetch orders:', error);
+    }
+  };
 
+  const fetchDrivers = async () => {
+    try {
+      const response = await axios.get(
+        'https://speedx-backend.onrender.com/admin',
+      );
+      const users = await response.data.data; // Assuming this is an array of users
+
+      // Use map to create a new array containing drivers
+      const driversArray = users
+        .filter(user => user.role === 'driver')
+        .map(driver => {
+          return {
+            name: driver.fullname, // Replace with the actual property names
+          };
+        });
+
+      setDrivers(driversArray);
+    } catch (error) {
+      // Handle the error
+      console.error('Failed to fetch drivers:', error);
+    }
+  };
+
+  useEffect(() => {
     fetchOrders();
+    fetchDrivers();
   }, []);
+
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
         <View>
           <Text style={styles.welcomeText}>Welcome</Text>
@@ -86,41 +110,40 @@ const DriverHome = () => {
             {user.fullname}
           </Text>
         </View>
-        <Image
-          style={styles.profileImage}
-          source={require('../../assets/images/profile.png')} // Replace with your actual profile image source
-        />
+        <TouchableOpacity onPress={() => navigate('DriverOrder')}>
+          <Image
+            style={styles.profileImage}
+            source={require('../../assets/images/profile.png')}
+          />
+        </TouchableOpacity>
         <Text>
           Current Level :<Text style={{color: 'red'}}>35</Text>
         </Text>
       </View>
 
-      <ScrollView contentContainerStyle={styles.centerContent}>
-        <Swiper
-          style={styles.imageSlider}
-          autoplay={true} // Enable auto-slides
-          autoplayTimeout={2.5} // Set the time interval between slides (3 seconds in this example)
-        >
-          <View style={styles.slide}>
-            <Image
-              style={styles.slideImage}
-              source={require('../../assets/images/delivery-person.png')} // Replace with your image source
-            />
-          </View>
-          <View style={styles.slide}>
-            <Image
-              style={styles.slideImage}
-              source={require('../../assets/images/package-doorstep.jpg')} // Replace with your image source
-            />
-          </View>
-          <View style={styles.slide}>
-            <Image
-              style={styles.slideImage}
-              source={require('../../assets/images/Packages-stacked.jpg')} // Replace with your image source
-            />
-          </View>
-        </Swiper>
-        <Text style={styles.todaysDeliveryText}>Today's Delivery</Text>
+      <Swiper style={styles.imageSlider} autoplay={true} autoplayTimeout={2.5}>
+        <View style={styles.slide}>
+          <Image
+            style={styles.slideImage}
+            source={require('../../assets/images/delivery-person.png')} // Replace with your image source
+          />
+        </View>
+        <View style={styles.slide}>
+          <Image
+            style={styles.slideImage}
+            source={require('../../assets/images/package-doorstep.jpg')} // Replace with your image source
+          />
+        </View>
+        <View style={styles.slide}>
+          <Image
+            style={styles.slideImage}
+            source={require('../../assets/images/Packages-stacked.jpg')} // Replace with your image source
+          />
+        </View>
+      </Swiper>
+
+      <Text style={styles.todaysDeliveryText}>Today's Delivery</Text>
+      <ScrollView style={styles.driverList} nestedScrollEnabled={true}>
         {allOrders.length === 0 ? (
           <View style={[styles.clientCard, {justifyContent: 'center'}]}>
             <Text style={{color: 'white', fontWeight: '700'}}>
@@ -134,17 +157,18 @@ const DriverHome = () => {
                 {order.name}
               </Text>
               <TouchableOpacity
-                onPress={() => navigate('DriverOrder')}
+                onPress={() => navigate('DriverOrder', {orderId: order._id})}
                 style={styles.startDeliveryBtn}>
                 <Text>Start Delivery</Text>
               </TouchableOpacity>
             </View>
           ))
         )}
-        {/* Add the image slider here */}
+      </ScrollView>
 
-        <Text style={styles.leaderboardText}>Driver Leaderboard</Text>
-        {driversData.map((driver, index) => (
+      <Text style={styles.leaderboardText}>Driver Leaderboard</Text>
+      <ScrollView style={styles.driverList} nestedScrollEnabled={true}>
+        {drivers.map((driver, index) => (
           <View key={index} style={styles.driverCard}>
             <View style={{flexDirection: 'row', gap: 20}}>
               <Text
@@ -164,12 +188,12 @@ const DriverHome = () => {
               style={{
                 color: 'white',
               }}>
-              Score: {driver.score}
+              Score: 50 {/* Replace with the actual score */}
             </Text>
           </View>
         ))}
       </ScrollView>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -192,6 +216,8 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
+    borderColor: 'red',
+    borderWidth: 3,
   },
   centerContent: {
     alignItems: 'center',
@@ -204,6 +230,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     alignSelf: 'flex-start', // Align content to the left
     // color: 'white',
+    marginLeft: 20,
   },
   clientCard: {
     backgroundColor: '#fa4b0c',
@@ -212,22 +239,26 @@ const styles = StyleSheet.create({
     padding: 15,
     width: '80%',
     alignItems: 'center',
+    alignSelf: 'center',
+    marginBottom: 10,
     borderRadius: 24,
     // flex:1,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
   leaderboardText: {
+    marginLeft: 20,
     fontSize: 18,
     marginTop: 20,
     marginBottom: 10,
     alignSelf: 'flex-start', // Align content to the left
   },
   driverCard: {
+    alignSelf: 'center',
     backgroundColor: '#fa4b0c',
     borderWidth: 1,
     borderColor: '#ddd',
-    padding: 10,
+    padding: 15,
     width: '80%',
     alignItems: 'center',
     marginBottom: 10,
@@ -242,7 +273,7 @@ const styles = StyleSheet.create({
     borderRadius: 24,
   },
   imageSlider: {
-    height: 260, // Set the height of the image slider as needed
+    height: 200, // Set the height of the image slider as needed
   },
   slide: {
     flex: 1,
@@ -252,7 +283,10 @@ const styles = StyleSheet.create({
   slideImage: {
     width: '100%',
     height: '100%',
-    resizeMode: 'center',
+    resizeMode: 'contain',
+  },
+  driverList: {
+    maxHeight: 200, // Set the maximum height for the driver list as needed
   },
 });
 

@@ -67,6 +67,7 @@ export default function AppNavigator() {
           component={DriverOrder}
           options={{headerShadowVisible: false, headerShown: false}}
         />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );

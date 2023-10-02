@@ -27,7 +27,7 @@ const Login = ({toggleForm, handleLogIn,navigation}) => {
     await axios
       .post('https://speedx-backend.onrender.com/user/login', values)
       .then(response => {
-        console.log('role: ******************** ', response.data.data.role);
+        // console.log('role: ******************** ', response.data.data.role);
         const userInfo = {
           fullname: response.data.data.fullname,
           userId: response.data.data.userId,
@@ -39,7 +39,7 @@ const Login = ({toggleForm, handleLogIn,navigation}) => {
         if (response.data.data.role === 'user') {
           handleLogIn('Main');
         } else if (response.data.data.role === 'driver') {
-        console.log('role:  ', response.data.data.role);
+        // console.log('role:  ', response.data.data.role);
 
           // navigation.reset({
           //   index: 0,

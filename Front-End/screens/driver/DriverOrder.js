@@ -1,4 +1,5 @@
-import React from 'react';
+import axios from 'axios';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -9,17 +10,19 @@ import {
 } from 'react-native';
 
 const DriverOrder = ({navigation, route}) => {
+  const {orderId} = route.params;
+  const [order, setOrder] = useState('');
   // Sample order data (replace with actual order data)
-  const order = {
-    pickupLocation: '123 Main St',
-    deliveryLocation: '456 Elm St',
-    description: 'Fragile items',
-    recipientName: 'John Doe',
-    clientName: 'Jane Smith',
-    recipientPhone: '123-456-7890',
-    clientPhone: '987-654-3210',
-    date: 'October 15, 2023',
-  };
+  // const order = {
+  //   pickupLocation: '123 Main St',
+  //   deliveryLocation: '456 Elm St',
+  //   description: 'Fragile items',
+  //   recipientName: 'John Doe',
+  //   clientName: 'Jane Smith',
+  //   recipientPhone: '123-456-7890',
+  //   clientPhone: '987-654-3210',
+  //   date: 'October 15, 2023',
+  // };
 
   const handleAcceptPress = () => {
     Alert.alert(
@@ -41,7 +44,6 @@ const DriverOrder = ({navigation, route}) => {
             // Handle order acceptance logic here
             console.log('Order accepted');
             // navigation.goBack();
-
           },
         },
       ],
@@ -72,51 +74,68 @@ const DriverOrder = ({navigation, route}) => {
     );
   };
 
+  useEffect(() => {
+    const fetchOrderDetails = async () => {
+      try {
+        const response = await axios.get(
+          `https://speedx-backend.onrender.com/order/details/${orderId}`,
+        );
+        // console.log(response.data.data.order);
+        setOrder(response.data.data.order);
+        // console.log(order)
+        console.log(order)
+      } catch (error) {}
+    };
+    fetchOrderDetails();
+  }, []);
+
+  // console.log('object ', orderId);
+
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.headerText}>Order ID : #0001</Text>
+        <Text style={styles.headerText}>Order ID : {order._id}</Text>
         <View style={{flexDirection: 'row'}}>
           <View style={styles.card}>
-            <Text style={styles.cardTitle}>Pickup Location</Text>
-            <Text>{order.pickupLocation}</Text>
+            <Text style={styles.cardTitle}>Delivery Location</Text>
+            <Text>{order.recieving_address}</Text>
           </View>
 
           <View style={styles.card}>
-            <Text style={styles.cardTitle}>Delivery Location</Text>
-            <Text>{order.deliveryLocation}</Text>
+            <Text style={styles.cardTitle}>Pickup Location</Text>
+            <Text>{order.address_details}</Text>
           </View>
         </View>
         <View style={styles.largeCard}>
           <Text style={styles.cardTitle}>Description</Text>
-          <Text>{order.description}</Text>
+          <Text>{order.additional_desc}</Text>
         </View>
         <View style={{flexDirection: 'row'}}>
           <View style={styles.card}>
             <Text style={styles.cardTitle}>Recipient Name</Text>
-            <Text>{order.recipientName}</Text>
+            <Text>{order.recipient_name}</Text>
           </View>
 
           <View style={styles.card}>
             <Text style={styles.cardTitle}>Client Name</Text>
-            <Text>{order.clientName}</Text>
+            <Text>{order.name}</Text>
           </View>
         </View>
 
         <View style={{flexDirection: 'row'}}>
           <View style={styles.card}>
             <Text style={styles.cardTitle}>Recipient Phone</Text>
-            <Text>{order.recipientPhone}</Text>
+            <Text>0{order.recipient_phone}</Text>
           </View>
 
           <View style={styles.card}>
             <Text style={styles.cardTitle}>Client Phone</Text>
-            <Text>{order.clientPhone}</Text>
+            <Text>0{order.phone}</Text>
           </View>
         </View>
         <View style={styles.largeCard}>
           <Text style={styles.cardTitle}>Date</Text>
-          <Text>{order.date}</Text>
+          <Text>{order.selectedDate}</Text>
         </View>
       </View>
 
