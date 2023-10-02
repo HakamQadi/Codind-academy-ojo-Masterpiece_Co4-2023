@@ -8,11 +8,12 @@ import {
   Alert,
   TouchableOpacity,
 } from 'react-native';
+import {useAppContext} from '../../context/AppContext';
 
 const DriverOrder = ({navigation, route}) => {
   const {orderId} = route.params;
   const [order, setOrder] = useState('');
-
+  const {user} = useAppContext();
 
   const handleAcceptPress = () => {
     Alert.alert(
@@ -30,11 +31,29 @@ const DriverOrder = ({navigation, route}) => {
         },
         {
           text: 'Accept',
-          onPress: () => {
+          onPress: async () => {
             // Handle order acceptance logic here
             console.log('Order accepted');
-            // navigation.goBack();
+          
+            // Increment the user's score
+            user.score += 1;
+          
+            try {
+              // Send the updated score to the server
+              const response = await axios.patch(
+                `https://speedx-backend.onrender.com/admin/${user.userId}`,
+                {
+                  score: user.score, // Update the score field
+                }
+              );
+              console.log('response ', response.data);
+            } catch (error) {
+              console.log(error);
+            }
+          
+            navigation.goBack();
           },
+          
         },
       ],
       {cancelable: false},
@@ -73,7 +92,7 @@ const DriverOrder = ({navigation, route}) => {
         // console.log(response.data.data.order);
         setOrder(response.data.data.order);
         // console.log(order)
-        console.log(order)
+        // console.log(order);
       } catch (error) {}
     };
     fetchOrderDetails();

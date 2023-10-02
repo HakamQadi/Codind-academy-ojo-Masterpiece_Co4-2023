@@ -111,7 +111,7 @@ const DriverHome = () => {
           />
         </TouchableOpacity>
         <Text>
-          Current Level :<Text style={{color: 'red'}}>35</Text>
+          Current Level <Text style={{color: 'red'}}>{user.score}</Text>
         </Text>
       </View>
 
