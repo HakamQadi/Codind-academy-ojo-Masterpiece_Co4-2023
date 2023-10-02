@@ -110,7 +110,7 @@ const DriverHome = () => {
             {user.fullname}
           </Text>
         </View>
-        <TouchableOpacity onPress={() => navigate('DriverOrder')}>
+        <TouchableOpacity onPress={() => navigate('DriverProfile')}>
           <Image
             style={styles.profileImage}
             source={require('../../assets/images/profile.png')}

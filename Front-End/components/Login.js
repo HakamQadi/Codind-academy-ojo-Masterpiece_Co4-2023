@@ -31,7 +31,7 @@ const Login = ({toggleForm, handleLogIn,navigation}) => {
         const userInfo = {
           fullname: response.data.data.fullname,
           userId: response.data.data.userId,
-          phone: response.data.data.phone,
+          phone: '0777777777',
         };
 
         setUser(userInfo);

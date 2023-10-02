@@ -14,6 +14,7 @@ import PlaceOrderSuccess from '../components/PlaceOrderSuccess';
 import CheckoutPage from '../screens/driver/DriverOrder';
 import DriverHome from '../screens/driver/DriverHome';
 import DriverOrder from '../screens/driver/DriverOrder';
+import DriverProfile from '../screens/driver/DriverProfile';
 
 const Stack = createNativeStackNavigator();
 // const Tab = createBottomTabNavigator();
@@ -67,7 +68,11 @@ export default function AppNavigator() {
           component={DriverOrder}
           options={{headerShadowVisible: false, headerShown: false}}
         />
-        
+         <Stack.Screen
+          name="DriverProfile"
+          component={DriverProfile}
+          options={{headerShadowVisible: false, headerShown: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,6 +1,7 @@
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
-import {useAppContext} from '../context/AppContext';
+import { useAppContext } from '../../context/AppContext';
+// import {useAppContext} from '../context/AppContext';
 
 const Card = ({children}) => {
   return <View style={styles.card}>{children}</View>;
@@ -8,7 +9,7 @@ const Card = ({children}) => {
 
 const DriverProfile = ({navigation, route}) => {
   const {user} = useAppContext();
-
+console.log(user)
   const handleLogout = () => {
     // You can add your logout logic here
     // For example, clearing user data and navigating to the login screen
@@ -20,7 +21,8 @@ const DriverProfile = ({navigation, route}) => {
     <View style={styles.container}>
       {/* <Text style={styles.title}>Profile Page</Text> */}
       <Image
-        source={require('../assets/images/profile.png')}
+        source={require('../../assets/images/profile.png')}
+        // source={require('../../a')}
         style={styles.profilePic}
       />
       <View>
@@ -43,7 +45,7 @@ const DriverProfile = ({navigation, route}) => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           // title="Go Back to Home"
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => navigation.navigate('DriverHome')}
           style={[styles.button, {backgroundColor: '#fa4a0c'}]} // Change background color
         >
           <Text style={styles.buttonText}>Back to Home</Text>
