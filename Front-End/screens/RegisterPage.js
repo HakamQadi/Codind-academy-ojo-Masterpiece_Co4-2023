@@ -13,11 +13,11 @@ const RegisterPage = ({navigation}) => {
   const toggleForm = () => {
     setIsSignUp(!isSignUp);
   };
-  const handleLogIn = () => {
+  const handleLogIn = (route) => {
     // navigation.navigate('Main');
     navigation.reset({
       index: 0,
-      routes: [{ name: 'Main' }],
+      routes: [{ name: `${route}` }],
     });
   };
   return (

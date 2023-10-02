@@ -60,12 +60,12 @@ export default function AppNavigator() {
         <Stack.Screen
           name="DriverHome"
           component={DriverHome}
-          options={{headerTitle: 'Home'}}
+          options={{headerShadowVisible: false, headerShown: false}}
         />
         <Stack.Screen
           name="DriverOrder"
           component={DriverOrder}
-          options={{headerTitle: 'Order'}}
+          options={{headerShadowVisible: false, headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>

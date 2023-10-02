@@ -1,4 +1,5 @@
-import React from 'react';
+import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -7,7 +8,10 @@ import {
   StyleSheet,
   Button,
   TouchableOpacity,
+  BackHandler,
+  Alert
 } from 'react-native';
+import { useAppContext } from '../../context/AppContext';
 
 const driversData = [
   {name: 'Driver 1', score: 85},
@@ -16,23 +20,68 @@ const driversData = [
   // Add more drivers as needed
 ];
 
+
+
+
 const DriverHome = () => {
+  const {navigate} = useNavigation();
+  const [confirmExit, setConfirmExit] = useState(false);
+  const {updateMergedData, user} = useAppContext();
+
+  useEffect(() => {
+    const backAction = () => {
+      if (!confirmExit) {
+        Alert.alert('Confirm Exit', 'Are you sure you want to exit the app?', [
+          {
+            text: 'Cancel',
+            onPress: () => null,
+            style: 'cancel',
+          },
+          {
+            text: 'Exit',
+            onPress: () => {
+              setConfirmExit(true);
+              BackHandler.exitApp(); 
+            },
+          },
+        ]);
+      } else {
+        BackHandler.exitApp();
+      }
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => {
+      backHandler.remove();
+    };
+  }, [confirmExit]);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.welcomeText}>Welcome Driver</Text>
+       <View>
+       <Text style={styles.welcomeText}>Welcome</Text>
+        <Text style={[styles.welcomeText,{color:'red'}]}> {user.fullname}</Text>
+       </View>
         <Image
           style={styles.profileImage}
           source={require('../../assets/images/profile.png')} // Replace with your actual profile image source
         />
-        <Text>Your Current Level : 35</Text>
+        <Text>Current Level : 
+          <Text style={{color:'red'}}>35</Text>
+        </Text>
       </View>
 
       <ScrollView contentContainerStyle={styles.centerContent}>
         <Text style={styles.todaysDeliveryText}>Today's Delivery</Text>
         <View style={styles.clientCard}>
           <Text style={{color: 'white', fontWeight: '700'}}>Client Name</Text>
-          <TouchableOpacity style={styles.startDeliveryBtn}>
+          <TouchableOpacity  onPress={() => navigate('DriverOrder')} style={styles.startDeliveryBtn}>
             <Text>Start Delivery</Text>
           </TouchableOpacity>
         </View>

@@ -28,7 +28,11 @@ const DriverOrder = ({navigation, route}) => {
       [
         {
           text: 'Cancel',
-          onPress: () => console.log('Order acceptance canceled'),
+          onPress: () => {
+            console.log('Order acceptance canceled');
+            // navigation.reset({index: 0, routes: [{name: 'DriverHome'}]});
+            // navigation.goBack();
+          },
           style: 'cancel',
         },
         {
@@ -36,6 +40,8 @@ const DriverOrder = ({navigation, route}) => {
           onPress: () => {
             // Handle order acceptance logic here
             console.log('Order accepted');
+            // navigation.goBack();
+
           },
         },
       ],
@@ -58,6 +64,7 @@ const DriverOrder = ({navigation, route}) => {
           onPress: () => {
             // Handle order cancellation logic here
             console.log('Order canceled');
+            navigation.goBack();
           },
         },
       ],
