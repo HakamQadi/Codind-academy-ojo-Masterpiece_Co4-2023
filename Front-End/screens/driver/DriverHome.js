@@ -1,5 +1,5 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import {useNavigation} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -10,20 +10,22 @@ import {
   BackHandler,
   Alert,
 } from 'react-native';
-import { useAppContext } from '../../context/AppContext';
+import {useAppContext} from '../../context/AppContext';
 import Swiper from 'react-native-swiper'; // Import the Swiper component
+import axios, {all} from 'axios';
 
 const driversData = [
-  { name: 'Driver 1', score: 85 },
-  { name: 'Driver 2', score: 92 },
-  { name: 'Driver 3', score: 78 },
+  {name: 'Driver 1', score: 85},
+  {name: 'Driver 2', score: 92},
+  {name: 'Driver 3', score: 78},
   // Add more drivers as needed
 ];
 
 const DriverHome = () => {
-  const { navigate } = useNavigation();
+  const {navigate} = useNavigation();
   const [confirmExit, setConfirmExit] = useState(false);
-  const { updateMergedData, user } = useAppContext();
+  const [allOrders, setAllOrders] = useState([]);
+  const {user} = useAppContext();
 
   useEffect(() => {
     const backAction = () => {
@@ -50,7 +52,7 @@ const DriverHome = () => {
 
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
-      backAction
+      backAction,
     );
 
     return () => {
@@ -58,92 +60,118 @@ const DriverHome = () => {
     };
   }, [confirmExit]);
 
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const response = await axios.get(
+          'https://speedx-backend.onrender.com/order',
+        );
+        // console.log('success');
+        // console.log(response.data.data.orders)
+        setAllOrders(response.data.data.orders);
+        // console.log(allOrders)
+      } catch (error) {
+        // console.log('faild');
+      }
+    };
+
+    fetchOrders();
+  }, []);
   return (
     <View style={styles.container}>
-    <View style={styles.header}>
-      <View>
-        <Text style={styles.welcomeText}>Welcome</Text>
-        <Text style={[styles.welcomeText, { color: 'red' }]}>
-          {user.fullname}
-        </Text>
-      </View>
-      <Image
-        style={styles.profileImage}
-        source={require('../../assets/images/profile.png')} // Replace with your actual profile image source
-      />
-      <Text>
-        Current Level :
-        <Text style={{ color: 'red' }}>35</Text>
-      </Text>
-    </View>
-
-    <ScrollView contentContainerStyle={styles.centerContent}>
-    <Swiper
-        style={styles.imageSlider}
-        autoplay={true} // Enable auto-slides
-        autoplayTimeout={2.5} // Set the time interval between slides (3 seconds in this example)
-      >
-        <View style={styles.slide}>
-          <Image
-            style={styles.slideImage}
-            source={require('../../assets/images/delivery-person.png')} // Replace with your image source
-          />
-        </View>
-        <View style={styles.slide}>
-          <Image
-            style={styles.slideImage}
-            source={require('../../assets/images/package-doorstep.jpg')} // Replace with your image source
-          />
-        </View>
-        <View style={styles.slide}>
-          <Image
-            style={styles.slideImage}
-            source={require('../../assets/images/Packages-stacked.jpg')} // Replace with your image source
-          />
-        </View>
-      </Swiper>
-      <Text style={styles.todaysDeliveryText}>Today's Delivery</Text>
-      <View style={styles.clientCard}>
-          <Text style={{color: 'white', fontWeight: '700'}}>Client Name</Text>
-          <TouchableOpacity  onPress={() => navigate('DriverOrder')} style={styles.startDeliveryBtn}>
-            <Text>Start Delivery</Text>
-          </TouchableOpacity>
-        </View>
-      {/* Add the image slider here */}
-    
-
-      <Text style={styles.leaderboardText}>Driver Leaderboard</Text>
-      {driversData.map((driver, index) => (
-        <View key={index} style={styles.driverCard}>
-          <View style={{ flexDirection: 'row', gap: 20 }}>
-            <Text
-              style={{
-                color: 'white',
-              }}>
-              #{index + 1}
-            </Text>
-            <Text
-              style={{
-                color: 'white',
-              }}>
-              {driver.name}
-            </Text>
-          </View>
-          <Text
-            style={{
-              color: 'white',
-            }}>
-            Score: {driver.score}
+      <View style={styles.header}>
+        <View>
+          <Text style={styles.welcomeText}>Welcome</Text>
+          <Text style={[styles.welcomeText, {color: 'red'}]}>
+            {user.fullname}
           </Text>
         </View>
-      ))}
-    </ScrollView>
-  </View>
-);
+        <Image
+          style={styles.profileImage}
+          source={require('../../assets/images/profile.png')} // Replace with your actual profile image source
+        />
+        <Text>
+          Current Level :<Text style={{color: 'red'}}>35</Text>
+        </Text>
+      </View>
+
+      <ScrollView contentContainerStyle={styles.centerContent}>
+        <Swiper
+          style={styles.imageSlider}
+          autoplay={true} // Enable auto-slides
+          autoplayTimeout={2.5} // Set the time interval between slides (3 seconds in this example)
+        >
+          <View style={styles.slide}>
+            <Image
+              style={styles.slideImage}
+              source={require('../../assets/images/delivery-person.png')} // Replace with your image source
+            />
+          </View>
+          <View style={styles.slide}>
+            <Image
+              style={styles.slideImage}
+              source={require('../../assets/images/package-doorstep.jpg')} // Replace with your image source
+            />
+          </View>
+          <View style={styles.slide}>
+            <Image
+              style={styles.slideImage}
+              source={require('../../assets/images/Packages-stacked.jpg')} // Replace with your image source
+            />
+          </View>
+        </Swiper>
+        <Text style={styles.todaysDeliveryText}>Today's Delivery</Text>
+        {allOrders.length === 0 ? (
+          <View style={[styles.clientCard, {justifyContent: 'center'}]}>
+            <Text style={{color: 'white', fontWeight: '700'}}>
+              No Orders Yet!
+            </Text>
+          </View>
+        ) : (
+          allOrders.map((order, index) => (
+            <View key={index} style={styles.clientCard}>
+              <Text style={{color: 'white', fontWeight: '700'}}>
+                {order.name}
+              </Text>
+              <TouchableOpacity
+                onPress={() => navigate('DriverOrder')}
+                style={styles.startDeliveryBtn}>
+                <Text>Start Delivery</Text>
+              </TouchableOpacity>
+            </View>
+          ))
+        )}
+        {/* Add the image slider here */}
+
+        <Text style={styles.leaderboardText}>Driver Leaderboard</Text>
+        {driversData.map((driver, index) => (
+          <View key={index} style={styles.driverCard}>
+            <View style={{flexDirection: 'row', gap: 20}}>
+              <Text
+                style={{
+                  color: 'white',
+                }}>
+                #{index + 1}
+              </Text>
+              <Text
+                style={{
+                  color: 'white',
+                }}>
+                {driver.name}
+              </Text>
+            </View>
+            <Text
+              style={{
+                color: 'white',
+              }}>
+              Score: {driver.score}
+            </Text>
+          </View>
+        ))}
+      </ScrollView>
+    </View>
+  );
 };
-  
-
-
 
 const styles = StyleSheet.create({
   container: {
