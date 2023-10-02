@@ -1,4 +1,4 @@
-const {User} = require("../model/UserModel");
+const { User } = require("../model/UserModel");
 
 const bcrypt = require("bcrypt");
 
@@ -7,8 +7,6 @@ const jwt = require("jsonwebtoken");
 const signToken = (id) => {
   return jwt.sign({ id }, process.env.SECRET_STR);
 };
-  
-
 
 exports.createUser = async (req, res) => {
   const { fullname, email, password, orders } = req.body;
@@ -30,6 +28,7 @@ exports.createUser = async (req, res) => {
       password: hashPass,
       orders,
       role: "user",
+      score: 0,
     });
     const token = signToken(newUser._id);
     res.status(201).json({

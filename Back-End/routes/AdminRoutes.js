@@ -8,6 +8,7 @@ router.route("/").get(adminController.getAllUsersByRole);
 router.route("/add_user").post(adminController.addUser);
 router.route("/delete_user/:id").delete(adminController.deleteUser);
 router.route("/edit_user/:id").patch(adminController.updateUser);
+router.route("/:id").patch(adminController.increaseScore);
 router.route("/login").post(adminController.login);
 
 module.exports = router;

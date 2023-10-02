@@ -14,12 +14,6 @@ import {useAppContext} from '../../context/AppContext';
 import Swiper from 'react-native-swiper';
 import axios from 'axios';
 
-const driversData = [
-  {name: 'Driver 1', score: 85},
-  {name: 'Driver 2', score: 92},
-  {name: 'Driver 3', score: 78},
-  // Add more drivers as needed
-];
 
 const DriverHome = () => {
   const {navigate} = useNavigation();

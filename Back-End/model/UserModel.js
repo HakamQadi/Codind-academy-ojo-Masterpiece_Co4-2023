@@ -14,6 +14,7 @@ const mySchema = new mongoose.Schema({
     },
   ],
   role: String,
+  score: Number,
 });
 
 mySchema.methods.comparePass = async function (pass, passDB) {

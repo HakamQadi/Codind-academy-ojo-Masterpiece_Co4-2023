@@ -51,6 +51,7 @@ exports.addUser = async (req, res) => {
       password: hashPass,
       //   orders,
       role,
+      score: 0,
     });
     const token = signToken(newUser._id);
     res.status(201).json({
@@ -60,6 +61,7 @@ exports.addUser = async (req, res) => {
         email: newUser.email,
         password: newUser.password,
         orders: newUser.orders,
+        score: newUser.score,
       },
       message: "User Added Successfully",
     });
@@ -71,35 +73,42 @@ exports.addUser = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
   const id = req.params.id;
-  await User.deleteOne({ _id: id });
-  const newUsers = await User.find();
+  try {
+    await User.deleteOne({ _id: id });
+    const newUsers = await User.find();
 
-  res.status(200).json({
-    message: "User deleted Successfully",
-    data: {
-      newUsers,
-    },
-  });
+    res.status(200).json({
+      message: "User deleted Successfully",
+      data: {
+        newUsers,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Something Went Wrong" });
+  }
 };
 
 exports.updateUser = async (req, res) => {
   const id = req.params.id;
   const newUserFullname = req.body.fullname;
   //   res.send(newUserFullname);
-
-  await User.updateOne(
-    { _id: id },
-    {
-      $set: { fullname: newUserFullname },
-    }
-  );
-  const updatedUser = await User.findById(id);
-  res.status(200).json({
-    data: {
-      updatedUser,
-    },
-    message: "User Updated Successfully",
-  });
+  try {
+    await User.updateOne(
+      { _id: id },
+      {
+        $set: { fullname: newUserFullname },
+      }
+    );
+    const updatedUser = await User.findById(id);
+    res.status(200).json({
+      data: {
+        updatedUser,
+      },
+      message: "User Updated Successfully",
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Something Went Wrong" });
+  }
 };
 exports.login = async (req, res) => {
   const { email, password } = req.body;
@@ -126,5 +135,27 @@ exports.login = async (req, res) => {
     }
   } catch (error) {
     res.status(400).json({ message: error });
+  }
+};
+
+exports.increaseScore = async (req, res) => {
+  const id = req.params.id;
+  const newScore = req.body.score;
+  try {
+    await User.updateOne(
+      { _id: id },
+      {
+        $set: { score: newScore },
+      }
+    );
+    const updatedUser = await User.findById(id);
+    res.status(200).json({
+      data: {
+        updatedUser,
+      },
+      message: "Score Increased Successfully",
+    });
+  } catch (error) {
+    res.status(500).json({ error: "Something Went Wrong" });
   }
 };
