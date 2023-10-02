@@ -12,17 +12,7 @@ import {
 const DriverOrder = ({navigation, route}) => {
   const {orderId} = route.params;
   const [order, setOrder] = useState('');
-  // Sample order data (replace with actual order data)
-  // const order = {
-  //   pickupLocation: '123 Main St',
-  //   deliveryLocation: '456 Elm St',
-  //   description: 'Fragile items',
-  //   recipientName: 'John Doe',
-  //   clientName: 'Jane Smith',
-  //   recipientPhone: '123-456-7890',
-  //   clientPhone: '987-654-3210',
-  //   date: 'October 15, 2023',
-  // };
+
 
   const handleAcceptPress = () => {
     Alert.alert(

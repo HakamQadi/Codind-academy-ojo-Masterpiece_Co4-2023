@@ -10,7 +10,7 @@ import {
 import {useAppContext} from '../context/AppContext';
 import axios from 'axios';
 
-const Login = ({toggleForm, handleLogIn,navigation}) => {
+const Login = ({toggleForm, handleLogIn, navigation}) => {
   const {setUser} = useAppContext();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -32,6 +32,7 @@ const Login = ({toggleForm, handleLogIn,navigation}) => {
           fullname: response.data.data.fullname,
           userId: response.data.data.userId,
           phone: '0777777777',
+          score: response.data.data.score,
         };
 
         setUser(userInfo);
@@ -39,7 +40,7 @@ const Login = ({toggleForm, handleLogIn,navigation}) => {
         if (response.data.data.role === 'user') {
           handleLogIn('Main');
         } else if (response.data.data.role === 'driver') {
-        // console.log('role:  ', response.data.data.role);
+          // console.log('role:  ', response.data.data.role);
 
           // navigation.reset({
           //   index: 0,

@@ -14,7 +14,6 @@ import {useAppContext} from '../../context/AppContext';
 import Swiper from 'react-native-swiper';
 import axios from 'axios';
 
-
 const DriverHome = () => {
   const {navigate} = useNavigation();
   const [confirmExit, setConfirmExit] = useState(false);
@@ -79,7 +78,8 @@ const DriverHome = () => {
         .filter(user => user.role === 'driver')
         .map(driver => {
           return {
-            name: driver.fullname, // Replace with the actual property names
+            name: driver.fullname,
+            score: driver.score, // Replace with the actual property names
           };
         });
 
@@ -182,7 +182,7 @@ const DriverHome = () => {
               style={{
                 color: 'white',
               }}>
-              Score: 50 {/* Replace with the actual score */}
+              Score: {driver.score} {/* Replace with the actual score */}
             </Text>
           </View>
         ))}
