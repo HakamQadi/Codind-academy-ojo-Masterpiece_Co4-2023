@@ -3,7 +3,7 @@ import Modal from "react-modal";
 
 const OrderDetailsModal = ({ isOpen, closeModal, orders }) => {
   const overlayStyle = {
-    backgroundColor: "rgba(0, 0, 0, 0.7)", // Dark background color with some transparency
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
   };
   return (
     
@@ -14,17 +14,16 @@ const OrderDetailsModal = ({ isOpen, closeModal, orders }) => {
     className="modal-dialog modal-dialog-centered"
     style={{
       overlay: {
-        backgroundColor: "rgba(0, 0, 0, 0.4)", // Dark background color with some transparency
+        backgroundColor: "rgba(0, 0, 0, 0.4)",
       },
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
     }}
-    overlayStyle={overlayStyle} // Apply the customized overlay style
+    overlayStyle={overlayStyle} 
   >
       <div style={{ margin: "6% auto",width:'40%' }} className="modal-content container">
         <div className="modal-header">
-          {/* <h5 className="modal-title text-dark">Selected User's Orders</h5> */}
           <button
             style={{ marginBottom: "0px", textAlign: "center" }}
             type="button"
@@ -46,7 +45,6 @@ const OrderDetailsModal = ({ isOpen, closeModal, orders }) => {
         </div>
         <div className="modal-body">
           <ul className="list-group">
-            {/* {orders.map((order) => ( */}
               <li
                 key={orders._id}
                 className="list-group-item"
@@ -99,9 +97,7 @@ const OrderDetailsModal = ({ isOpen, closeModal, orders }) => {
                 <p>
                   <strong>Selected Date:</strong> {orders.selectedDate}
                 </p>
-                {/* Add more order details as needed */}
               </li>
-            {/* ))} */}
           </ul>
         </div>
       </div>

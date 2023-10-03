@@ -3,14 +3,13 @@ import React, { useEffect, useState } from "react";
 import "../formStyle.css";
 import DeleteBtn from "./DeleteBtn";
 import LoadingSpinner from "./components/LoadingSpinner";
-import SuccessMessage from "./components/SuccessMessage"; // Import the SuccessMessage component
+import SuccessMessage from "./components/SuccessMessage"; 
 
 const UsersTable = (props) => {
   const [allUsers, setAllUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
-  // const [isUsernameEditing, setIsUsernameEditing] = useState(false);
   const [isDeletingUser, setIsDeletingUser] = useState(false);
 
   useEffect(() => {
@@ -39,22 +38,18 @@ const UsersTable = (props) => {
   const handleUserDelete = async (deletedUserId) => {
     try {
       setIsDeletingUser(true);
-      await axios.delete(
-        `https://speedx-backend.onrender.com/admin/delete_user/${deletedUserId}`
-      );
 
       // Filter the old items in the array and return a new array of items whose id does not match the deletedUserId
       setAllUsers((prevUsers) =>
         prevUsers.filter((user) => user._id !== deletedUserId)
       );
 
-      // Show success message
       setSuccessMessage("User deleted successfully!");
       setShowSuccessMessage(true);
     } catch (error) {
       console.error("Error deleting user:", error);
     } finally {
-      setIsDeletingUser(false); // Reset the flag when the delete operation is complete
+      setIsDeletingUser(false);
     }
   };
 
@@ -82,9 +77,7 @@ const UsersTable = (props) => {
       setShowSuccessMessage(true);
     } catch (error) {
       console.error("Error updating username:", error);
-    } finally {
-      // setIsUsernameEditing(false);
-    }
+    } 
   };
 
   const onCloseSuccessMessage = () => {

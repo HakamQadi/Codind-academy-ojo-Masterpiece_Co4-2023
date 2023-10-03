@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import OrderDetailsModal from "../../modals/OrderDetailsModal";
-import LoadingSpinner from "./components/LoadingSpinner"; // Import the LoadingSpinner component
+import LoadingSpinner from "./components/LoadingSpinner"; 
 
 const ViewOrders = () => {
   const [allUsersData, setAllUsersData] = useState([]);
   const [selectedUserOrders, setSelectedUserOrders] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); // Add loading state
+  const [isLoading, setIsLoading] = useState(false); 
 
   const fetchUserOrders = async (userId, OrderId) => {
-    setIsLoading(true); // Set loading to true when fetching data
+    setIsLoading(true); 
 
     try {
       const response = await axios.get(
@@ -27,22 +27,22 @@ const ViewOrders = () => {
           }
         });
 
-        setIsModalOpen(true); // Open the modal when orders are fetched
+        setIsModalOpen(true); 
       }
     } catch (error) {
       console.error("Error fetching user orders:", error);
     } finally {
-      setIsLoading(false); // Set loading to false when data fetching is done (success or error)
+      setIsLoading(false); 
     }
   };
 
   const closeModal = () => {
-    setIsModalOpen(false); // Close the modal
+    setIsModalOpen(false);
   };
 
   useEffect(() => {
     const fetchAllUsersData = async () => {
-      setIsLoading(true); // Set loading to true when fetching data
+      setIsLoading(true); 
 
       try {
         const response = await axios.get(
@@ -59,7 +59,7 @@ const ViewOrders = () => {
       } catch (error) {
         console.error("Error fetching user data:", error);
       } finally {
-        setIsLoading(false); // Set loading to false when data fetching is done (success or error)
+        setIsLoading(false);
       }
     };
 
@@ -97,7 +97,7 @@ const ViewOrders = () => {
           </div>
         ))}
         {isLoading ? (
-          <LoadingSpinner /> // Show loading spinner while fetching data
+          <LoadingSpinner /> 
         ) : null}
       </div>
       <OrderDetailsModal

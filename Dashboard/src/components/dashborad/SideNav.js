@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import UsersTable from "./UsersTable";
+import React from "react";
 import { Link } from "react-router-dom";
 
 const SideNav = () => {

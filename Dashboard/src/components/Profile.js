@@ -7,34 +7,16 @@ import "./formStyle.css";
 import { useUserContext } from "../context/UserContext";
 
 const Profile = (props) => {
-  // const id = props.id
-  // const location = useLocation()
   const [userName, setUserName] = useState(null);
   const [userEmail, setUserEmail] = useState(null);
   const { user } = useUserContext();
 
   let navigate = useNavigate();
-  // let id = location.state.id
   let id = user.userId;
   let token = user.token;
-  // if (!id) {
-  //     id = "0"
-  // }
+
   useEffect(() => {
-    // const fetchUserData = async () => {
-    //     try {
-    //         const response = await axios.get(`http://localhost:8080/users/profile/${location.state.id}`, {
-    //             headers: {
-    //                 Authorization: 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0Yjk4ZTBlYzQ1MzEyMjAyYmNjYzA5NiIsImlhdCI6MTY4OTg4NDQ4OH0.E2HIQFkWHpmWs70VJe7IgnT9z554STsIBZm56oKBT0E',
-    //             }
-    //         });
-    //         setUserName(response.data.user.username);
-    //         setUserEmail(response.data.user.email);
-    //         // console.log(response.data.data.username)
-    //     } catch (error) {
-    //         console.error('Error fetching user data:', error);
-    //     }
-    // };
+   
     const fetchUserData = async () => {
       try {
         const response = await axios
@@ -46,15 +28,13 @@ const Profile = (props) => {
           .catch((err) => {
             if (err && err.response) {
               console.log("Error: ", err.response.data.error);
-              navigate("/login"); //redirect to the profile page
+              navigate("/login"); 
             }
           });
         if (response && response.data) {
           setUserName(response.data.user.username);
           setUserEmail(response.data.user.email);
-          // console.log(typeof(response.data.userId))
         }
-        // console.log(response.data.data.username)
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -62,7 +42,6 @@ const Profile = (props) => {
     fetchUserData();
   });
   const logout = () => {
-    // localStorage.clear();
     sessionStorage.clear();
     navigate("/login");
   };

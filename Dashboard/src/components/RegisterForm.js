@@ -19,7 +19,6 @@ const validationSchema = yup.object({
 
 
 const RegisterForm = () => {
-    // const [success, setSuccess] = useState(null)
     const [error, setError] = useState(null)
     const [role, setRole] = useState('')
     const [secretKey, setSecretKey] = useState('')

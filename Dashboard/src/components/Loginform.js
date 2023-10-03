@@ -7,12 +7,11 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../context/UserContext";
 
-// Import your loading spinner or component here
-import LoadingSpinner from "./dashborad/components/LoadingSpinner"; // Replace with your actual loading component
+import LoadingSpinner from "./dashborad/components/LoadingSpinner"; 
 
 const Loginform = (props) => {
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false); // Add loading state
+  const [loading, setLoading] = useState(false); 
   const { setUser } = useUserContext();
   let navigate = useNavigate();
 
@@ -41,7 +40,7 @@ const Loginform = (props) => {
       }
     } catch (error) {
       if (error.response) {
-        setError(error.response.data.message); // Display the error message from the server
+        setError(error.response.data.message); 
       } else {
         setError("Network error. Please check your internet connection.");
       }
@@ -74,9 +73,8 @@ const Loginform = (props) => {
             <div className="form-items">
               <h3>Welcome Back!</h3>
               <span className={error ? "error" : ""}>{error ? error : ""}</span>
-              {/* Conditionally render the loading component */}
               {loading ? (
-                <LoadingSpinner /> // Replace with your loading component
+                <LoadingSpinner /> 
               ) : (
                 <form
                   className="requires-validation"
