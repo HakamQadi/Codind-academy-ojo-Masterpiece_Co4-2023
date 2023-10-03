@@ -5,11 +5,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import HomePage from '../screens/HomePage';
 import ProfilePage from '../screens/ProfilePage';
 import SearchPage from '../screens/SearchPage';
-import DriverHome from '../screens/driver/DriverHome';
-import DeliveryForm from '../components/DeliveryForm';
 import {Image} from 'react-native';
-import {screen} from '@testing-library/react';
-import DriverOrder from '../screens/driver/DriverOrder';
 
 const Tab = createBottomTabNavigator();
 
@@ -36,11 +32,6 @@ const TabNav = () => {
             ),
         }}
       />
-      {/* <Tab.Screen
-        name="Delivery"
-        component={DeliveryForm}
-        options={{headerShown: true, title: 'Delivery Form'}}
-      /> */}
       <Tab.Screen
         name="Search"
         component={SearchPage}

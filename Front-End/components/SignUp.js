@@ -1,6 +1,5 @@
 import React from 'react';
 import {Text, TextInput, TouchableOpacity, View, Alert} from 'react-native';
-// import { Formik } from 'formik';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
@@ -22,12 +21,9 @@ const register = values => {
   axios
     .post('https://speedx-backend.onrender.com/user/register', values)
     .then(response => {
-      // Handle the API response data here
-      // console.log('Data from API:', response.data.data.drivers[0]);
       console.log('register success');
     })
     .catch(error => {
-      // Handle any errors that occurred during the request
       console.error('Error fetching data:', error);
     });
 };
@@ -43,13 +39,10 @@ const SignUp = ({toggleForm}) => {
       }}
       validationSchema={validationSchema}
       onSubmit={(values, {resetForm}) => {
-        // Handle form submission here (e.g., API call)
-        // console.log('Form submitted with values:', values);
         register(values);
         resetForm();
         Alert.alert('Success', 'Sign-up successful!');
         toggleForm();
-        // navigation.navigate('Login');
       }}>
       {({values, handleChange, handleSubmit, errors, touched}) => (
         <View style={SignUpStyles.container}>

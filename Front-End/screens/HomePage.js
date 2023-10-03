@@ -82,15 +82,12 @@ const HomePage = ({navigation}) => {
 
   return (
     <View style={HomeStyles.container}>
-      {/* Header Section */}
       <View
         style={{
-          // backgroundColor:'yellow',
           flexDirection: 'row',
           justifyContent: 'space-between',
           paddingHorizontal: 15,
         }}>
-        {/* Replace this with your app logo */}
         <View style={{flexDirection: 'row'}}>
           <Text style={{fontSize: 30, fontWeight: '800', color: 'black'}}>
             Speed
@@ -106,14 +103,12 @@ const HomePage = ({navigation}) => {
         <Text style={[HomeStyles.h2, {marginTop: 10}]}>Popular Delivery</Text>
         <FlatList
           data={popDelivery}
-          numColumns={NUM_COLUMNS} // Set the number of columns
+          numColumns={NUM_COLUMNS} 
           renderItem={({item}) => (
             <TouchableOpacity
               style={HomeStyles.card}
               onPress={() => navigate('DeliveryForm', {title: item.title})}>
-              {/* thumbnail */}
               <Image style={HomeStyles.thumbnail} source={item.thumbnail} />
-              {/* title */}
               <Text
                 numberOfLines={1}
                 ellipsizeMode="tail"
@@ -126,41 +121,25 @@ const HomePage = ({navigation}) => {
                   justifyContent: 'space-between',
                   marginTop: 3,
                 }}>
-                {/* Price */}
                 <Text style={{fontWeight: '700',color:'black'}}> {item.description}</Text>
-                {/* Ratings */}
               </View>
             </TouchableOpacity>
           )}
-          keyExtractor={item => item.id.toString()} // Provide a unique key for each item
+          keyExtractor={item => item.id.toString()} 
           showsVerticalScrollIndicator={false}
         />
       </View>
 
-      {/* Horizontal Line */}
-      {/* <View
-        style={{
-          borderBottomWidth: 1,
-          borderBottomColor: 'gray',
-          marginTop: 30,
-          width: '70%',
-          alignSelf: 'center',
-        }}
-      /> */}
-
-      {/* Express Delivery Section */}
       <View style={HomeStyles.bestSellersContainer}>
         <Text style={HomeStyles.h2}>Express Delivery</Text>
         <FlatList
           data={expDelivery}
-          numColumns={NUM_COLUMNS} // Set the number of columns
+          numColumns={NUM_COLUMNS}
           renderItem={({item}) => (
             <TouchableOpacity
               style={HomeStyles.card}
               onPress={() => navigate('DeliveryForm', {title: item.title})}>
-              {/* thumbnail */}
               <Image style={HomeStyles.thumbnail} source={item.thumbnail} />
-              {/* title */}
               <Text
                 numberOfLines={1}
                 ellipsizeMode="tail"
@@ -174,13 +153,11 @@ const HomePage = ({navigation}) => {
                   marginTop: 3,
                   
                 }}>
-                {/* Price */}
                 <Text style={{fontWeight: '700',color:'black'}}>{item.description}</Text>
-                {/* Ratings */}
               </View>
             </TouchableOpacity>
           )}
-          keyExtractor={item => item.id.toString()} // Provide a unique key for each item
+          keyExtractor={item => item.id.toString()} 
           showsVerticalScrollIndicator={false}
         />
       </View>

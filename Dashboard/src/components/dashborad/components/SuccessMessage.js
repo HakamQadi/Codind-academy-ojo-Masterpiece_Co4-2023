@@ -5,10 +5,10 @@ const SuccessMessage = ({ message, onClose }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
-    }, 3000); // Close the success message after 3 seconds
+    }, 3000); 
 
     return () => {
-      clearTimeout(timer); // Clear the timer if the component unmounts
+      clearTimeout(timer); 
     };
   }, [onClose]);
 

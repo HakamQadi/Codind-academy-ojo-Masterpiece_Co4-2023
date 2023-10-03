@@ -5,7 +5,7 @@ import {FormStyle} from '../style_sheets/StylesSheet';
 import car from '../assets/icons/car.png';
 import truck from '../assets/icons//truck.png';
 import bike from '../assets/icons/bike.png';
-import {useAppContext} from '../context/AppContext'; // Import the context hook
+import {useAppContext} from '../context/AppContext'; 
 import axios from 'axios';
 
 const ShipmentDetails = ({route, navigation}) => {
@@ -17,7 +17,6 @@ const ShipmentDetails = ({route, navigation}) => {
   });
   const handleChange = (field, value) => {
     setShipmentDetails({...shipmentDetails, [field]: value});
-    // console.log(shipmentDetails);
   };
   const handleSubmit = async () => {
 
@@ -33,16 +32,10 @@ const ShipmentDetails = ({route, navigation}) => {
       return;
     }
 
-    // Use a Promise to wait for the state to update
     await new Promise(resolve => {
       updateMergedData(shipmentDetails);
       resolve();
     });
-    // console.log('user ',user)
-    // await updateMergedData(shipmentDetails);
-    // console.log('mergedData ', mergedData);
-    // console.log('user ID ', user.userId);
-    // console.log(shipmentDetails)
     console.log('mergedData ', mergedData);
     console.log('user.userId ', user.userId);
     console.log('shipmentDetails ', shipmentDetails);
@@ -54,11 +47,10 @@ const ShipmentDetails = ({route, navigation}) => {
       .then(response => {
         console.log('mergedData ', mergedData);
         console.log('response ', response.data);
-        // console.log('response2 ', response);
         navigation.navigate('OrderPlaced');
       })
       .catch(error => {
-        // setErrorMessage(error.response.data.message);
+        setErrorMessage(error.response.data.message);
       });
   };
   return (

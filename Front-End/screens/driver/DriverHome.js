@@ -19,7 +19,7 @@ const DriverHome = () => {
   const [confirmExit, setConfirmExit] = useState(false);
   const [allOrders, setAllOrders] = useState([]);
   const [drivers, setDrivers] = useState([]);
-  const {user} = useAppContext();
+  const {user, deliverDone} = useAppContext();
 
   useEffect(() => {
     const backAction = () => {
@@ -54,47 +54,48 @@ const DriverHome = () => {
     };
   }, [confirmExit]);
 
-  const fetchOrders = async () => {
-    try {
-      const response = await axios.get(
-        'https://speedx-backend.onrender.com/order',
-      );
-      setAllOrders(response.data.data.orders);
-    } catch (error) {
-      // Handle the error
-      console.error('Failed to fetch orders:', error);
-    }
-  };
-
-  const fetchDrivers = async () => {
-    try {
-      const response = await axios.get(
-        'https://speedx-backend.onrender.com/admin',
-      );
-      const users = await response.data.data; // Assuming this is an array of users
-
-      // Use map to create a new array containing drivers
-      const driversArray = users
-        .filter(user => user.role === 'driver')
-        .map(driver => {
-          return {
-            name: driver.fullname,
-            score: driver.score, // Replace with the actual property names
-          };
-        });
-
-      setDrivers(driversArray);
-    } catch (error) {
-      // Handle the error
-      console.error('Failed to fetch drivers:', error);
-    }
-  };
-
   useEffect(() => {
-    fetchOrders();
-    fetchDrivers();
-  }, []);
+    const fetchOrders = async () => {
+      console.log("object2")
 
+      try {
+        const response = await axios.get(
+          'https://speedx-backend.onrender.com/order',
+        );
+        setAllOrders(response.data.data.orders);
+      } catch (error) {
+        console.error('Failed to fetch orders:', error);
+      }
+    };
+
+    fetchOrders(); 
+
+    const fetchDrivers = async () => {
+      console.log("object3")
+
+      try {
+        const response = await axios.get(
+          'https://speedx-backend.onrender.com/admin',
+        );
+        const users = await response.data.data; 
+
+        const driversArray = users
+          .filter(user => user.role === 'driver')
+          .map(driver => {
+            return {
+              name: driver.fullname,
+              score: driver.score, 
+            };
+          });
+
+        setDrivers(driversArray);
+      } catch (error) {
+        console.error('Failed to fetch drivers:', error);
+      }
+    };
+
+    fetchDrivers(); 
+  }, []); //
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.header}>
@@ -119,19 +120,19 @@ const DriverHome = () => {
         <View style={styles.slide}>
           <Image
             style={styles.slideImage}
-            source={require('../../assets/images/delivery-person.png')} // Replace with your image source
+            source={require('../../assets/images/delivery-person.png')} 
           />
         </View>
         <View style={styles.slide}>
           <Image
             style={styles.slideImage}
-            source={require('../../assets/images/package-doorstep.jpg')} // Replace with your image source
+            source={require('../../assets/images/package-doorstep.jpg')} 
           />
         </View>
         <View style={styles.slide}>
           <Image
             style={styles.slideImage}
-            source={require('../../assets/images/Packages-stacked.jpg')} // Replace with your image source
+            source={require('../../assets/images/Packages-stacked.jpg')} 
           />
         </View>
       </Swiper>
@@ -150,11 +151,14 @@ const DriverHome = () => {
               <Text style={{color: 'white', fontWeight: '700'}}>
                 {order.name}
               </Text>
-              <TouchableOpacity
-                onPress={() => navigate('DriverOrder', {orderId: order._id})}
-                style={styles.startDeliveryBtn}>
-                <Text>Start Delivery</Text>
-              </TouchableOpacity>
+             
+                <TouchableOpacity
+                  onPress={() => navigate('DriverOrder', {orderId: order._id})}
+                  style={styles.startDeliveryBtn}>
+                  <Text>Start Delivery</Text>
+                </TouchableOpacity>
+            
+             
             </View>
           ))
         )}
@@ -182,7 +186,7 @@ const DriverHome = () => {
               style={{
                 color: 'white',
               }}>
-              Score: {driver.score} {/* Replace with the actual score */}
+              Score: {driver.score} 
             </Text>
           </View>
         ))}
@@ -215,15 +219,14 @@ const styles = StyleSheet.create({
   },
   centerContent: {
     alignItems: 'center',
-    flexGrow: 1, // This will make the content center vertically
+    flexGrow: 1, 
     padding: 20,
   },
   todaysDeliveryText: {
     fontSize: 18,
     marginTop: 20,
     marginBottom: 10,
-    alignSelf: 'flex-start', // Align content to the left
-    // color: 'white',
+    alignSelf: 'flex-start', 
     marginLeft: 20,
   },
   clientCard: {
@@ -236,7 +239,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 10,
     borderRadius: 24,
-    // flex:1,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -245,7 +247,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 20,
     marginBottom: 10,
-    alignSelf: 'flex-start', // Align content to the left
+    alignSelf: 'flex-start', 
   },
   driverCard: {
     alignSelf: 'center',
@@ -267,7 +269,7 @@ const styles = StyleSheet.create({
     borderRadius: 24,
   },
   imageSlider: {
-    height: 200, // Set the height of the image slider as needed
+    height: 200,  
   },
   slide: {
     flex: 1,
@@ -280,7 +282,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   driverList: {
-    maxHeight: 200, // Set the maximum height for the driver list as needed
+    maxHeight: 200,  
   },
 });
 

@@ -13,7 +13,7 @@ import {useAppContext} from '../../context/AppContext';
 const DriverOrder = ({navigation, route}) => {
   const {orderId} = route.params;
   const [order, setOrder] = useState('');
-  const {user} = useAppContext();
+  const {user, setDeliverDone} = useAppContext();
 
   const handleAcceptPress = () => {
     Alert.alert(
@@ -24,36 +24,28 @@ const DriverOrder = ({navigation, route}) => {
           text: 'Cancel',
           onPress: () => {
             console.log('Order acceptance canceled');
-            // navigation.reset({index: 0, routes: [{name: 'DriverHome'}]});
-            // navigation.goBack();
           },
           style: 'cancel',
         },
         {
           text: 'Accept',
           onPress: async () => {
-            // Handle order acceptance logic here
             console.log('Order accepted');
-          
-            // Increment the user's score
             user.score += 1;
-          
+
             try {
-              // Send the updated score to the server
-              const response = await axios.patch(
+              await axios.patch(
                 `https://speedx-backend.onrender.com/admin/${user.userId}`,
                 {
-                  score: user.score, // Update the score field
-                }
+                  score: user.score,  
+                },
               );
-              console.log('response ', response.data);
             } catch (error) {
               console.log(error);
             }
-          
+            setDeliverDone(true);
             navigation.goBack();
           },
-          
         },
       ],
       {cancelable: false},
@@ -73,7 +65,6 @@ const DriverOrder = ({navigation, route}) => {
         {
           text: 'Confirm',
           onPress: () => {
-            // Handle order cancellation logic here
             console.log('Order canceled');
             navigation.goBack();
           },
@@ -85,20 +76,17 @@ const DriverOrder = ({navigation, route}) => {
 
   useEffect(() => {
     const fetchOrderDetails = async () => {
+      console.log("fetchOrderDetails")
       try {
         const response = await axios.get(
           `https://speedx-backend.onrender.com/order/details/${orderId}`,
         );
-        // console.log(response.data.data.order);
         setOrder(response.data.data.order);
-        // console.log(order)
-        // console.log(order);
       } catch (error) {}
     };
     fetchOrderDetails();
   }, []);
 
-  // console.log('object ', orderId);
 
   return (
     <View style={styles.container}>
@@ -152,19 +140,17 @@ const DriverOrder = ({navigation, route}) => {
         <TouchableOpacity
           // title="Go Back to Home"
           onPress={handleAcceptPress}
-          style={[styles.button, {backgroundColor: '#fa4a0c'}]} // Change background color
+          style={[styles.button, {backgroundColor: '#fa4a0c'}]}
         >
           <Text style={styles.buttonText}>Accept</Text>
         </TouchableOpacity>
         <TouchableOpacity
           // title="Go Back to Home"
           onPress={handleCancelPress}
-          style={[styles.button, {backgroundColor: '#fa4a0c'}]} // Change background color
+          style={[styles.button, {backgroundColor: '#fa4a0c'}]}
         >
           <Text style={styles.buttonText}>Cancel</Text>
         </TouchableOpacity>
-        {/* <Button title="Accept" onPress={handleAcceptPress} /> */}
-        {/* <Button title="Cancel" onPress={handleCancelPress} /> */}
       </View>
     </View>
   );
@@ -184,21 +170,18 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     borderRadius: 12,
-    elevation: 5, // This is for Android devices
+    elevation: 5,  
     padding: 10,
-    // flexDirection: 'row',
   },
   largeCard: {
-    // flex: 1,
     height: 150,
     margin: 8,
     backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 12,
-    elevation: 5, // This is for Android devices
+    elevation: 5, 
     padding: 10,
-    // flexDirection: 'row',
   },
   cardTitle: {
     fontSize: 16,
@@ -213,7 +196,7 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-    backgroundColor: '#fa4a0c', // Change background color
+    backgroundColor: '#fa4a0c', 
     color: 'white',
     padding: 10,
     borderRadius: 5,

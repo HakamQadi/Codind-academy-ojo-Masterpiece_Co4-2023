@@ -15,10 +15,10 @@ const Login = ({toggleForm, handleLogIn, navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState(null);
-  const [isLoading, setIsLoading] = useState(false); // Add loading state
+  const [isLoading, setIsLoading] = useState(false);  
 
   const login = async () => {
-    setIsLoading(true); // Set loading to true when the login request starts
+    setIsLoading(true); 
     const values = {
       email: email,
       password: password,
@@ -27,7 +27,6 @@ const Login = ({toggleForm, handleLogIn, navigation}) => {
     await axios
       .post('https://speedx-backend.onrender.com/user/login', values)
       .then(response => {
-        // console.log('role: ******************** ', response.data.data.role);
         const userInfo = {
           fullname: response.data.data.fullname,
           userId: response.data.data.userId,
@@ -36,26 +35,17 @@ const Login = ({toggleForm, handleLogIn, navigation}) => {
         };
 
         setUser(userInfo);
-        // console.log('Login successful');
         if (response.data.data.role === 'user') {
           handleLogIn('Main');
         } else if (response.data.data.role === 'driver') {
-          // console.log('role:  ', response.data.data.role);
-
-          // navigation.reset({
-          //   index: 0,
-          //   routes: [{name: 'DriverHome'}],
-          // });
           handleLogIn('DriverHome');
-
-          // navigation.navigate('Main')
         }
       })
       .catch(error => {
-        // setErrorMessage(error.response.data.message);
+        setErrorMessage(error.response.data.message);
       })
       .finally(() => {
-        setIsLoading(false); // Set loading to false when the request is completed (success or error)
+        setIsLoading(false); 
       });
   };
 
@@ -76,7 +66,7 @@ const Login = ({toggleForm, handleLogIn, navigation}) => {
         onChangeText={setPassword}
         secureTextEntry
       />
-      {isLoading ? ( // Show loading indicator if isLoading is true
+      {isLoading ? ( 
         <ActivityIndicator size="large" color="#fa4a0c" />
       ) : (
         <>

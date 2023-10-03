@@ -5,11 +5,9 @@ import { AppProvider } from './context/AppContext'; // Import your context
 
 function App() {
   return (
-    // <NavigationContainer>
       <AppProvider>
         <AppNavigator />
       </AppProvider>
-    // </NavigationContainer>
   );
 }
 

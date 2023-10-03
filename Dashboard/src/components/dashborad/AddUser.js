@@ -3,8 +3,6 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router";
 import * as yup from "yup";
-// import LoadingSpinner from "../LoadingSpinner";
-// import SuccessMessage from "../SuccessMessage"; // Import the SuccessMessage component
 import LoadingSpinner from './components/LoadingSpinner';
 import SuccessMessage from "./components/SuccessMessage";
 

@@ -3,10 +3,8 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   FlatList,
-  StyleSheet,
-  Alert, // Import Alert from React Native
+  Alert, 
   TouchableOpacity,
   Image
 } from 'react-native';
@@ -49,7 +47,6 @@ const SearchPage = () => {
     setFilteredOrders([]);
   };
 
-  // Function to handle card click and show order details in an alert
   const handleCardClick = order => {
     Alert.alert(
       'Order Details',
@@ -65,18 +62,12 @@ const SearchPage = () => {
 
   return (
     <View style={searchStyle.container}>
-      {/* <View style={searchStyle.searchBar}> */}
-        {/* <Image
-          source={require('../assets/icons/search.png')}
-          style={searchStyle.searchIcon}
-        /> */}
         <TextInput
           style={searchStyle.input}
           placeholder="Enter Recipient Name"
           value={recipientName}
           onChangeText={text => setRecipientName(text)}
         />
-      {/* </View> */}
       <FlatList
         data={filteredOrders}
         keyExtractor={item => item._id.toString()}
@@ -86,7 +77,6 @@ const SearchPage = () => {
             <Text style={searchStyle.cardText}>
               Recipient Name: {item.recipient_name}
             </Text>
-            {/* Add onPress prop to call the handleCardClick function */}
             <TouchableOpacity onPress={() => handleCardClick(item)}>
               <Text style={searchStyle.viewDetailsBtn}>View Details</Text>
             </TouchableOpacity>

@@ -38,9 +38,8 @@ const PlaceOrderSuccess = ({navigation}) => {
       </View>
 
       <TouchableOpacity
-        // title="Go Back to Home"
         onPress={() => navigation.navigate('Home')}
-        style={[styles.button, {backgroundColor: '#fa4a0c'}]} // Change background color
+        style={[styles.button, {backgroundColor: '#fa4a0c'}]}  
       >
         <Text style={styles.buttonText}>Back to Home</Text>
       </TouchableOpacity>
@@ -90,7 +89,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   button: {
-    backgroundColor: '#fa4a0c', // Change background color
+    backgroundColor: '#fa4a0c', 
     color: 'white',
     padding: 10,
     borderRadius: 5,

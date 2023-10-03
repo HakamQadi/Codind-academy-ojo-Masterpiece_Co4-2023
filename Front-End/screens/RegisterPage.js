@@ -14,7 +14,6 @@ const RegisterPage = ({navigation}) => {
     setIsSignUp(!isSignUp);
   };
   const handleLogIn = (route) => {
-    // navigation.navigate('Main');
     navigation.reset({
       index: 0,
       routes: [{ name: `${route}` }],
@@ -41,11 +40,10 @@ const RegisterPage = ({navigation}) => {
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
-    resizeMode: 'cover', // Adjust the image's resizeMode as needed
+    resizeMode: 'cover', 
   },
   container: {
     flex: 1,
-    // justifyContent: 'center',
     alignItems: 'center',
     marginTop: '20%',
   },

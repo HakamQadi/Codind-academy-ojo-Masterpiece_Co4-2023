@@ -1,7 +1,6 @@
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import React from 'react';
 import { useAppContext } from '../../context/AppContext';
-// import {useAppContext} from '../context/AppContext';
 
 const Card = ({children}) => {
   return <View style={styles.card}>{children}</View>;
@@ -11,18 +10,13 @@ const DriverProfile = ({navigation, route}) => {
   const {user} = useAppContext();
 console.log(user)
   const handleLogout = () => {
-    // You can add your logout logic here
-    // For example, clearing user data and navigating to the login screen
-    // Replace 'Login' with the name of your login screen in the navigation stack.
     navigation.navigate('Register');
   };
 
   return (
     <View style={styles.container}>
-      {/* <Text style={styles.title}>Profile Page</Text> */}
       <Image
         source={require('../../assets/images/profile.png')}
-        // source={require('../../a')}
         style={styles.profilePic}
       />
       <View>
@@ -39,21 +33,16 @@ console.log(user)
           <Text style={styles.info}>{user.phone}</Text>
         </Card>
       </View>
-      {/* Add more cards for additional user information */}
-
-      {/* Buttons at the bottom */}
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          // title="Go Back to Home"
           onPress={() => navigation.navigate('DriverHome')}
-          style={[styles.button, {backgroundColor: '#fa4a0c'}]} // Change background color
+          style={[styles.button, {backgroundColor: '#fa4a0c'}]} 
         >
           <Text style={styles.buttonText}>Back to Home</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          // title="Logout"
           onPress={handleLogout}
-          style={[styles.button, {backgroundColor: '#fa4a0c'}]} // Change background color
+          style={[styles.button, {backgroundColor: '#fa4a0c'}]} 
         >
           <Text style={styles.buttonText}>Logout</Text>
         </TouchableOpacity>
@@ -81,7 +70,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 16,
     marginBottom: 16,
-    maxWidth: '90%', // Set the width to 90%
+    maxWidth: '90%', 
     elevation: 2,
     shadowColor: '#000',
     shadowOffset: {
@@ -107,7 +96,7 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-    backgroundColor: '#fa4a0c', // Change background color
+    backgroundColor: '#fa4a0c', 
     color: 'white',
     padding: 10,
     borderRadius: 5,
@@ -120,9 +109,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   profilePic: {
-    width: 150, // Adjust the width as needed
-    height: 150, // Adjust the height as needed
-    borderRadius: 75, // Half of the width and height to make it circular
+    width: 150, 
+    height: 150, 
+    borderRadius: 75, 
     marginTop: 100,
     marginBottom: -150,
     borderColor: 'red',

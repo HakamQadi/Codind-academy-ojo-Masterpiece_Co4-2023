@@ -26,7 +26,7 @@ const ReceivingForm = ({navigation}) => {
     recipient_phone: '',
     recipient_additionalDesc: '',
     recieving_date: '',
-    showDatePicker: false, // Add showDatePicker state
+    showDatePicker: false,  
   });
 
   const handleChange = (field, value) => {
@@ -58,7 +58,6 @@ const ReceivingForm = ({navigation}) => {
       return;
     }
 
-    // Check if the recipient_phone field contains only numeric characters
     if (!/^[0-9]+$/.test(receivingData.recipient_phone)) {
       Alert.alert(
         'Invalid Phone Number',
@@ -67,7 +66,6 @@ const ReceivingForm = ({navigation}) => {
       return;
     }
 
-    // Check if the phone number has exactly 10 digits and starts with 077, 078, or 079
     if (receivingData.recipient_phone.length !== 10) {
       Alert.alert(
         'Invalid Phone Number',
@@ -85,7 +83,6 @@ const ReceivingForm = ({navigation}) => {
     }
 
     const mergedData = {...receivingData, selectedDate};
-    // const mergedData = {...receivingData};
     updateMergedData(mergedData);
     navigation.navigate('ShipmentDetails');
   };
@@ -156,7 +153,7 @@ const ReceivingForm = ({navigation}) => {
 
       {receivingData.showDatePicker && (
         <DateTimePicker
-          value={selectedDate || new Date()} // Provide a default value
+          value={selectedDate || new Date()}  
           mode="date"
           display="spinner"
           onChange={handleDateChange}

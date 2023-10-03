@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 
 import React from 'react';
-// import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
 import RegisterPage from '../screens/RegisterPage';
@@ -11,13 +10,11 @@ import DeliveryForm from '../components/DeliveryForm';
 import ReceivingForm from '../components/ReceivingForm';
 import ShipmentDetails from '../components/ShipmentDetails';
 import PlaceOrderSuccess from '../components/PlaceOrderSuccess';
-import CheckoutPage from '../screens/driver/DriverOrder';
 import DriverHome from '../screens/driver/DriverHome';
 import DriverOrder from '../screens/driver/DriverOrder';
 import DriverProfile from '../screens/driver/DriverProfile';
 
 const Stack = createNativeStackNavigator();
-// const Tab = createBottomTabNavigator();
 
 export default function AppNavigator() {
   return (
@@ -35,7 +32,7 @@ export default function AppNavigator() {
         />
         <Stack.Screen
           name="Main"
-          component={TabNav} // Use the BottomTabNavigator here
+          component={TabNav} 
           options={{headerShadowVisible: false, headerShown: false}}
         />
         <Stack.Screen
